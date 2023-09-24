@@ -37,7 +37,8 @@ Route::resource('/supplier', SupplierController::class)
         ->except('edit', 'create', 'show');
 
 Route::resource('/penjualan', PenjualanController::class)
-        ->except('edit', 'show', 'destroy', 'store');
+        ->except('edit', 'show', 'destroy', 'create', 'store');
+Route::post('penjualan/{penjualan}', [PenjualanController::class, 'store'])->name('penjualan.store');
 
 Route::resource('/penjualanproduk', PenjualanProdukController::class)
         ->except('edit', 'create', 'show', 'store', 'index');

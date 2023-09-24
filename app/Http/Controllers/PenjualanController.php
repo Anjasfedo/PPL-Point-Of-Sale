@@ -29,16 +29,7 @@ class PenjualanController extends Controller
      */
     public function create()
     {
-        $penjualan = Penjualan::create([
-            'total_item' => 0,
-            'total_penjualan' => 0,
-            'diterima' => 0,
-            'kembalian' => 0,
-        ]);
-    
-        session(['id_penjualan' => $penjualan->id_penjualan]);
-    
-        return redirect()->route('penjualanproduk.index', [$penjualan->id_penjualan]);
+        // 
     }
 
     /**
@@ -46,7 +37,19 @@ class PenjualanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // Inisialisasi data dengan nilai 0
+        $penjualan = new Penjualan;
+        $penjualan->total_item = 0;
+        $penjualan->total_penjualan = 0;
+        $penjualan->diterima = 0;
+        $penjualan->kembalian = 0;
+
+        $penjualan->save();
+
+        // Simpan id_penjualan ke dalam session
+        session(['id_penjualan' => $penjualan->id_penjualan]);
+
+        return redirect()->route('penjualanproduk.index', [$penjualan->id_penjualan]);
     }
 
     /**
@@ -81,24 +84,10 @@ class PenjualanController extends Controller
         $penjualan->diterima = $request->input('diterima');
         $penjualan->kembalian = $request->input('kembalian');
 
-        // Mengambil data penjualan_detail berdasarkan id_penjualan
-        $penjualanproduk = PenjualanProduk::where('id_penjualan', $id)->get();
-
-        // Mengurangkan stok produk berdasarkan data penjualan_detail
-        foreach ($penjualanproduk as $detail) {
-            $produk = Produk::find($detail->id_produk);
-
-            if ($produk) {
-                // Mengurangkan stok produk sesuai dengan jumlah penjualan_detail
-                $produk->stok -= $detail->jumlah;
-                $produk->save();
-            }
-        }
-
         // Simpan perubahan pada data penjualan
         $penjualan->save();
 
-        return back();
+        return redirect()->route('penjualan.index');
     }
 
     /**

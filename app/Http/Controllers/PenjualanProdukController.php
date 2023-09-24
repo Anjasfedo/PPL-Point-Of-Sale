@@ -20,8 +20,9 @@ class PenjualanProdukController extends Controller
         $dataProduk = Produk::latest()->get();
         $dataPenjualan = Penjualan::where('id_penjualan', $id)->first(); // Menggunakan first() untuk mengambil satu baris data.
         $dataPenjualanProduk = PenjualanProduk::where('id_penjualan', $id)->get();
+        $id_penjualan = $id;
 
-        return view('penjualanproduk.index', compact('dataProduk', 'id', 'dataPenjualan', 'dataPenjualanProduk'));
+        return view('penjualanproduk.index', compact('dataProduk', 'dataPenjualan', 'dataPenjualanProduk', 'id_penjualan'));
     }
 
     /**

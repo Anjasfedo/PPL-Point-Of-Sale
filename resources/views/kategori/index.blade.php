@@ -142,4 +142,4 @@
   
 @endsection
 
-@includeIf('kategori.kategoriCreate')
+@includeIf('Kategori.kategoriCreate')
