@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\ProdukController;
+use App\Http\Controllers\PenjualanController;
+use App\Http\Controllers\PenjualanProdukController;
 
 /*
 |--------------------------------------------------------------------------
@@ -33,3 +35,11 @@ Route::resource('/produk', ProdukController::class)
 
 Route::resource('/supplier', SupplierController::class)
         ->except('edit', 'create', 'show');
+
+Route::resource('/penjualan', PenjualanController::class)
+        ->except('edit', 'show', 'store', 'destroy');
+Route::post('/penjualan/{penjualan}', [PenjualanController::class, 'store'])->name('penjualan.store');
+
+Route::resource('/penjualanproduk', PenjualanProdukController::class)
+        ->except('edit', 'create', 'show', 'store');
+Route::post('penjualanproduk/{penjualanproduk}', [PenjualanProdukController::class, 'store'])->name('penjualanproduk.store');
