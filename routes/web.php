@@ -9,6 +9,9 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PenjualanProdukController;
 
+use App\Http\Controllers\PembelianController;
+use App\Http\Controllers\PembelianProdukController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -36,6 +39,8 @@ Route::resource('/produk', ProdukController::class)
 Route::resource('/supplier', SupplierController::class)
         ->except('edit', 'create', 'show');
 
+
+
 Route::resource('/penjualan', PenjualanController::class)
         ->except('edit', 'show', 'destroy', 'create', 'store');
 Route::post('penjualan/{penjualan}', [PenjualanController::class, 'store'])->name('penjualan.store');
@@ -44,3 +49,14 @@ Route::resource('/penjualanproduk', PenjualanProdukController::class)
         ->except('edit', 'create', 'show', 'store', 'index');
 Route::get('penjualanproduk/index/{penjualanproduk}', [PenjualanProdukController::class, 'index'])->name('penjualanproduk.index');
 Route::post('penjualanproduk/{penjualanproduk}', [PenjualanProdukController::class, 'store'])->name('penjualanproduk.store');
+
+
+
+Route::resource('/pembelian', PembelianController::class)
+        ->except('edit', 'show', 'destroy', 'create', 'store');
+Route::post('pembelian/{pembelian}', [PembelianController::class, 'store'])->name('pembelian.store');
+
+Route::resource('/pembelianproduk', PembelianProdukController::class)
+        ->except('edit', 'create', 'show', 'store', 'index');
+Route::get('pembelianproduk/index/{pembelianproduk}', [PembelianProdukController::class, 'index'])->name('pembelianproduk.index');
+Route::post('pembelianproduk/{pembelianproduk}', [PembelianProdukController::class, 'store'])->name('pembelianproduk.store');

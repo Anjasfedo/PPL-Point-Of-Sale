@@ -1,0 +1,68 @@
+@foreach ($dataPembelian as $item)
+    <!-- Modal for Sale Details -->
+    <div class="modal fade" id="modal-info{{ $item->id_pembelian }}">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Sale Details</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <section class="content">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="card card-primary">
+                                    <div class="card-header">
+                                        <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>ID pembelian: {{ $item->id_pembelian }}</p>
+                                        <p>Total Item: {{ $item->total_item }}</p>
+                                        <p>Total Harga: {{ $item->total_pembelian }}</p>
+
+                                        <h5>Related Products:</h5>
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID Produk</th>
+                                                    <th>Nama Produk</th>
+                                                    <th>Harga Jual</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Total Harga</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach ($dataPembelianProduk as $produk)
+                                                    @if ($produk->id_pembelian === $item->id_pembelian)
+                                                        <tr>
+                                                            <td>{{ $produk->id_pembelian_produk }}</td>
+                                                            <td>
+                                                                @if ($produk->produk)
+                                                                    {{ $produk->produk->nama_produk }}
+                                                                @endif
+                                                            </td>
+                                                            <td>
+                                                                @if ($produk->produk)
+                                                                    {{ $produk->produk->harga_jual }}
+                                                                @endif
+                                                            </td>
+                                                            <td>{{ $produk->jumlah }}</td>
+                                                            <td>{{ $produk->total_harga }}</td>
+                                                        </tr>
+                                                    @endif
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+@endforeach

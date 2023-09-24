@@ -14,10 +14,11 @@ class PembelianProduk extends Model
     protected $guarded = [];
 
     protected $fillable = [
-        'id_penjualan',
+        'id_pembelian',
         'id_produk',
         'id_supplier',
         'jumlah',
+        'harga_beli',
         'total_harga',
     ];
 
