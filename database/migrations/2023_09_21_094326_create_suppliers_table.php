@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id_supplier');
             $table->string('nama_supplier')->unique();
             $table->string('telepon')->unique();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

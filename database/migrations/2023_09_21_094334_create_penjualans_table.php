@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('penjualans', function (Blueprint $table) {
             $table->increments('id_penjualan');
             $table->integer('total_item');
-            $table->integer('total_harga');
+            $table->integer('total_penjualan');
+            $table->integer('diterima');
+            $table->integer('kembalian');
             $table->timestamps();
         });
     }

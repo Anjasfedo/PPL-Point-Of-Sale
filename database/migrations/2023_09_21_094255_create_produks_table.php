@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nama_produk')->unique();
             $table->integer('harga_jual');
             $table->integer('stok');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('id_kategori')
