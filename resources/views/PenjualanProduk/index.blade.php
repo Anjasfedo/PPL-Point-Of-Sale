@@ -6,7 +6,7 @@
 
 
     <!-- Main content -->
-    
+
     <!--  -->
     <section class="content">
         <div class="container-fluid">
@@ -16,8 +16,8 @@
                 <h5><i class="fas fa-info"></i> Note:</h5>
                 This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
               </div> -->
-  
-  
+
+
               <!-- Main content -->
               <div class="invoice p-3 mb-3">
                 <!-- title row -->
@@ -58,17 +58,18 @@
                         </div>
                       </div>
 
-                      <input hidden name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly>
-                      
+                      <input name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly>
+                      <input name="id_user" type="text" value="{{ $dataPenjualan->id_user }}" readonly>
+
                       <button type="submit" class="btn btn-success float-right">
                         <i class="far fa-credit-card"></i>Tambah
                       </button>
                     </form>
                   </div>
-                    
+
                 </div>
                 <!-- /.row -->
-                
+
   <!--  -->
                 <!-- Table row -->
                 <div class="row">
@@ -135,7 +136,7 @@
                   </div>
                   <!-- /.col -->
                   <div class="col-5">
-                    
+
                       <div class="table-responsive">
                           <table class="table">
                             <tr>
@@ -144,7 +145,7 @@
                               </th>
                               <td>
                                 <input type="text" id="diterima" name="diterima" class="form-control form-control-lg" value="">
-                        
+
                               </td>
                             </tr>
                               <tr>
@@ -166,15 +167,15 @@
                   </div>
                   <!-- /.col -->
               </div>
-              
+
                 <!-- /.row -->
-  
+
                 <!-- this row will not appear when printing -->
                 <div class="row no-print">
                   <div class="col-12">
-                    
+
                     <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-                      <i class="fas fa-download"></i> Generate PDF
+                      <i class="fas fa-download"></i> Simpan
                     </button>
                   </div>
                 </div>
@@ -188,7 +189,7 @@
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->
-  
+
 @endsection
 
 
@@ -196,26 +197,26 @@
 @includeIf('PenjualanProduk.update')
 @includeIf('PenjualanProduk.destroy')
 
-@push('script') 
+@push('script')
                         <script>
                           // Mengambil elemen-elemen yang diperlukan
                           var diterimaInput = document.getElementById('diterima');
                           var kembalianInput = document.getElementById('kembalian');
                           var totalPenjualanInput = document.getElementById('total_penjualan');
-                      
+
                           // Menambahkan event listener untuk menghitung kembalian saat diterima diubah
                           diterimaInput.addEventListener('input', function () {
                               var diterima = parseFloat(diterimaInput.value); // Mengonversi ke angka, default 0 jika tidak valid
                               var totalPenjualan = parseFloat(totalPenjualanInput.value) || 0; // Mengambil total_penjualan
-                      
+
                               // Menghitung kembalian
                               var kembalian = diterima - totalPenjualan;
-                      
+
                               // Menyimpan hasil kembalian ke input kembalian
                               if (kembalian < 0) {
                                   kembalian = 0; // Setel kembalian menjadi 0 jika negatif
                               }
-                      
+
                               kembalianInput.value = kembalian; // Mengonversi hasil ke dua angka desimal
                           });
                       </script>

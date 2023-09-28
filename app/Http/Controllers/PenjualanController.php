@@ -29,7 +29,7 @@ class PenjualanController extends Controller
      */
     public function create()
     {
-        // 
+        //
     }
 
     /**
@@ -43,7 +43,7 @@ class PenjualanController extends Controller
         $penjualan->total_penjualan = 0;
         $penjualan->diterima = 0;
         $penjualan->kembalian = 0;
-
+        $penjualan->id_user = auth()->id();
         $penjualan->save();
 
         // Simpan id_penjualan ke dalam session
@@ -72,7 +72,7 @@ class PenjualanController extends Controller
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
-    {     
+    {
         $request->validate([
             'diterima' => 'required|numeric|min:1',
         ]);

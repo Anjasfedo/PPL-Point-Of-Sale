@@ -10,7 +10,7 @@ class Penjualan extends Model
     use HasFactory;
 
     protected $table = 'penjualans';
-    protected $primaryKey = 'id_penjualan'; 
+    protected $primaryKey = 'id_penjualan';
     protected $guarded = [];
 
     protected $fillable = [
@@ -18,6 +18,7 @@ class Penjualan extends Model
         'total_penjualan',
         'diterima',
         'kembalian',
+        'id_user',
     ];
 
     public function produk()

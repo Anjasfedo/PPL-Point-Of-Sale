@@ -12,6 +12,8 @@ use App\Http\Controllers\PenjualanProdukController;
 use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PembelianProdukController;
 
+use App\Http\Controllers\LoginController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -27,36 +29,52 @@ use App\Http\Controllers\PembelianProdukController;
 //     return view('layout.main');
 // });
 
-Route::resource('/', DashboardController::class)
-        ->except('edit', 'create', 'show', 'store', 'update', 'destroy');
 
-Route::resource('/kategori', KategoriController::class)
-        ->except('edit', 'create', 'show');
+Route::get('login', [LoginController::class, 'index'])->name('login');
+Route::post('loginproses', [LoginController::class, 'login_proses'])->name('loginproses');
+Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 
-Route::resource('/produk', ProdukController::class)
-        ->except('edit', 'create', 'show');
+Route::get('/register', [LoginController::class, 'register'])->name('register');
+Route::post('registerproses', [LoginController::class, 'register_proses'])->name('registerproses');
 
-Route::resource('/supplier', SupplierController::class)
-        ->except('edit', 'create', 'show');
+Route::group(['middleware' => 'auth'], function () {
 
+    Route::group(['middleware' => 'role:admin'], function () {
 
+        Route::resource('/kategori', KategoriController::class)
+                ->except('edit', 'create', 'show');
 
-Route::resource('/penjualan', PenjualanController::class)
-        ->except('edit', 'show', 'destroy', 'create', 'store');
-Route::post('penjualan/{penjualan}', [PenjualanController::class, 'store'])->name('penjualan.store');
+        Route::resource('/produk', ProdukController::class)
+                ->except('edit', 'create', 'show');
 
-Route::resource('/penjualanproduk', PenjualanProdukController::class)
-        ->except('edit', 'create', 'show', 'store', 'index');
-Route::get('penjualanproduk/index/{penjualanproduk}', [PenjualanProdukController::class, 'index'])->name('penjualanproduk.index');
-Route::post('penjualanproduk/{penjualanproduk}', [PenjualanProdukController::class, 'store'])->name('penjualanproduk.store');
+        Route::resource('/supplier', SupplierController::class)
+                ->except('edit', 'create', 'show');
 
 
+        Route::resource('/pembelian', PembelianController::class)
+                ->except('edit', 'show', 'destroy', 'create', 'store');
+        Route::post('pembelian/{pembelian}', [PembelianController::class, 'store'])->name('pembelian.store');
 
-Route::resource('/pembelian', PembelianController::class)
-        ->except('edit', 'show', 'destroy', 'create', 'store');
-Route::post('pembelian/{pembelian}', [PembelianController::class, 'store'])->name('pembelian.store');
+        Route::resource('/pembelianproduk', PembelianProdukController::class)
+                ->except('edit', 'create', 'show', 'store', 'index');
+        Route::get('pembelianproduk/index/{pembelianproduk}', [PembelianProdukController::class, 'index'])->name('pembelianproduk.index');
+        Route::post('pembelianproduk/{pembelianproduk}', [PembelianProdukController::class, 'store'])->name('pembelianproduk.store');
+    });
 
-Route::resource('/pembelianproduk', PembelianProdukController::class)
-        ->except('edit', 'create', 'show', 'store', 'index');
-Route::get('pembelianproduk/index/{pembelianproduk}', [PembelianProdukController::class, 'index'])->name('pembelianproduk.index');
-Route::post('pembelianproduk/{pembelianproduk}', [PembelianProdukController::class, 'store'])->name('pembelianproduk.store');
+    Route::group(['middleware' => 'role:admin|kasir'], function () {
+
+        Route::resource('/', DashboardController::class)
+                ->except('edit', 'create', 'show', 'store', 'update', 'destroy', 'index');
+        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+
+        Route::resource('/penjualan', PenjualanController::class)
+                ->except('edit', 'show', 'destroy', 'create', 'store');
+        Route::post('penjualan/{penjualan}', [PenjualanController::class, 'store'])->name('penjualan.store');
+
+        Route::resource('/penjualanproduk', PenjualanProdukController::class)
+                ->except('edit', 'create', 'show', 'store', 'index');
+        Route::get('penjualanproduk/index/{penjualanproduk}', [PenjualanProdukController::class, 'index'])->name('penjualanproduk.index');
+        Route::post('penjualanproduk/{penjualanproduk}', [PenjualanProdukController::class, 'store'])->name('penjualanproduk.store');
+    });
+});
