@@ -119,7 +119,7 @@
             {
                 extend: 'print',
                 exportOptions: {
-                    columns: ':visible'
+                    columns: ':not(.no-export)'
                 },
                 customize: function ( win ) {
                     $(win.document.body)
@@ -134,13 +134,13 @@
             {
                 extend: 'excel',
                 exportOptions: {
-                    columns: ':visible'
+                    columns: ':not(.no-export)'
                 }
             },
             {
                 extend: "copy",
                 exportOptions: {
-                    columns: ':visible'
+                    columns: ':not(.no-export)'
                 }
             },
 
@@ -153,7 +153,7 @@
                'targets': -1, // column index (start from 0)
                'orderable': false, // set orderable false for selected columns
          }],
-    }).buttons().container().appendTo('#tabel-produk_wrapper .col-md-6:eq(0)');
+    }).buttons().container().appendTo('#tabel-data_wrapper .col-md-6:eq(0)');
 
   });
 </script>
@@ -221,6 +221,9 @@
 <script>
 
   $(document).ready(function() {
+
+    $('#tabel-data thead th:last').addClass('no-export');
+
     // Inisialisasi select2 di dalam <select>
     $('.select2bs4').select2({
         theme: 'bootstrap4',

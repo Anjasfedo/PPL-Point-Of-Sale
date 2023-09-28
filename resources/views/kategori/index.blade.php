@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <!-- Main content -->
-    
+
     <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -20,7 +20,7 @@
                   <tr>
                     <th>No</th>
                     <th>Nama kategori</th>
-                    <th>Aksi</th>
+                    <th class="no-export">Aksi</th>
                   </tr>
                   </thead>
                   <tbody>
@@ -80,7 +80,7 @@
                                     <!--/.col (left) -->
                                     <!-- right column -->
                                     <div class="col-md-6">
-                          
+
                                     </div>
                                     <!--/.col (right) -->
                                   </div>
@@ -122,10 +122,10 @@
                           <!-- /.modal-dialog -->
                         </div>
                         <!-- /.modal -->
-                      
-                    @endforeach 
+
+                    @endforeach
                   </tbody>
-                  
+
                 </table>
               </div>
               <!-- /.card-body -->
@@ -139,7 +139,7 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-  
+
 @endsection
 
 @includeIf('Kategori.kategoriCreate')

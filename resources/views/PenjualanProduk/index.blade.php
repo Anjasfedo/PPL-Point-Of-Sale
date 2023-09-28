@@ -74,7 +74,7 @@
                 <!-- Table row -->
                 <div class="row">
                   <div class="col-12 table-responsive">
-                    <table class="table table-stiped table-bordered table-penjualan">
+                    <table id="tabel-data" class="table table-stiped table-bordered table-penjualan">
                       <thead>
                           <th width="5%">No</th>
                           <th>Nama</th>
