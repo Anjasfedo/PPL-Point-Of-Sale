@@ -59,6 +59,7 @@ class PenjualanProdukController extends Controller
         PenjualanProduk::create([
             'id_penjualan' => $request->id_penjualan,
             'id_produk' => $request->id_produk,
+            'id_user' => auth()->id(),
             'jumlah' => $request->jumlah,
             'total_harga' => $totalharga,
         ]);
@@ -164,7 +165,7 @@ class PenjualanProdukController extends Controller
         // Simpan perubahan
         $penjualan->save();
 
-        return back();     
+        return back();
     }
 
     /**
@@ -177,29 +178,29 @@ class PenjualanProdukController extends Controller
 
         // Temukan objek Penjualan berdasarkan id_penjualan pada PenjualanProduk
         $penjualan = Penjualan::find($penjualanProduk->id_penjualan);
-    
+
         // Mengurangkan total_item dengan jumlah yang dihapus
         $penjualan->total_item -= $penjualanProduk->jumlah;
-    
+
         // Mengurangkan total_penjualan dengan total_harga dari PenjualanProduk yang dihapus
         $penjualan->total_penjualan -= $penjualanProduk->total_harga;
-    
+
         // Jika total_item menjadi 0, Anda dapat mengosongkan total_penjualan
         if ($penjualan->total_item === 0) {
             $penjualan->total_penjualan = 0;
         }
-    
+
         // Simpan perubahan pada objek penjualan
         $penjualan->save();
-    
+
         // Mengembalikan jumlah produk yang dihapus ke stok
         $produk = Produk::find($penjualanProduk->id_produk);
         $produk->stok += $penjualanProduk->jumlah;
         $produk->save();
-    
+
         // Hapus objek PenjualanProduk
         $penjualanProduk->delete();
-    
+
         return back();
     }
 }

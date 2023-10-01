@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <!-- Main content -->
-    
+
     <!--  -->
     <section class="content">
         <div class="container-fluid">
@@ -14,8 +14,7 @@
                 <h5><i class="fas fa-info"></i> Note:</h5>
                 This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
               </div> -->
-  
-  
+
               <!-- Main content -->
               <div class="invoice p-3 mb-3">
                 <!-- title row -->
@@ -80,21 +79,20 @@
                           <label for="inputHargaTotal">Harga Total</label>
                           <input type="number" class="form-control" id="inputHargaTotal" value="1" name="total_harga" step="any">
                       </div>
-                      
-                      </div>
-                      
 
-                      <input name="id_pembelian" type="text" value="{{ $id_pembelian }}" readonly>
-                      
+                      </div>
+
+                      <input name="id_pembelian" type="text" value="{{ $id_pembelian }}" readonly hidden>
+
                       <button type="submit" class="btn btn-success float-right">
                         <i class="far fa-credit-card"></i>Tambah
                       </button>
                     </form>
                   </div>
-                    
+
                 </div>
                 <!-- /.row -->
-                
+
   <!--  -->
                 <!-- Table row -->
                 <div class="row">
@@ -134,7 +132,7 @@
                                       data-toggle="modal"
                                       data-target="#modal-pembelian-detail-hapus{{ $item->id_pembelian_produk }}"
                                       class="btn btn-danger">
-                                      <i class="fas fa-trash-alt">Edit</i>
+                                      <i class="fas fa-trash-alt">Hapus</i>
                                   </a>
                               </td>
                           </tr>
@@ -161,7 +159,7 @@
                   </div>
                   <!-- /.col -->
                   <div class="col-5">
-                    
+
                       <div class="table-responsive">
                           <table class="table">
                             <tr>
@@ -170,7 +168,7 @@
                               </th>
                               <td>
                                 <input type="text" id="diterima" name="diterima" class="form-control form-control-lg" value="">
-                        
+
                               </td>
                             </tr>
                               <tr>
@@ -192,15 +190,15 @@
                   </div>
                   <!-- /.col -->
               </div>
-              
+
                 <!-- /.row -->
-  
+
                 <!-- this row will not appear when printing -->
                 <div class="row no-print">
                   <div class="col-12">
-                    
+
                     <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-                      <i class="fas fa-download"></i> Generate PDF
+                      <i class="fas fa-download"></i> Lakukan Pembelian
                     </button>
                   </div>
                 </div>
@@ -214,35 +212,34 @@
         </div><!-- /.container-fluid -->
       </section>
       <!-- /.content -->
-  
-@endsection
 
+@endsection
 
 @includeIf('PembelianProduk.produk')
 @includeIf('PembelianProduk.supplier')
 @includeIf('PembelianProduk.update')
 @includeIf('PembelianProduk.destroy')
 
-@push('script') 
+@push('script')
                         <script>
                           // Mengambil elemen-elemen yang diperlukan
                           var diterimaInput = document.getElementById('diterima');
                           var kembalianInput = document.getElementById('kembalian');
                           var totalpembelianInput = document.getElementById('total_pembelian');
-                      
+
                           // Menambahkan event listener untuk menghitung kembalian saat diterima diubah
                           diterimaInput.addEventListener('input', function () {
                               var diterima = parseFloat(diterimaInput.value); // Mengonversi ke angka, default 0 jika tidak valid
                               var totalpembelian = parseFloat(totalpembelianInput.value) || 0; // Mengambil total_pembelian
-                      
+
                               // Menghitung kembalian
                               var kembalian = diterima - totalpembelian;
-                      
+
                               // Menyimpan hasil kembalian ke input kembalian
                               if (kembalian < 0) {
                                   kembalian = 0; // Setel kembalian menjadi 0 jika negatif
                               }
-                      
+
                               kembalianInput.value = kembalian; // Mengonversi hasil ke dua angka desimal
                           });
                       </script>

@@ -1,8 +1,8 @@
-@extends('Layout.main') 
+@extends('Layout.main')
 
-@section('title') 
+@section('title')
 
-penjualan 
+penjualan
 
 @endsection
 
@@ -19,12 +19,14 @@ penjualan
                         <form
                             method="POST"
                             action="{{ route('penjualan.store', [$item->id_penjualan]) }}" method="POST">
-                            @endforeach 
-                            @csrf 
+                        @endforeach
+                            @csrf
                             @method('POST')
                             <!-- Field-form di sini -->
                             <button type="submit" class="btn btn-primary">Tambah penjualan</button>
                         </form>
+
+
                     </div>
 
                     <!-- /.card-header -->
@@ -40,7 +42,7 @@ penjualan
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($dataPenjualan as $item)
+                                @foreach ($dataPenjualanTabel as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->id_penjualan }}</td>

@@ -7,18 +7,18 @@
     {{-- {{ config('app.name') }} --}}
 
       | @yield('title')
-      
+
   </title>
 
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="{{ asset('AdminLte/plugins/fontawesome-free/css/all.min.css') }}">
-  
+
   <!-- IonIcons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  
+
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('AdminLte/dist/css/adminlte.min.css') }}">
 
@@ -50,7 +50,7 @@
 -->
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
-  
+
   @include('Layout.navbar')
 
   @include('Layout.sidebar')
@@ -60,7 +60,7 @@
     @include('Layout.header')
 
     @yield('content')
-  </div>  
+  </div>
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
@@ -119,12 +119,12 @@
             {
                 extend: 'print',
                 exportOptions: {
-                    columns: ':visible'
+                    columns: ':not(.no-export)'
                 },
                 customize: function ( win ) {
                     $(win.document.body)
                         .css( 'font-size', '10pt' )
- 
+
                     $(win.document.body).find( 'table' )
                         .addClass( 'compact' )
                         .css( 'font-size', 'inherit' );
@@ -134,16 +134,16 @@
             {
                 extend: 'excel',
                 exportOptions: {
-                    columns: ':visible'
+                    columns: ':not(.no-export)'
                 }
             },
             {
                 extend: "copy",
                 exportOptions: {
-                    columns: ':visible'
+                    columns: ':not(.no-export)'
                 }
             },
-            
+
         ],
         lengthMenu: [
             [ 10, 25, 50, -1 ],
@@ -153,7 +153,7 @@
                'targets': -1, // column index (start from 0)
                'orderable': false, // set orderable false for selected columns
          }],
-    }).buttons().container().appendTo('#tabel-produk_wrapper .col-md-6:eq(0)');
+    }).buttons().container().appendTo('#tabel-data_wrapper .col-md-6:eq(0)');
 
   });
 </script>
@@ -176,6 +176,15 @@
     });
   });
 </script>
+
+
+@if (Session::has('failed'))
+<script>
+
+  toastr.error("{{ Session::get('failed') }}","gagal brow!")
+</script>
+@endif
+
 
 @if (Session::has('message'))
 <script>
@@ -210,30 +219,33 @@
 
 
 <script>
-  
+
   $(document).ready(function() {
+
+    $('#tabel-data thead th:last').addClass('no-export');
+
     // Inisialisasi select2 di dalam <select>
     $('.select2bs4').select2({
         theme: 'bootstrap4',
     });
-  
+
     // Event click ketika tombol "Pilih produk" di dalam modal ditekan
     $(".select-product").click(function() {
         var id = $(this).data("id");
-  
+
         // Pilih opsi dengan nilai yang sesuai dengan id
         $('.produk-pilihan').val(id).trigger('change');
-  
+
         // Tutup modal setelah memilih produk
         $('#modal-produk-data').modal('hide');
     });
 
     $(".select-supplier").click(function() {
         var id = $(this).data("id");
-  
+
         // Pilih opsi dengan nilai yang sesuai dengan id
         $('.supplier-pilihan').val(id).trigger('change');
-  
+
         // Tutup modal setelah memilih produk
         $('#modal-supplier-data').modal('hide');
     });
