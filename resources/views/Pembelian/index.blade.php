@@ -1,8 +1,8 @@
-@extends('Layout.main') 
+@extends('Layout.main')
 
-@section('title') 
+@section('title')
 
-pembelian 
+pembelian
 
 @endsection
 
@@ -19,8 +19,8 @@ pembelian
                         <form
                             method="POST"
                             action="{{ route('pembelian.store', [$item->id_pembelian]) }}" method="POST">
-                            @endforeach 
-                            @csrf 
+                            @endforeach
+                            @csrf
                             @method('POST')
                             <!-- Field-form di sini -->
                             <button type="submit" class="btn btn-primary">Tambah pembelian</button>
@@ -40,7 +40,7 @@ pembelian
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($dataPembelian as $item)
+                                @foreach ($dataPembelianTabel as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $item->id_pembelian }}</td>

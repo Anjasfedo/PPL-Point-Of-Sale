@@ -21,9 +21,16 @@ class PembelianController extends Controller
         $dataProduk = Produk::all();
         $datasupplier = Supplier::all();
         $dataPembelian = Pembelian::get();
+        $dataPembelianTabel = Pembelian::where('total_item', '>', 0)
+        ->where('total_pembelian', '>', 0)
+        ->where('diterima', '>', 0)
+        ->where('kembalian', '>', 0)
+        ->get();
+
+
         $dataPembelianProduk = PembelianProduk::with('produk')->latest()->get();
 
-        return view('Pembelian.index', compact('dataProduk', 'dataPembelian', 'dataPembelianProduk'));
+        return view('Pembelian.index', compact('dataProduk', 'dataPembelian', 'dataPembelianTabel', 'dataPembelianProduk'));
     }
 
     /**

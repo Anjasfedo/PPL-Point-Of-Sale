@@ -83,9 +83,6 @@
 </div>
 <!-- /.register-box -->
 
-
-
-
 <!-- jQuery -->
 <script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>
 <!-- Bootstrap 4 -->
@@ -95,9 +92,6 @@
 
 
 <script src="{{ asset('AdminLte/plugins/toastr/toastr.min.js') }}"></script>
-
-
-<
 
 @if (Session::has('success'))
 <script>

@@ -17,7 +17,6 @@
                 This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
               </div> -->
 
-
               <!-- Main content -->
               <div class="invoice p-3 mb-3">
                 <!-- title row -->
@@ -41,7 +40,7 @@
                         <div class="form-group col-md-6">
                           <label for="inputEmail4">Email</label>
                           <div class="input-group">
-                            <select name="id_produk" class="form-control select2bs4"">
+                            <select name="id_produk" class="form-control produk-pilihan select2bs4"">
                               <option value="">-- choose product --</option>
                               @foreach ($dataProduk as $item)
                               <option value="{{ $item->id_produk }}">{{ $item->nama_produk }}</option>
@@ -58,8 +57,7 @@
                         </div>
                       </div>
 
-                      <input name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly>
-                      <input name="id_user" type="text" value="{{ $dataPenjualan->id_user }}" readonly>
+                      <input name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly hidden>
 
                       <button type="submit" class="btn btn-success float-right">
                         <i class="far fa-credit-card"></i>Tambah
@@ -74,7 +72,7 @@
                 <!-- Table row -->
                 <div class="row">
                   <div class="col-12 table-responsive">
-                    <table id="tabel-data" class="table table-stiped table-bordered table-penjualan">
+                    <table class="table table-stiped table-bordered table-penjualan">
                       <thead>
                           <th width="5%">No</th>
                           <th>Nama</th>
@@ -175,7 +173,7 @@
                   <div class="col-12">
 
                     <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-                      <i class="fas fa-download"></i> Simpan
+                      <i class="fas fa-download"></i> Lakukan Penjualan
                     </button>
                   </div>
                 </div>

@@ -19,9 +19,16 @@ class PenjualanController extends Controller
     {
         $dataProduk = Produk::all();
         $dataPenjualan = Penjualan::get();
-        $dataPenjualanProduk = PenjualanProduk::with('produk')->latest()->get();
+        $dataPenjualanTabel = Penjualan::where('total_item', '>', 0)
+        ->where('total_penjualan', '>', 0)
+        ->where('diterima', '>', 0)
+        ->where('kembalian', '>', 0)
+        ->get();
 
-        return view('Penjualan.index', compact('dataProduk', 'dataPenjualan', 'dataPenjualanProduk'));
+        $dataPenjualanProduk = PenjualanProduk::with('produk')->latest()->get();
+        // $dataPenjualanProduk = PenjualanProduk::with('produk')->latest()->get();
+
+        return view('Penjualan.index', compact('dataProduk', 'dataPenjualan' , 'dataPenjualanTabel', 'dataPenjualanProduk'));
     }
 
     /**
@@ -43,7 +50,6 @@ class PenjualanController extends Controller
         $penjualan->total_penjualan = 0;
         $penjualan->diterima = 0;
         $penjualan->kembalian = 0;
-        $penjualan->id_user = auth()->id();
         $penjualan->save();
 
         // Simpan id_penjualan ke dalam session

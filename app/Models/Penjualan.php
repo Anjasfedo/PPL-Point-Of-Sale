@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 class Penjualan extends Model
 {
     use HasFactory;
@@ -18,7 +20,6 @@ class Penjualan extends Model
         'total_penjualan',
         'diterima',
         'kembalian',
-        'id_user',
     ];
 
     public function produk()

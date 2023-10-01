@@ -15,7 +15,6 @@
                 This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
               </div> -->
 
-
               <!-- Main content -->
               <div class="invoice p-3 mb-3">
                 <!-- title row -->
@@ -83,8 +82,7 @@
 
                       </div>
 
-
-                      <input name="id_pembelian" type="text" value="{{ $id_pembelian }}" readonly>
+                      <input name="id_pembelian" type="text" value="{{ $id_pembelian }}" readonly hidden>
 
                       <button type="submit" class="btn btn-success float-right">
                         <i class="far fa-credit-card"></i>Tambah
@@ -99,7 +97,7 @@
                 <!-- Table row -->
                 <div class="row">
                   <div class="col-12 table-responsive">
-                    <table id="tabel-data" class="table table-stiped table-bordered table-pembelian">
+                    <table class="table table-stiped table-bordered table-pembelian">
                       <thead>
                           <th width="5%">No</th>
                           <th>Nama</th>
@@ -134,7 +132,7 @@
                                       data-toggle="modal"
                                       data-target="#modal-pembelian-detail-hapus{{ $item->id_pembelian_produk }}"
                                       class="btn btn-danger">
-                                      <i class="fas fa-trash-alt">Edit</i>
+                                      <i class="fas fa-trash-alt">Hapus</i>
                                   </a>
                               </td>
                           </tr>
@@ -200,7 +198,7 @@
                   <div class="col-12">
 
                     <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-                      <i class="fas fa-download"></i> Generate PDF
+                      <i class="fas fa-download"></i> Lakukan Pembelian
                     </button>
                   </div>
                 </div>
@@ -216,7 +214,6 @@
       <!-- /.content -->
 
 @endsection
-
 
 @includeIf('PembelianProduk.produk')
 @includeIf('PembelianProduk.supplier')

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->increments('id_penjualan_produk');
             $table->unsignedInteger('id_penjualan');
             $table->unsignedInteger('id_produk');
+            $table->unsignedInteger('id_user');
             $table->integer('jumlah');
             $table->integer('total_harga');
             $table->timestamps();

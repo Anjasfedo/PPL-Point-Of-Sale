@@ -9,6 +9,8 @@ use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 use App\Models\User;
+use App\Models\Penjualan;
+use App\Models\Pembelian;
 
 class PermissionSeeder extends Seeder
 {
@@ -54,6 +56,22 @@ class PermissionSeeder extends Seeder
 
         User::find(1)->assignRole('admin');
         User::find(2)->assignRole('kasir');
+
+        $penjualan = new Penjualan;
+        $penjualan->total_item = 0;
+        $penjualan->total_penjualan = 0;
+        $penjualan->diterima = 0;
+        $penjualan->kembalian = 0;
+        $penjualan->save();
+
+        $pembelian = new Pembelian;
+        $pembelian->total_item = 0;
+        $pembelian->total_pembelian = 0;
+        $pembelian->diterima = 0;
+        $pembelian->kembalian = 0;
+
+        $pembelian->save();
+
 
     }
 }
