@@ -1,10 +1,13 @@
 <?php
 
-use App\Http\Controllers\SupplierController;
+
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DashboardController;
+
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\SupplierController;
+
 use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\PenjualanController;
 use App\Http\Controllers\PenjualanProdukController;
@@ -13,6 +16,8 @@ use App\Http\Controllers\PembelianController;
 use App\Http\Controllers\PembelianProdukController;
 
 use App\Http\Controllers\LoginController;
+
+use App\Http\Controllers\LaporanController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +42,11 @@ Route::get('logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/register', [LoginController::class, 'register'])->name('register');
 Route::post('registerproses', [LoginController::class, 'register_proses'])->name('registerproses');
 
+Route::resource('/laporan', LaporanController::class)
+->except('show');
+Route::get('laporan/detail/{tanggal}', [LaporanController::class, 'show'])->name('detail');
+
+
 Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'role:admin'], function () {
@@ -59,6 +69,8 @@ Route::group(['middleware' => 'auth'], function () {
                 ->except('edit', 'create', 'show', 'store', 'index');
         Route::get('pembelianproduk/index/{pembelianproduk}', [PembelianProdukController::class, 'index'])->name('pembelianproduk.index');
         Route::post('pembelianproduk/{pembelianproduk}', [PembelianProdukController::class, 'store'])->name('pembelianproduk.store');
+
+
     });
 
     Route::group(['middleware' => 'role:admin|kasir'], function () {
