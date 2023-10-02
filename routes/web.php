@@ -34,23 +34,11 @@ Route::get('/', function () {
     return view('auth.login');
 });
 
-
-Route::get('login', [LoginController::class, 'index'])->name('login');
-Route::post('loginproses', [LoginController::class, 'login_proses'])->name('loginproses');
-Route::get('logout', [LoginController::class, 'logout'])->name('logout');
-
-Route::get('/register', [LoginController::class, 'register'])->name('register');
-Route::post('registerproses', [LoginController::class, 'register_proses'])->name('registerproses');
-
-Route::resource('/laporan', LaporanController::class)
-->except('show');
-Route::get('laporan/detail/{tanggal}', [LaporanController::class, 'show'])->name('detail');
-
+Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'role:admin'], function () {
-
         Route::resource('/kategori', KategoriController::class)
                 ->except('edit', 'create', 'show');
 
@@ -59,7 +47,6 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('/supplier', SupplierController::class)
                 ->except('edit', 'create', 'show');
-
 
         Route::resource('/pembelian', PembelianController::class)
                 ->except('edit', 'show', 'destroy', 'create', 'store');
@@ -70,15 +57,13 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('pembelianproduk/index/{pembelianproduk}', [PembelianProdukController::class, 'index'])->name('pembelianproduk.index');
         Route::post('pembelianproduk/{pembelianproduk}', [PembelianProdukController::class, 'store'])->name('pembelianproduk.store');
 
-
+        Route::resource('/laporan', LaporanController::class)
+        ->except('show');
+        Route::get('laporan/detail/{tanggal}', [LaporanController::class, 'show'])->name('detail');
     });
 
     Route::group(['middleware' => 'role:admin|kasir'], function () {
-
-        Route::resource('/', DashboardController::class)
-                ->except('edit', 'create', 'show', 'store', 'update', 'destroy', 'index');
-        Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
         Route::resource('/penjualan', PenjualanController::class)
                 ->except('edit', 'show', 'destroy', 'create', 'store');
