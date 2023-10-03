@@ -19,6 +19,8 @@ use App\Http\Controllers\LoginController;
 
 use App\Http\Controllers\LaporanController;
 
+use App\Http\Controllers\HomeController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,12 +43,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['middleware' => 'role:admin'], function () {
         Route::resource('/kategori', KategoriController::class)
                 ->except('edit', 'create', 'show');
+        Route::post('kategori-import', [KategoriController::class, 'kategoriImport'])->name('kategori-import');
+        // Route::get('kategori-export', [KategoriController::class, 'kategoriExport'])->name('kategori-export');
 
         Route::resource('/produk', ProdukController::class)
                 ->except('edit', 'create', 'show');
+        Route::post('produk-import', [ProdukController::class, 'produkImport'])->name('produk-import');
 
         Route::resource('/supplier', SupplierController::class)
                 ->except('edit', 'create', 'show');
+        Route::post('supplier-import', [SupplierController::class, 'supplierImport'])->name('supplier-import');
 
         Route::resource('/pembelian', PembelianController::class)
                 ->except('edit', 'show', 'destroy', 'create', 'store');
@@ -63,7 +69,7 @@ Route::group(['middleware' => 'auth'], function () {
     });
 
     Route::group(['middleware' => 'role:admin|kasir'], function () {
-        Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+        Route::get('/home', [HomeController::class, 'index'])->name('home');
 
         Route::resource('/penjualan', PenjualanController::class)
                 ->except('edit', 'show', 'destroy', 'create', 'store');

@@ -4,7 +4,7 @@
 @endsection
 @section('content')
     <!-- Main content -->
-    
+
     <section class="content">
       <div class="container-fluid">
         <div class="row">
@@ -12,6 +12,8 @@
             <div class="card">
               <div class="card-header">
                 <a data-toggle="modal" data-target="#modal-tambah-supplier" class="btn btn-primary">Tambah supplier</a>
+                <a data-toggle="modal" data-target="#modal-import-supplier" class="btn btn-primary">Import supplier</a>
+                @includeIf('supplier.importsupplier')
               </div>
               <!-- /.card-header -->
               <div class="card-body">
@@ -89,7 +91,7 @@
                                     <!--/.col (left) -->
                                     <!-- right column -->
                                     <div class="col-md-6">
-                          
+
                                     </div>
                                     <!--/.col (right) -->
                                   </div>
@@ -131,10 +133,10 @@
                           <!-- /.modal-dialog -->
                         </div>
                         <!-- /.modal -->
-                      
-                    @endforeach 
+
+                    @endforeach
                   </tbody>
-                  
+
                 </table>
               </div>
               <!-- /.card-body -->
@@ -148,7 +150,7 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-  
+
 @endsection
 
 @includeIf('supplier.supplierCreate')

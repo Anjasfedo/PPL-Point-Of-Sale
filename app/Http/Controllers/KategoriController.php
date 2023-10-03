@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 use App\Models\Kategori;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\KategoriExport;
+use App\Imports\KategoriImport;
+
 use Illuminate\Support\Facades\Validator;
 
 class KategoriController extends Controller
@@ -35,9 +39,9 @@ class KategoriController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'nama_kategori' => 'required|min:5|unique:kategoris',
-            
+
         ]);
-        
+
         if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
         $dataKategori['nama_kategori'] = $request->nama_kategori;
@@ -70,9 +74,9 @@ class KategoriController extends Controller
 
         $validator = Validator::make($request->all(),[
             'nama_kategori' => 'required|min:5|unique:kategoris',
-            
+
         ]);
-        
+
         if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
         $dataKategori['nama_kategori'] = $request->nama_kategori;
@@ -94,4 +98,22 @@ class KategoriController extends Controller
 
         return back();
     }
+
+    public function kategoriImport(Request $request)
+    {
+        $this->validate($request, [
+            'kategori' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new KategoriImport, $request->file('kategori')); // Menggunakan kelas KategoriImport yang diperbarui
+
+        return redirect()->back()->with('success', 'Data berhasil diimpor.');
+    }
+
+    // public function kategoriExport()
+    // {
+    //     $dataKategori = Kategori::select('nama_kategori')->get(); // Hanya mengambil kolom 'name'
+
+    //     return Excel::download(new KategoriExport($dataKategori), 'kategori.xlsx');
+    // }
 }

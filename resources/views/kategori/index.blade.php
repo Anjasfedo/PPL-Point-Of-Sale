@@ -12,6 +12,8 @@
             <div class="card">
               <div class="card-header">
                 <a data-toggle="modal" data-target="#modal-tambah-kategori" class="btn btn-primary">Tambah Kategori</a>
+                <a data-toggle="modal" data-target="#modal-import-kategori" class="btn btn-primary">Import Kategori</a>
+                @includeIf('Kategori.importKategori')
               </div>
               <!-- /.card-header -->
               <div class="card-body">

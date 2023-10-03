@@ -31,7 +31,6 @@ Laporan
                                     <th>Total Pembelian Stok Barang</th>
                                     <th>Pengeluaran</th>
                                     <th>Pendapatan</th>
-                                    <th>Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -52,13 +51,6 @@ Laporan
                                     <td>{{ $data['total_pembelian_stok_barang'] }} Barang</td>
                                     <td>Rp. {{ $data['pengeluaran'] }}</td>
                                     <td>Rp. {{ $data['pendapatan'] }}</td>
-                                    <td>
-                                        <a data-toggle="modal" data-target="#modal" class="btn btn-primary">
-                                            <i class="fas fa-pen"></i> Detail
-                                        </a>
-                                    </td>
-                                        {{-- @includeIf('Laporan.detail') --}}
-                                    </td>
                                 </tr>
                                 @php
                                 $nomorUrut++;
@@ -82,10 +74,6 @@ Laporan
                                 </tr>
                             </tfoot>
                         </table>
-
-
-
-
                     </div>
                     <!-- /.card-body -->
                 </div>
