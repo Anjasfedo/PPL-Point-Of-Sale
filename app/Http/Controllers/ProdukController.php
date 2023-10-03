@@ -9,6 +9,9 @@ use App\Models\Kategori;
 
 use Illuminate\Support\Facades\Validator;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\ProdukImport;
+
 class ProdukController extends Controller
 {
     /**
@@ -43,12 +46,12 @@ class ProdukController extends Controller
             'stok' => 'required',
             'id_kategori' => 'required',
         ]);
-        
+
         if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
         // Produk::latest()->first() ?? new Produk();
         Produk::create($request->all());
-        
+
         return back();
     }
 
@@ -78,9 +81,9 @@ class ProdukController extends Controller
             'harga_jual' => 'required|min:1',
             'stok' => 'required',
         ]);
-        
+
         if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
-        
+
 
         $dataProduk = Produk::find($id);
         $dataProduk->update($request->all());
@@ -97,5 +100,16 @@ class ProdukController extends Controller
         $dataProduk->delete();
 
         return back();
+    }
+
+    public function produkImport(Request $request)
+    {
+        $this->validate($request, [
+            'produk' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new ProdukImport, $request->file('produk')); // Menggunakan kelas produkImport yang diperbarui
+
+        return redirect()->back()->with('success', 'Data berhasil diimpor.');
     }
 }

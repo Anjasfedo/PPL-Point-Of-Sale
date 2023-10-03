@@ -4,18 +4,19 @@
 @endsection
 @section('content')
     <!-- Main content -->
-    
+
     <section class="content">
       <div class="container-fluid">
         <div class="row">
           <div class="col-12">
-            
+
             <div class="card">
               <div class="card-header">
                 <a data-toggle="modal" data-target="#modal-tambah-produk" class="btn btn-primary">Tambah produk</a>
-                
+                <a data-toggle="modal" data-target="#modal-import-produk" class="btn btn-primary">Import produk</a>
+                @includeIf('produk.importproduk')
               </div>
-              
+
               <!-- /.card-header -->
               <div class="card-body">
                 <table id="tabel-data" class="table table-bordered table-hover">
@@ -56,7 +57,7 @@
                                     <span aria-hidden="true">&times;</span>
                                   </button>
                                 </div>
-                        
+
                                 <section class="content">
                                   <div class="container-fluid">
                                     <div class="row">
@@ -81,7 +82,7 @@
                       @enderror
                                                 </div>
                                           </div>
-                                          
+
                                           <div class="card-body">
                                             <div class="form-group">
                                               <label>Minimal</label>
@@ -91,7 +92,7 @@
                                             @endforeach
                                               </select>
                                             </div>
-                                        </div> 
+                                        </div>
 
                                         <div class="card-body">
                                           <div class="form-group">
@@ -123,7 +124,7 @@
                                       <!--/.col (left) -->
                                       <!-- right column -->
                                       <div class="col-md-6">
-                            
+
                                       </div>
                                       <!--/.col (right) -->
                                     </div>
@@ -137,8 +138,8 @@
                             <!-- /.modal-dialog -->
                           </div>
                           <!-- /.modal -->
-  
-  
+
+
                           {{-- modal delete --}}
                           <div class="modal fade" id="modal-hapus-produk{{ $item->id_produk }}">
                             <div class="modal-dialog">
@@ -166,10 +167,10 @@
                             <!-- /.modal-dialog -->
                           </div>
                           <!-- /.modal -->
-                        
-                      @endforeach 
+
+                      @endforeach
                   </tbody>
-                  
+
                 </table>
               </div>
               <!-- /.card-body -->
@@ -183,7 +184,7 @@
       <!-- /.container-fluid -->
     </section>
     <!-- /.content -->
-  
+
 @endsection
 
 @includeIf('produk.produkCreate')

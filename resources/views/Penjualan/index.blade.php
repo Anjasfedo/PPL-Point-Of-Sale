@@ -25,10 +25,8 @@ penjualan
                             <!-- Field-form di sini -->
                             <button type="submit" class="btn btn-primary">Tambah penjualan</button>
                         </form>
-
-
                     </div>
-
+                    @hasrole('admin')
                     <!-- /.card-header -->
                     <div class="card-body">
                         <table id="tabel-data" class="table table-bordered table-hover">
@@ -59,6 +57,7 @@ penjualan
                         </table>
                     </div>
                     <!-- /.card-body -->
+                    @endhasrole
                 </div>
                 <!-- /.card -->
             </div>

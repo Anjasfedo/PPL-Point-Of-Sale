@@ -8,6 +8,9 @@ use App\Models\Supplier;
 
 use Illuminate\Support\Facades\Validator;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\SupplierImport;
+
 class SupplierController extends Controller
 {
     /**
@@ -37,11 +40,11 @@ class SupplierController extends Controller
             'nama_supplier' => 'required|min:5|unique:suppliers',
             'telepon' => 'required|min:1',
         ]);
-        
+
         if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
         Supplier::create($request->all());
-        
+
         return back();
     }
 
@@ -70,13 +73,13 @@ class SupplierController extends Controller
             'nama_supplier' => 'required|min:5|unique:suppliers',
             'telepon' => 'required|min:1',
         ]);
-        
+
         if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
 
         $dataSupplier = Supplier::find($id);
         $dataSupplier->update($request->all());
-        
+
         return back();
     }
 
@@ -89,5 +92,16 @@ class SupplierController extends Controller
         $datasupplier->delete();
 
         return back();
+    }
+
+    public function supplierImport(Request $request)
+    {
+        $this->validate($request, [
+            'supplier' => 'required|mimes:xlsx,xls,csv',
+        ]);
+
+        Excel::import(new SupplierImport, $request->file('supplier')); // Menggunakan kelas supplierImport yang diperbarui
+
+        return redirect()->back()->with('success', 'Data berhasil diimpor.');
     }
 }
