@@ -3,60 +3,49 @@
 @section('content')
     <!-- Main content -->
     <div class="content">
+        @hasrole('admin')
         <div class="container-fluid">
 
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-12">
-                  <div class="info-box shadow-none">
-                    <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+                    <div class="info-box shadow-lg">
+                      <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
 
-                    <div class="info-box-content">
-                      <span class="info-box-text">Shadows</span>
-                      <span class="info-box-number">None</span>
+                      <div class="info-box-content">
+                        <span class="info-box-text">Kategori</span>
+                        <span class="info-box-number">2</span>
+                      </div>
+                      <!-- /.info-box-content -->
                     </div>
-                    <!-- /.info-box-content -->
+                    <!-- /.info-box -->
                   </div>
-                  <!-- /.info-box -->
-                </div>
                 <!-- /.col -->
                 <div class="col-md-3 col-sm-6 col-12">
-                  <div class="info-box shadow-sm">
-                    <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
+                    <div class="info-box shadow-lg">
+                      <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
 
-                    <div class="info-box-content">
-                      <span class="info-box-text">Shadows</span>
-                      <span class="info-box-number">Small</span>
+                      <div class="info-box-content">
+                        <span class="info-box-text">Produk</span>
+                        <span class="info-box-number">10</span>
+                      </div>
+                      <!-- /.info-box-content -->
                     </div>
-                    <!-- /.info-box-content -->
+                    <!-- /.info-box -->
                   </div>
-                  <!-- /.info-box -->
-                </div>
                 <!-- /.col -->
                 <div class="col-md-3 col-sm-6 col-12">
-                  <div class="info-box shadow">
-                    <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+                    <div class="info-box shadow-lg">
+                      <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
 
-                    <div class="info-box-content">
-                      <span class="info-box-text">Shadows</span>
-                      <span class="info-box-number">Regular</span>
+                      <div class="info-box-content">
+                        <span class="info-box-text">Supplier</span>
+                        <span class="info-box-number">5</span>
+                      </div>
+                      <!-- /.info-box-content -->
                     </div>
-                    <!-- /.info-box-content -->
+                    <!-- /.info-box -->
                   </div>
-                  <!-- /.info-box -->
-                </div>
                 <!-- /.col -->
-                <div class="col-md-3 col-sm-6 col-12">
-                  <div class="info-box shadow-lg">
-                    <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
-
-                    <div class="info-box-content">
-                      <span class="info-box-text">Shadows</span>
-                      <span class="info-box-number">Large</span>
-                    </div>
-                    <!-- /.info-box-content -->
-                  </div>
-                  <!-- /.info-box -->
-                </div>
                 <!-- /.col -->
               </div>
               <!-- /.row -->
@@ -129,7 +118,6 @@
               <div class="card card-danger">
                 <div class="card-header">
                   <h3 class="card-title">Chart</h3>
-
                   <div class="card-tools">
                     <button type="button" class="btn btn-tool" data-card-widget="collapse">
                       <i class="fas fa-minus"></i>
@@ -148,6 +136,14 @@
           <!-- /.row -->
         </div>
         <!-- /.container-fluid -->
+        @endhasrole
+
+        @hasrole('kasir')
+            <a href="{{ route('penjualan.index') }}" class="nav-link">
+              <i class="far nav-icon"></i>
+              <p>Penjualan Barang</p>
+            </a>
+        @endhasrole
       </div>
       <!-- /.content -->
 

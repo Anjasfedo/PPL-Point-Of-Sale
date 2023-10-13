@@ -1,6 +1,11 @@
 @extends('Layout.main')
 @section('title')
-    produk
+    Barang
+@endsection
+
+@section('breadcrumb')
+    @parent
+    <li class="breadcrumb-item active">Barang</li>
 @endsection
 @section('content')
     <!-- Main content -->
@@ -12,8 +17,8 @@
 
             <div class="card">
               <div class="card-header">
-                <a data-toggle="modal" data-target="#modal-tambah-produk" class="btn btn-primary">Tambah produk</a>
-                <a data-toggle="modal" data-target="#modal-import-produk" class="btn btn-primary">Import produk</a>
+                <a data-toggle="modal" data-target="#modal-tambah-produk" class="btn btn-primary">Tambah Barang</a>
+                <a data-toggle="modal" data-target="#modal-import-produk" class="btn btn-primary">Import Barang</a>
                 @includeIf('produk.importproduk')
               </div>
 
@@ -23,7 +28,7 @@
                   <thead>
                   <tr>
                     <th>No</th>
-                    <th>Nama Produk</th>
+                    <th>Nama Barang</th>
                     <th>Kategori</th>
                     <th>Harga Jual</th>
                     <th>Stok</th>

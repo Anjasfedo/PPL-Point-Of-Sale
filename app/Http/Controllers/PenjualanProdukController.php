@@ -38,54 +38,56 @@ class PenjualanProdukController extends Controller
      */
     public function store(Request $request, string $id)
     {
-        // Menghitung harga produk berdasarkan id_produk
-        $produk = Produk::find($request->id_produk);
+        // // Menghitung harga produk berdasarkan id_produk
+        // $produk = Produk::find($request->id_produk);
 
-        if (!$produk) {
-            return back()->with('error', 'Produk tidak ditemukan');
-        }
+        // if (!$produk) {
+        //     return back()->with('error', 'Produk tidak ditemukan');
+        // }
 
-        $hargaProduk = $produk->harga_jual;
+        // $hargaProduk = $produk->harga_jual;
 
-        // Menghitung totalharga
-        $totalharga = $hargaProduk * $request->jumlah;
+        // // Menghitung totalharga
+        // $totalharga = $hargaProduk * $request->jumlah;
 
-        // Validasi jumlah produk tidak melebihi stok
-        if ($request->jumlah > $produk->stok) {
-            return back()->with('error', 'Jumlah produk melebihi stok yang tersedia');
-        }
+        // // Validasi jumlah produk tidak melebihi stok
+        // if ($request->jumlah > $produk->stok) {
+        //     return back()->with('error', 'Jumlah produk melebihi stok yang tersedia');
+        // }
 
-        // Menyimpan data ke dalam tabel penjualanproduk
-        PenjualanProduk::create([
-            'id_penjualan' => $request->id_penjualan,
-            'id_produk' => $request->id_produk,
-            'id_user' => auth()->id(),
-            'jumlah' => $request->jumlah,
-            'total_harga' => $totalharga,
-        ]);
+        // // Menyimpan data ke dalam tabel penjualanproduk
+        // PenjualanProduk::create([
+        //     'id_penjualan' => $request->id_penjualan,
+        //     'id_produk' => $request->id_produk,
+        //     'id_user' => auth()->id(),
+        //     'jumlah' => $request->jumlah,
+        //     'total_harga' => $totalharga,
+        // ]);
 
-        // Mengurangi stok produk
-        $produk->stok -= $request->jumlah;
-        $produk->save();
+        // // Mengurangi stok produk
+        // $produk->stok -= $request->jumlah;
+        // $produk->save();
 
-        // Menghitung ulang total item dan total harga untuk penjualan
-        $totalItem = PenjualanProduk::where('id_penjualan', $id)->sum('jumlah');
-        $totalPenjualan = PenjualanProduk::where('id_penjualan', $id)->sum('total_harga');
+        // // Menghitung ulang total item dan total harga untuk penjualan
+        // $totalItem = PenjualanProduk::where('id_penjualan', $id)->sum('jumlah');
+        // $totalPenjualan = PenjualanProduk::where('id_penjualan', $id)->sum('total_harga');
 
-        // Update data penjualan
-        $penjualan = Penjualan::find($id);
+        // // Update data penjualan
+        // $penjualan = Penjualan::find($id);
 
-        if (!$penjualan) {
-            return back()->with('error', 'Data penjualan tidak ditemukan');
-        }
+        // if (!$penjualan) {
+        //     return back()->with('error', 'Data penjualan tidak ditemukan');
+        // }
 
-        $penjualan->total_item = $totalItem;
-        $penjualan->total_penjualan = $totalPenjualan;
+        // $penjualan->total_item = $totalItem;
+        // $penjualan->total_penjualan = $totalPenjualan;
 
-        // Simpan perubahan
-        $penjualan->save();
+        // // Simpan perubahan
+        // $penjualan->save();
 
-        return back();
+        // return back();
+
+        dd($request->all());
     }
 
     /**
@@ -109,63 +111,63 @@ class PenjualanProdukController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $dataPenjualan = PenjualanProduk::find($id);
+        // $dataPenjualan = PenjualanProduk::find($id);
 
-        // Mendapatkan objek Produk berdasarkan id_produk dari permintaan
-        $produk = Produk::find($request->id_produk);
+        // // Mendapatkan objek Produk berdasarkan id_produk dari permintaan
+        // $produk = Produk::find($request->id_produk);
 
-        if (!$produk) {
-            return back()->with('error', 'Produk tidak ditemukan');
-        }
+        // if (!$produk) {
+        //     return back()->with('error', 'Produk tidak ditemukan');
+        // }
 
-        // Validasi jumlah tidak kurang dari stok
-        if ($request->jumlah < 0) {
-            return back()->with('error', 'Jumlah produk tidak valid.');
-        }
+        // // Validasi jumlah tidak kurang dari stok
+        // if ($request->jumlah < 0) {
+        //     return back()->with('error', 'Jumlah produk tidak valid.');
+        // }
 
-        // Validasi jumlah tidak melebihi stok
-        if ($request->jumlah > $produk->stok) {
-            return back()->with('error', 'Jumlah produk melebihi stok yang tersedia.');
-        }
+        // // Validasi jumlah tidak melebihi stok
+        // if ($request->jumlah > $produk->stok) {
+        //     return back()->with('error', 'Jumlah produk melebihi stok yang tersedia.');
+        // }
 
-        // Mengurangi stok produk yang sebelumnya ditambahkan
-        $produk->stok += $dataPenjualan->jumlah;
-        $produk->save();
+        // // Mengurangi stok produk yang sebelumnya ditambahkan
+        // $produk->stok += $dataPenjualan->jumlah;
+        // $produk->save();
 
-        // Update jumlah
-        $dataPenjualan->jumlah = $request->jumlah;
+        // // Update jumlah
+        // $dataPenjualan->jumlah = $request->jumlah;
 
-        // Mengakses harga_jual dari objek Produk
-        $harga_jual = $produk->harga_jual;
+        // // Mengakses harga_jual dari objek Produk
+        // $harga_jual = $produk->harga_jual;
 
-        // Menghitung ulang total_harga
-        $dataPenjualan->total_harga = $harga_jual * $request->jumlah;
+        // // Menghitung ulang total_harga
+        // $dataPenjualan->total_harga = $harga_jual * $request->jumlah;
 
-        // Simpan perubahan
-        $dataPenjualan->save();
+        // // Simpan perubahan
+        // $dataPenjualan->save();
 
-        // Mengurangi stok produk yang baru ditambahkan
-        $produk->stok -= $request->jumlah;
-        $produk->save();
+        // // Mengurangi stok produk yang baru ditambahkan
+        // $produk->stok -= $request->jumlah;
+        // $produk->save();
 
-        // Menghitung ulang total item dan total harga untuk penjualan
-        $totalItem = PenjualanProduk::where('id_penjualan', $dataPenjualan->id_penjualan)->sum('jumlah');
-        $totalPenjualan = PenjualanProduk::where('id_penjualan', $dataPenjualan->id_penjualan)->sum('total_harga');
+        // // Menghitung ulang total item dan total harga untuk penjualan
+        // $totalItem = PenjualanProduk::where('id_penjualan', $dataPenjualan->id_penjualan)->sum('jumlah');
+        // $totalPenjualan = PenjualanProduk::where('id_penjualan', $dataPenjualan->id_penjualan)->sum('total_harga');
 
-        // Update data penjualan
-        $penjualan = Penjualan::find($dataPenjualan->id_penjualan);
+        // // Update data penjualan
+        // $penjualan = Penjualan::find($dataPenjualan->id_penjualan);
 
-        if (!$penjualan) {
-            return back()->with('error', 'Data penjualan tidak ditemukan');
-        }
+        // if (!$penjualan) {
+        //     return back()->with('error', 'Data penjualan tidak ditemukan');
+        // }
 
-        $penjualan->total_item = $totalItem;
-        $penjualan->total_penjualan = $totalPenjualan;
+        // $penjualan->total_item = $totalItem;
+        // $penjualan->total_penjualan = $totalPenjualan;
 
-        // Simpan perubahan
-        $penjualan->save();
+        // // Simpan perubahan
+        // $penjualan->save();
 
-        return back();
+        // return back();
     }
 
     /**
@@ -173,34 +175,34 @@ class PenjualanProdukController extends Controller
      */
     public function destroy(string $id)
     {
-        // Temukan objek PenjualanProduk berdasarkan ID
-        $penjualanProduk = PenjualanProduk::findOrFail($id);
+        // // Temukan objek PenjualanProduk berdasarkan ID
+        // $penjualanProduk = PenjualanProduk::findOrFail($id);
 
-        // Temukan objek Penjualan berdasarkan id_penjualan pada PenjualanProduk
-        $penjualan = Penjualan::find($penjualanProduk->id_penjualan);
+        // // Temukan objek Penjualan berdasarkan id_penjualan pada PenjualanProduk
+        // $penjualan = Penjualan::find($penjualanProduk->id_penjualan);
 
-        // Mengurangkan total_item dengan jumlah yang dihapus
-        $penjualan->total_item -= $penjualanProduk->jumlah;
+        // // Mengurangkan total_item dengan jumlah yang dihapus
+        // $penjualan->total_item -= $penjualanProduk->jumlah;
 
-        // Mengurangkan total_penjualan dengan total_harga dari PenjualanProduk yang dihapus
-        $penjualan->total_penjualan -= $penjualanProduk->total_harga;
+        // // Mengurangkan total_penjualan dengan total_harga dari PenjualanProduk yang dihapus
+        // $penjualan->total_penjualan -= $penjualanProduk->total_harga;
 
-        // Jika total_item menjadi 0, Anda dapat mengosongkan total_penjualan
-        if ($penjualan->total_item === 0) {
-            $penjualan->total_penjualan = 0;
-        }
+        // // Jika total_item menjadi 0, Anda dapat mengosongkan total_penjualan
+        // if ($penjualan->total_item === 0) {
+        //     $penjualan->total_penjualan = 0;
+        // }
 
-        // Simpan perubahan pada objek penjualan
-        $penjualan->save();
+        // // Simpan perubahan pada objek penjualan
+        // $penjualan->save();
 
-        // Mengembalikan jumlah produk yang dihapus ke stok
-        $produk = Produk::find($penjualanProduk->id_produk);
-        $produk->stok += $penjualanProduk->jumlah;
-        $produk->save();
+        // // Mengembalikan jumlah produk yang dihapus ke stok
+        // $produk = Produk::find($penjualanProduk->id_produk);
+        // $produk->stok += $penjualanProduk->jumlah;
+        // $produk->save();
 
-        // Hapus objek PenjualanProduk
-        $penjualanProduk->delete();
+        // // Hapus objek PenjualanProduk
+        // $penjualanProduk->delete();
 
-        return back();
+        // return back();
     }
 }

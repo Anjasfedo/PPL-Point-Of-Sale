@@ -2,6 +2,11 @@
 @section('title')
     Kategori
 @endsection
+
+@section('breadcrumb')
+    @parent
+    <li class="breadcrumb-item active">Kategori</li>
+@endsection
 @section('content')
     <!-- Main content -->
 

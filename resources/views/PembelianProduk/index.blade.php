@@ -1,6 +1,11 @@
 @extends('Layout.main')
 @section('title')
-    produk
+    Pembelian Barang
+@endsection
+
+@section('breadcrumb')
+    @parent
+    <li class="breadcrumb-item active">Pembelian Barang</li>
 @endsection
 @section('content')
     <!-- Main content -->
@@ -56,7 +61,7 @@
                       </div>
 
                       <div class="form-row">
-                        <div class="form-group col-md-6">
+                        {{-- <div class="form-group col-md-6">
                           <label for="">Supplier</label>
                           <div class="input-group">
                             <select name="id_supplier" class="form-control supplier-pilihan select2bs4">
@@ -69,7 +74,7 @@
                                 <a data-toggle="modal" data-target="#modal-supplier-data" class="btn btn-info btn-flat"><i class="fa fa-arrow-right"></i></a>
                             </span>
                         </div>
-                        </div>
+                        </div> --}}
 
                         <div class="form-group col-md-3">
                           <label for="inputHargaSatuan">Harga Satuan</label>

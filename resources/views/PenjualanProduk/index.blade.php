@@ -1,221 +1,244 @@
-@extends('Layout.main')
-@section('title')
-    produk
-@endsection
-@section('content')
+<!-- Styles -->
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
 
-
-    <!-- Main content -->
-
-    <!--  -->
-    <section class="content">
-        <div class="container-fluid">
-          <div class="row">
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
             <div class="col-12">
-              <!-- <div class="callout callout-info">
-                <h5><i class="fas fa-info"></i> Note:</h5>
-                This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
-              </div> -->
+                <div class="card">
+                    <div class="card-header">
+                    </div>
 
-              <!-- Main content -->
-              <div class="invoice p-3 mb-3">
-                <!-- title row -->
-                <div class="row">
-                  <div class="col-12">
-                    <h4>
-                      <i class="fas fa-globe"></i> Usaha
-                      <small class="float-right">Tanggal</small>
-                    </h4>
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- info row -->
-                <div class="row">
-                  <div class="col-12">
-                    <form
-                        action="{{ route('penjualanproduk.store', [$id_penjualan]) }}"
-                        method="POST">
+                    <div class="card-body">
+                      <form action="{{ route('penjualanproduk.store', [$id_penjualan]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                      <div class="form-row">
-                        <div class="form-group col-md-6">
-                          <label for="inputEmail4">Email</label>
-                          <div class="input-group">
-                            <select name="id_produk" class="form-control produk-pilihan select2bs4"">
-                              <option value="">-- choose product --</option>
-                              @foreach ($dataProduk as $item)
-                              <option value="{{ $item->id_produk }}">{{ $item->nama_produk }}</option>
-                              @endforeach
-                          </select>
-                            <span class="input-group-btn">
-                                <a data-toggle="modal" data-target="#modal-produk-data" class="btn btn-info btn-flat"><i class="fa fa-arrow-right"></i></a>
-                            </span>
+                    
+                        <div class="card">
+                            <div class="card-header">
+                                Products
+                            </div>
+                    
+                            <div class="card-body">
+                                <table class="table" id="products_table">
+                                    <thead>
+                                        <tr>
+                                            <th>Produk</th>
+                                            <th>Harga</th>
+                                            <th>Jumlah</th>
+                                            <th>Total Harga</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (old('id_produk', ['']) as $index => $oldProduct)
+                                            <tr>
+                                                <td>
+                                                    <select name="id_produk[]" class="form-control produk-pilihan select2bs4">
+                                                        <option value="">-- choose product --</option>
+                                                        @foreach ($dataProduk as $item)
+                                                            <option value="{{ $item->id_produk }}" data-harga="{{ $item->harga_jual }}">
+                                                                {{ $item->nama_produk }}
+                                                            </option>
+                                                        @endforeach
+                                                    </select>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="harga-jual form-control" value="" readonly />
+                                                </td>
+                                                <td>
+                                                    <input type="number" name="jumlah[]" class="form-control" value="{{ old('jumlah.' . $index) ?? '1' }}" />
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="total-harga form-control" name="total_harga[]" value="0" readonly />
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                    
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <button id='delete_row' class="pull-right btn btn-danger">- Delete Row</button>
+                                        <button id="add_row" class="btn btn-default pull-right">+ Add Row</button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+                        <div>
+                            <input class="btn btn-danger" type="submit" value="Submit">
                         </div>
-                        <div class="form-group col-md-6">
-                          <label for="inputJumlah">Jumlah</label>
-                          <input type="number" class="form-control" id="inputJumlah" value="1" name="jumlah">
+                    
+                        <div class="form-group">
+                            <label for="total_penjualan">total_penjualan</label>
+                            <input type="text" id="total_penjualan" name="total_penjualan" class="form-control" value="" readonly>
                         </div>
+                        <div class="form-group">
+                          <label for="total_jumlah">total_jumlah</label>
+                          <input type="text" id="total_jumlah" name="total_jumlah" class="form-control" value="" readonly>
                       </div>
-
-                      <input name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly hidden>
-
-                      <button type="submit" class="btn btn-success float-right">
-                        <i class="far fa-credit-card"></i>Tambah
-                      </button>
+                      
+                        <div class="form-group">
+                            <label for="diterima">diterima</label>
+                            <input type="text" id="diterima" name="diterima" class="form-control" value="">
+                        </div>
+                        <div class="form-group">
+                            <label for="kembalian">kembalian</label>
+                            <input type="text" id="kembalian" name="kembalian" class="form-control" value="" readonly>
+                        </div>
+                    
+                        <div class="form-group">
+                            <label for="id_penjualan">id_penjualan</label>
+                            <input name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly>
+                        </div>
                     </form>
-                  </div>
-
+                    </div>
                 </div>
-                <!-- /.row -->
+            </div>
+        </div>
+    </div>
+</section>
+<!-- /.content -->
 
-  <!--  -->
-                <!-- Table row -->
-                <div class="row">
-                  <div class="col-12 table-responsive">
-                    <table class="table table-stiped table-bordered table-penjualan">
-                      <thead>
-                          <th width="5%">No</th>
-                          <th>Nama</th>
-                          <th>Harga</th>
-                          <th width="15%">Jumlah</th>
-                          <th>Subtotal</th>
-                          <th width="15%">
-                              <i class="fa fa-cog"></i>
-                          </th>
-                      </thead>
-                      <tbody id="tabel-produksss">
-                          @foreach ($dataPenjualanProduk as $item)
-                          <tr>
-                              <td>{{ $loop->iteration }}</td>
-                              <td>
-                                  {{ $dataProduk->where('id_produk', $item->id_produk)->first()->nama_produk }}
-                              </td>
-                              <td>
-                                  {{ $dataProduk->where('id_produk', $item->id_produk)->first()->harga_jual }}
-                              </td>
-                              <td >{{ $item->jumlah }}
-                              </td>
-                              <td>{{ $item->total_harga }}</td>
-                              <td>
-                                  <a
-                                      data-toggle="modal"
-                                      data-target="#modal-penjualan-detail-edit{{ $item->id_penjualan_produk }}"
-                                      class="btn btn-primary">
-                                      <i class="fas fa pen">Edit</i>
-                                  </a>
-                                  <a
-                                      data-toggle="modal"
-                                      data-target="#modal-penjualan-detail-hapus{{ $item->id_penjualan_produk }}"
-                                      class="btn btn-danger">
-                                      <i class="fas fa-trash-alt">Edit</i>
-                                  </a>
-                              </td>
-                          </tr>
-                          @endforeach
-                          </tbody>
-                      </table>
-                  </div>
-                  <!-- /.col -->
-                </div>
-                <!-- /.row -->
-
-                <form action="{{ route('penjualan.update', [$id_penjualan]) }}" method="post">
-                  @csrf
-                  @method("PUT")
-                <div class="row">
-                  <!-- accepted payments column -->
-                  <div class="col-7">
-                      <div class="tampil-bayar bg-primary">
-
-                      </div>
-                      <div class="tampil-terbilang">
-
-                      </div>
-                  </div>
-                  <!-- /.col -->
-                  <div class="col-5">
-
-                      <div class="table-responsive">
-                          <table class="table">
-                            <tr>
-                              <th>
-                                <label for="diterima" class="col-form-label col-form-label-lg">DITERIMA</label>
-                              </th>
-                              <td>
-                                <input type="text" id="diterima" name="diterima" class="form-control form-control-lg" value="">
-
-                              </td>
-                            </tr>
-                              <tr>
-                                  <th style="width:50%">
-                                    Subtotal:
-                                  </th>
-                                  <td>
-                                    <input type="text" id="total_penjualan" class="form-control" name="total_penjualan" value="{{ $dataPenjualan->total_penjualan }}" readonly>
-                                  </td>
-                              </tr>
-                              <tr>
-                                  <th>Kembalian:</th>
-                                  <td>
-                                    <input type="number" name="kembalian" id="kembalian" class="form-control" value="0" readonly>
-                                  </td>
-                              </tr>
-                          </table>
-                      </div>
-                  </div>
-                  <!-- /.col -->
-              </div>
-
-                <!-- /.row -->
-
-                <!-- this row will not appear when printing -->
-                <div class="row no-print">
-                  <div class="col-12">
-
-                    <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-                      <i class="fas fa-download"></i> Lakukan Penjualan
-                    </button>
-                  </div>
-                </div>
-
-              </form>
-
-              </div>
-              <!-- /.invoice -->
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
-      </section>
-      <!-- /.content -->
-
-@endsection
+<!-- Modal -->
+<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="productModalLabel">Error</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Please select a product in the last row before adding a new row.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- JavaScript Imports -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
 
-@includeIf('PenjualanProduk.produk')
-@includeIf('PenjualanProduk.update')
-@includeIf('PenjualanProduk.destroy')
+<script>
+$(document).ready(function() {
+    let row_number = 1;
 
-@push('script')
-                        <script>
-                          // Mengambil elemen-elemen yang diperlukan
-                          var diterimaInput = document.getElementById('diterima');
-                          var kembalianInput = document.getElementById('kembalian');
-                          var totalPenjualanInput = document.getElementById('total_penjualan');
+    function updateTotalPrice() {
+        let totalSum = 0;
+        let totalItem = 0;
+        let totalJumlah = 0;
 
-                          // Menambahkan event listener untuk menghitung kembalian saat diterima diubah
-                          diterimaInput.addEventListener('input', function () {
-                              var diterima = parseFloat(diterimaInput.value); // Mengonversi ke angka, default 0 jika tidak valid
-                              var totalPenjualan = parseFloat(totalPenjualanInput.value) || 0; // Mengambil total_penjualan
+        $('#products_table tbody tr').each(function() {
+            const row = $(this);
+            const quantityInput = row.find('input[name="jumlah[]"]');
+            let quantity = parseFloat(quantityInput.val()) || 0;
 
-                              // Menghitung kembalian
-                              var kembalian = diterima - totalPenjualan;
+            if (quantity < 1) {
+                quantity = 1;
+                quantityInput.val(quantity);
+            }
 
-                              // Menyimpan hasil kembalian ke input kembalian
-                              if (kembalian < 0) {
-                                  kembalian = 0; // Setel kembalian menjadi 0 jika negatif
-                              }
+            const selectedProduct = row.find('select[name="id_produk[]"] option:selected');
+            const price = parseFloat(selectedProduct.data('harga')) || 0;
+            const total = quantity * price;
+            row.find('.harga-jual').val(price); // Atur harga sesuai dengan harga jual yang dipilih
+            row.find('.total-harga').val(total);
 
-                              kembalianInput.value = kembalian; // Mengonversi hasil ke dua angka desimal
-                          });
-                      </script>
-                        @endpush
+            totalSum += total;
+            totalItem += quantity;
+            totalJumlah += quantity;
+        });
+
+        $('#total_penjualan').val(totalSum);
+        $('#total_item').val(totalItem);
+        $('#total_jumlah').val(totalJumlah);
+
+        updateKembalian();
+    }
+
+    $('#add_row').click(function(e) {
+        e.preventDefault();
+
+        if (areAllProductsSelected()) {
+            const new_row = $('#products_table tbody tr:last').clone();
+            new_row.find('input[name="jumlah[]"]').val(1);
+            new_row.find('select[name="id_produk[]"]').val('');
+            new_row.find('.total-harga').val(0);
+            new_row.find('.harga-jual').val(''); // Kosongkan harga saat menambahkan baris baru
+
+            new_row.insertAfter('#products_table tbody tr:last');
+            row_number++;
+        } else {
+            showModal();
+        }
+    });
+
+    $('#delete_row').click(function(e) {
+        e.preventDefault();
+        if (row_number > 1) {
+            $('#products_table tbody tr:last').remove();
+            row_number--;
+            updateTotalPrice();
+        } else {
+            showModal();
+        }
+    });
+
+    $('#products_table').on('input', 'input[name="jumlah[]"]', function() {
+        updateTotalPrice();
+    });
+
+    $('#products_table').on('change', 'select[name="id_produk[]"]', function() {
+        updateTotalPrice();
+    });
+
+    $('form').submit(function(e) {
+        if (!areAllProductsSelected()) {
+            e.preventDefault();
+            showModal();
+        }
+    });
+
+    function areAllProductsSelected() {
+        let allSelected = true;
+        $('#products_table select[name="id_produk[]"]').each(function() {
+            if ($(this).val() === '') {
+                allSelected = false;
+                return false;
+            }
+        });
+        return allSelected;
+    }
+
+    function showModal() {
+        $('#productModal').modal('show');
+    }
+
+    function updateKembalian() {
+        const totalPenjualan = parseFloat($('#total_penjualan').val()) || 0;
+        const diterima = parseFloat($('#diterima').val()) || 0;
+        const kembalian = diterima - totalPenjualan;
+        if (kembalian >= 0) {
+            $('#kembalian').val(kembalian);
+        } else {
+            $('#kembalian').val('');
+        }
+    }
+
+    $('#diterima').on('input', function() {
+        updateKembalian();
+    });
+});
+
+</script>

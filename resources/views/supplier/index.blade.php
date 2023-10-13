@@ -1,6 +1,11 @@
 @extends('Layout.main')
 @section('title')
-    supplier
+    Supplier
+@endsection
+
+@section('breadcrumb')
+    @parent
+    <li class="breadcrumb-item active">Supplier</li>
 @endsection
 @section('content')
     <!-- Main content -->

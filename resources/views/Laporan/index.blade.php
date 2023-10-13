@@ -1,9 +1,12 @@
 @extends('Layout.main')
 
 @section('title')
+    Laporan
+@endsection
 
-Laporan
-
+@section('breadcrumb')
+    @parent
+    <li class="breadcrumb-item active">Laporan</li>
 @endsection
 
 @section('content')
