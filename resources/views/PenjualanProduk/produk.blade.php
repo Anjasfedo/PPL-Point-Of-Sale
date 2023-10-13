@@ -50,9 +50,9 @@
                  <td>{{ $item->stok }}</td>
                  <td>
                   <!-- Di dalam modal -->
-  <a href="#" class="btn btn-primary select-product" data-id="{{ $item->id_produk }}" data-name="{{ $item->nama_produk }}">
+  <a href="#" class="btn btn-primary select-product" data-id="{{ $item->id_produk }}" data-name="{{ $item->nama_produk }}" data-dismiss="modal">
     Pilih
-  </a>
+</a>
   
                 
                 </td>

@@ -1,133 +1,216 @@
-<!-- Styles -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://unpkg.com/@coreui/coreui/dist/css/coreui.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css">
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.css">
+@extends('Layout.main')
+@section('title')
+    produk
+@endsection
+@section('content')
 
-<!-- Main content -->
-<section class="content">
-    <div class="container-fluid">
-        <div class="row">
+
+    <!-- Main content -->
+
+    <!--  -->
+    <section class="content">
+        <div class="container-fluid">
+          <div class="row">
             <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                    </div>
+              <!-- <div class="callout callout-info">
+                <h5><i class="fas fa-info"></i> Note:</h5>
+                This page has been enhanced for printing. Click the print button at the bottom of the invoice to test.
+              </div> -->
 
-                    <div class="card-body">
-                      <form action="{{ route('penjualanproduk.store', [$id_penjualan]) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                    
-                        <div class="card">
-                            <div class="card-header">
-                                Products
-                            </div>
-                    
-                            <div class="card-body">
-                                <table class="table" id="products_table">
-                                    <thead>
-                                        <tr>
-                                            <th>Produk</th>
-                                            <th>Harga</th>
-                                            <th>Jumlah</th>
-                                            <th>Total Harga</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach (old('id_produk', ['']) as $index => $oldProduct)
-                                            <tr>
-                                                <td>
-                                                    <select name="id_produk[]" class="form-control produk-pilihan select2bs4">
-                                                        <option value="">-- choose product --</option>
-                                                        @foreach ($dataProduk as $item)
-                                                            <option value="{{ $item->id_produk }}" data-harga="{{ $item->harga_jual }}">
-                                                                {{ $item->nama_produk }}
-                                                            </option>
-                                                        @endforeach
-                                                    </select>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="harga-jual form-control" value="" readonly />
-                                                </td>
-                                                <td>
-                                                    <input type="number" name="jumlah[]" class="form-control" value="{{ old('jumlah.' . $index) ?? '1' }}" />
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="total-harga form-control" name="total_harga[]" value="0" readonly />
-                                                </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                    
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <button id='delete_row' class="pull-right btn btn-danger">- Delete Row</button>
-                                        <button id="add_row" class="btn btn-default pull-right">+ Add Row</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div>
-                            <input class="btn btn-danger" type="submit" value="Submit">
-                        </div>
-                    
-                        <div class="form-group">
-                            <label for="total_penjualan">total_penjualan</label>
-                            <input type="text" id="total_penjualan" name="total_penjualan" class="form-control" value="" readonly>
-                        </div>
-                        <div class="form-group">
-                          <label for="total_jumlah">total_jumlah</label>
-                          <input type="text" id="total_jumlah" name="total_jumlah" class="form-control" value="" readonly>
-                      </div>
-                      
-                        <div class="form-group">
-                            <label for="diterima">diterima</label>
-                            <input type="text" id="diterima" name="diterima" class="form-control" value="">
-                        </div>
-                        <div class="form-group">
-                            <label for="kembalian">kembalian</label>
-                            <input type="text" id="kembalian" name="kembalian" class="form-control" value="" readonly>
-                        </div>
-                    
-                        <div class="form-group">
-                            <label for="id_penjualan">id_penjualan</label>
-                            <input name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly>
-                        </div>
-                    </form>
-                    </div>
+              <!-- Main content -->
+              <div class="invoice p-3 mb-3">
+                <!-- title row -->
+                <div class="row">
+                  <div class="col-12">
+                    <h4>
+                      <i class="fas fa-globe"></i> Usaha
+                      <small class="float-right">Tanggal</small>
+                    </h4>
+                  </div>
+                  <!-- /.col -->
                 </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- /.content -->
+                <!-- info row -->
+                <div class="row">
+                  <div class="col-6">
+                    <p>lorem</p>
+                  </div>
+                  <div class="col-6">
+                    <p>lorem</p>
+                  </div>
+                </div>
+                <!-- /.row -->
 
+  <!--  --><form action="{{ route('penjualanproduk.store', [$id_penjualan]) }}" method="POST" enctype="multipart/form-data">
+    @csrf
+                    
+                <!-- Table row -->
+                <div class="row">
+                  <div class="col-12 table-responsive">
+                    <table class="table table-stiped table-bordered table-penjualan" id="products_table">
+                      <thead>
+                        <tr>
+                            <th>Produk</th>
+                            <th>Harga</th>
+                            <th>Jumlah</th>
+                            <th>Total Harga</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      @foreach (old('id_produk', ['']) as $index => $oldProduct)
+                          <tr>
+                              <td>
+                                <div class="input-group">
+                                  <select name="id_produk[]" class="form-control produk-pilihan select2bs4 product-select">
+
+                                    <option value="">-- choose product --</option>
+                                    @foreach ($dataProduk as $item)
+                                        <option value="{{ $item->id_produk }}" data-harga="{{ $item->harga_jual }}">
+                                            {{ $item->nama_produk }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                <span class="input-group-btn">
+                                  <a data-toggle="modal" data-target="#modal-produk-data" class="btn btn-info btn-flat"><i class="fa fa-arrow-right"></i></a>
+                              </span>
+                                </div>
+                                  
+                              </td>
+                              <td>
+                                  <input type="text" class="harga-jual form-control" value="" readonly />
+                              </td>
+                              <td>
+                                  <input type="number" name="jumlah[]" class="form-control" value="{{ old('jumlah.' . $index) ?? '1' }}" />
+                              </td>
+                              <td>
+                                  <input type="text" class="total-harga form-control" name="total_harga[]" value="0" readonly />
+                              </td>
+                          </tr>
+                      @endforeach
+                  </tbody>
+                      </table>
+
+                      <div class="row">
+                        <div class="col-md-12">
+                            <button id='delete_row' class="pull-right btn btn-danger">- Delete Row</button>
+                            <button id="add_row" class="btn btn-default pull-right">+ Add Row</button>
+                        </div>
+                    </div>
+                  </div>
+                  <!-- /.col -->
+                </div>
+                <!-- /.row -->
+
+                
+                <div class="row">
+                  <!-- accepted payments column -->
+                  <div class="col-7">
+                      <div class="tampil-bayar bg-primary">
+
+                      </div>
+                      <div class="tampil-terbilang">
+
+                      </div>
+                  </div>
+                  <!-- /.col -->
+                  <div class="col-5">
+
+                      <div class="table-responsive">
+                          <table class="table">
+                            <tr>
+                              <th>
+                                <label for="diterima" class="col-form-label col-form-label-lg">DITERIMA</label>
+                              </th>
+                              <td>
+                                <input type="text" id="diterima" name="diterima" class="form-control" value="">
+
+                              </td>
+                            </tr>
+                              <tr>
+                                  <th style="width:50%">
+                                    Subtotal:
+                                  </th>
+                                  <td>
+                                    <input type="text" id="total_penjualan" name="total_penjualan" class="form-control" value="" readonly>
+                                  </td>
+                              </tr>
+                              <tr>
+                                  <th>Kembalian:</th>
+                                  <td>
+                                    <input type="text" id="kembalian" name="kembalian" class="form-control" value="" readonly>
+                                  </td>
+                              </tr>
+                          </table>
+                      </div>
+                  </div>
+                  <!-- /.col -->
+              </div>
+
+              {{-- input hidden --}}
+              <input type="text" id="total_item" name="total_item" class="form-control" value="" readonly>
+              <input name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly>
+
+                <!-- /.row -->
+
+                <!-- this row will not appear when printing -->
+                <div class="row no-print">
+                  <div class="col-12">
+
+                    {{-- <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
+                      <i class="fas fa-download"></i> Lakukan Penjualan
+                    </button> --}}
+
+                    <input class="btn btn-danger" type="submit" value="Submit">
+                  </div>
+                </div>
+
+              </form>
+            </div>
+
+
+              </div>
+              <!-- /.invoice -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+        </div><!-- /.container-fluid -->
+      </section>
+      <!-- /.content -->
+
+      
 <!-- Modal -->
 <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="productModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="productModalLabel">Error</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Please select a product in the last row before adding a new row.
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
+  <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title" id="productModalLabel">Error</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              Please select a product in the last row before adding a new row.
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+      </div>
+  </div>
 </div>
+
+@endsection
+
+@includeIf('PenjualanProduk.produk')
+{{-- @includeIf('PenjualanProduk.update')
+@includeIf('PenjualanProduk.destroy') --}}
+@push('script')
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script> --}}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+
 <!-- JavaScript Imports -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+
 
 
 <script>
@@ -162,7 +245,7 @@ $(document).ready(function() {
 
         $('#total_penjualan').val(totalSum);
         $('#total_item').val(totalItem);
-        $('#total_jumlah').val(totalJumlah);
+        $('#total_item').val(totalJumlah);
 
         updateKembalian();
     }
@@ -175,7 +258,7 @@ $(document).ready(function() {
             new_row.find('input[name="jumlah[]"]').val(1);
             new_row.find('select[name="id_produk[]"]').val('');
             new_row.find('.total-harga').val(0);
-            new_row.find('.harga-jual').val(''); // Kosongkan harga saat menambahkan baris baru
+            new_row.find('.harga-jual').val('');
 
             new_row.insertAfter('#products_table tbody tr:last');
             row_number++;
@@ -212,7 +295,7 @@ $(document).ready(function() {
 
     function areAllProductsSelected() {
         let allSelected = true;
-        $('#products_table select[name="id_produk[]"]').each(function() {
+        $('#products_table select.product-select').each(function() {
             if ($(this).val() === '') {
                 allSelected = false;
                 return false;
@@ -239,6 +322,21 @@ $(document).ready(function() {
     $('#diterima').on('input', function() {
         updateKembalian();
     });
+
+    
+// Update the event handler for the "Pilih" button in the modal
+$('.select-product').click(function(e) {
+    e.preventDefault();
+    const selectedRow = $(this).closest('tr');
+    const selectedProduct = selectedRow.find('td:nth-child(2)').text(); // Adjust the column index as needed
+    const productSelect = $('#products_table tbody tr:last select.product-select');
+    productSelect.val(selectedProduct); // Set the selected product in the form dropdown
+    updateTotalPrice();
+    $('#modal-produk-data').modal('hide'); // Close the modal
+});
+
 });
 
 </script>
+
+@endpush

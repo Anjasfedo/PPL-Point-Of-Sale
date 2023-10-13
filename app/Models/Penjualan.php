@@ -22,8 +22,14 @@ class Penjualan extends Model
         'kembalian',
     ];
 
+    // public function produk()
+    // {
+    //     return $this->belongsToMany(Produk::class, 'penjualan_produks');
+    // }
+
     public function produk()
-    {
-        return $this->belongsToMany(Produk::class, 'penjualan_produks');
-    }
+{
+    return $this->belongsToMany(Produk::class, 'penjualan_produks');
+}
+
 }
