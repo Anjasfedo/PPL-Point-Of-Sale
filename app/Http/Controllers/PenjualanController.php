@@ -79,21 +79,22 @@ class PenjualanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'diterima' => 'required|numeric|min:1',
-        ]);
+        // $request->validate([
+        //     'diterima' => 'required|numeric|min:1',
+        // ]);
 
-        // Mengambil data penjualan berdasarkan $id
-        $penjualan = Penjualan::find($id);
+        // // Mengambil data penjualan berdasarkan $id
+        // $penjualan = Penjualan::find($id);
 
-        // Mengupdate data penjualan dengan nilai diterima dari formulir
-        $penjualan->diterima = $request->input('diterima');
-        $penjualan->kembalian = $request->input('kembalian');
+        // // Mengupdate data penjualan dengan nilai diterima dari formulir
+        // $penjualan->diterima = $request->input('diterima');
+        // $penjualan->kembalian = $request->input('kembalian');
 
-        // Simpan perubahan pada data penjualan
-        $penjualan->save();
+        // // Simpan perubahan pada data penjualan
+        // $penjualan->save();
 
-        return redirect()->route('penjualan.index');
+        // return redirect()->route('penjualan.index');
+        dd($request->all());
     }
 
     /**
