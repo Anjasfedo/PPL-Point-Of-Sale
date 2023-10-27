@@ -229,26 +229,26 @@
         theme: 'bootstrap4',
     });
 
-    // Event click ketika tombol "Pilih produk" di dalam modal ditekan
-    $(".select-product").click(function() {
-        var id = $(this).data("id");
+    // // Event click ketika tombol "Pilih produk" di dalam modal ditekan
+    // $(".select-product").click(function() {
+    //     var id = $(this).data("id");
 
-        // Pilih opsi dengan nilai yang sesuai dengan id
-        $('.produk-pilihan').val(id).trigger('change');
+    //     // Pilih opsi dengan nilai yang sesuai dengan id
+    //     $('.produk-pilihan').val(id).trigger('change');
 
-        // Tutup modal setelah memilih produk
-        $('#modal-produk-data').modal('hide');
-    });
+    //     // Tutup modal setelah memilih produk
+    //     $('#modal-produk-data').modal('hide');
+    // });
 
-    $(".select-supplier").click(function() {
-        var id = $(this).data("id");
+    // $(".select-supplier").click(function() {
+    //     var id = $(this).data("id");
 
-        // Pilih opsi dengan nilai yang sesuai dengan id
-        $('.supplier-pilihan').val(id).trigger('change');
+    //     // Pilih opsi dengan nilai yang sesuai dengan id
+    //     $('.supplier-pilihan').val(id).trigger('change');
 
-        // Tutup modal setelah memilih produk
-        $('#modal-supplier-data').modal('hide');
-    });
+    //     // Tutup modal setelah memilih produk
+    //     $('#modal-supplier-data').modal('hide');
+    // });
   });
   </script>
 
