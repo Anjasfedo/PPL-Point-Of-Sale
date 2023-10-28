@@ -37,9 +37,9 @@
                                 </div>
                             </div>
                         </div>
-                        <form action="{{ route('penjualan.update', [$id_penjualan]) }}" method="post">
+                        <form action="{{ route('penjualanproduk.store', [$id_penjualan]) }}" method="post">
                             @csrf
-                            @method("PUT")
+                            @method("POST")
                             <!-- Table row -->
                             <div class="row">
                                 <div class="col-12 table-responsive">
@@ -109,6 +109,7 @@
                                 </div>
                             </div>
                             <input name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly>
+                            <input name="id_user" type="text" value="{{ auth()->id() }}" readonly>
                             <div class="row no-print">
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
@@ -154,23 +155,23 @@ $(document).ready(function() {
     }
 
     $(document).on('click', '.tambah-penjualan', function() {
-        var id_barang = $(this).data("id_barang");
-        var nama_barang = $(this).data("nama_barang");
+        var id_produk = $(this).data("id_produk");
+        var nama_produk = $(this).data("nama_produk");
         var stok = $(this).data("stok");
         var harga_jual = $(this).data("harga_jual");
         var jumlah_barang = 0; // Default qty
 
         var data = [
-            ['<input type="text" class="form-control" name="nama_barang[]" value="' +
-                nama_barang + '" readonly>', stok,
+            ['<input type="text" class="form-control" name="nama_produk[]" value="' +
+                nama_produk + '" readonly>', stok,
                 '<input type="text" class="form-control" name="harga_jual[]" value="' +
                 harga_jual + '" readonly>',
                 '<input type="number" class="form-control qty" name="jumlah[]" min="1" max="' +
                 stok + '" value="' +
                 jumlah_barang + '" id="jumlah_barang">',
                 '<input type="text" class="form-control total_harga" name="total_harga[]" value="0" readonly>',
-                '<input type="text" class="form-control" name="id_barang[]" value="' +
-                id_barang + '" readonly>',
+                '<input type="text" class="form-control" name="id_produk[]" value="' +
+                id_produk + '" readonly>',
                 '<button class="btn btn-sm btn-danger text-white hapus-baris">Remove</button>'
             ]
         ];

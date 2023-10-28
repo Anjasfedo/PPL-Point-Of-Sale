@@ -36,56 +36,51 @@ class PenjualanProdukController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, string $id)
+    public function store(Request $request, string $id_penjualan)
     {
-        // // Menghitung harga produk berdasarkan id_produk
-        // $produk = Produk::find($request->id_produk);
+        $request->validate([
+            'id_penjualan' => 'required',
+            'id_produk' => 'required|array',
+            'id_user' => 'required',
+            'jumlah' => 'required|array',
+            'total_harga' => 'required|array',
+            'diterima' => 'required', // Pastikan diterima adalah required
+            // tambahkan validasi lainnya sesuai kebutuhan
+        ]);
 
-        // if (!$produk) {
-        //     return back()->with('error', 'Produk tidak ditemukan');
-        // }
+        // Simpan data penjualan_produk ke tabel penjualan_produks
+        foreach ($request->id_produk as $key => $id_produk) {
+            $penjualanProduk = new PenjualanProduk();
+            $penjualanProduk->id_penjualan = $request->id_penjualan;
+            $penjualanProduk->id_produk = $id_produk;
+            $penjualanProduk->id_user = $request->id_user;
+            $penjualanProduk->jumlah = $request->jumlah[$key];
+            $penjualanProduk->total_harga = $request->total_harga[$key];
+            // Simpan penjualan_produk
+            $penjualanProduk->save();
 
-        // $hargaProduk = $produk->harga_jual;
+            // Kurangi stok pada tabel produks berdasarkan id_produk
+            $produk = Produk::find($id_produk);
+            $produk->stok -= $request->jumlah[$key];
+            $produk->save();
+        }
 
-        // // Menghitung totalharga
-        // $totalharga = $hargaProduk * $request->jumlah;
+        // Hitung total_item, total_penjualan, dan kembalian
+        $total_item = array_sum($request->jumlah);
+        $total_penjualan = array_sum($request->total_harga);
+        $diterima = $request->diterima;
+        $kembalian = $diterima - $total_penjualan;
 
-        // // Validasi jumlah produk tidak melebihi stok
-        // if ($request->jumlah > $produk->stok) {
-        //     return back()->with('error', 'Jumlah produk melebihi stok yang tersedia');
-        // }
+        // Simpan data ke tabel penjualan
+        $penjualan = Penjualan::find($request->id_penjualan);
+        $penjualan->total_item = $total_item;
+        $penjualan->total_penjualan = $total_penjualan;
+        $penjualan->diterima = $diterima;
+        $penjualan->kembalian = $kembalian;
+        $penjualan->save();
 
-        // // Menyimpan data ke dalam tabel penjualanproduk
-        // PenjualanProduk::create([
-        //     'id_penjualan' => $request->id_penjualan,
-        //     'id_produk' => $request->id_produk,
-        //     'id_user' => auth()->id(),
-        //     'jumlah' => $request->jumlah,
-        //     'total_harga' => $totalharga,
-        // ]);
-
-        // // Mengurangi stok produk
-        // $produk->stok -= $request->jumlah;
-        // $produk->save();
-
-        // // Menghitung ulang total item dan total harga untuk penjualan
-        // $totalItem = PenjualanProduk::where('id_penjualan', $id)->sum('jumlah');
-        // $totalPenjualan = PenjualanProduk::where('id_penjualan', $id)->sum('total_harga');
-
-        // // Update data penjualan
-        // $penjualan = Penjualan::find($id);
-
-        // if (!$penjualan) {
-        //     return back()->with('error', 'Data penjualan tidak ditemukan');
-        // }
-
-        // $penjualan->total_item = $totalItem;
-        // $penjualan->total_penjualan = $totalPenjualan;
-
-        // // Simpan perubahan
-        // $penjualan->save();
-
-        // return back();
+        return redirect()->route('penjualan.index')
+            ->with('success', 'Penjualan berhasil disimpan.');
     }
 
     /**
