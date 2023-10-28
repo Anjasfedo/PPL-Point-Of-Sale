@@ -15,6 +15,7 @@ pembelian
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
+                        {{-- <a data-toggle="modal" data-target="#modal-supplier-data" class="btn btn-info btn-flat">Tambah pembelian</a> --}}
                         @foreach ($dataPembelian as $item)
                         <form
                             method="POST"
@@ -72,3 +73,20 @@ pembelian
 
 
 @includeIf('Pembelian.info')
+{{-- @includeIf('Pembelian.supplier') --}}
+{{-- @includeif('Pembelian.pembelianform') --}}
+{{-- 
+@push('script')
+<script>
+    $(document).ready(function () {
+        // Tangani klik tombol "Pilih"
+        $(".select-supplier").click(function (e) {
+            e.preventDefault();
+            var idSupplier = $(this).data("id");
+            $("#selected_supplier").val(idSupplier);
+        });
+    });
+</script>
+
+
+@endpush --}}

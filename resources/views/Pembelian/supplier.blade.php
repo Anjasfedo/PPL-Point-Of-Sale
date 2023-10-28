@@ -1,6 +1,6 @@
-<div class="modal fade" id="modal-supplier-data">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content"">
+<div class="modal fade" id="modal-supplier-data" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" style="max-height: 80vh;">
+    <div class="modal-content" style="overflow-y: auto;">
         <div class="modal-header">
           <h4 class="modal-title">Large Modal</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -40,7 +40,7 @@
               <td>{{ $item->telepon }}</td>
               <td>
                   <a href="#" class="btn btn-primary select-supplier"
-                     data-id_supplier="{{ $item->id_supplier }}"
+                     data-id="{{ $item->id_supplier }}"
                      data-name="{{ $item->nama_supplier }}" data-toggle="modal" data-target="#modal-pembelian-form">
                      Pilih
                   </a>

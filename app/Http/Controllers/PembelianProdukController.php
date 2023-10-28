@@ -38,56 +38,55 @@ class PembelianProdukController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, string $id)
+    public function store(Request $request, string $id_pembelian)
     {
-    // Mendapatkan objek Produk berdasarkan id_produk dari permintaan
-    $produk = Produk::find($request->id_produk);
-
-    if (!$produk) {
-        return back()->with('error', 'Produk tidak ditemukan');
+        $request->validate([
+            'id_pembelian' => 'required',
+            'id_produk' => 'required|array',
+            'id_supplier' => 'required',
+            'harga_beli' => 'required|array',
+            'jumlah' => 'required|array',
+            'total_harga' => 'required|array',
+            'diterima' => 'required', // Pastikan diterima adalah required
+            // tambahkan validasi lainnya sesuai kebutuhan
+        ]);
+    
+        // Simpan data pembelian produk ke tabel pembelian_produks
+        foreach ($request->id_produk as $key => $id_produk) {
+            $pembelianProduk = new PembelianProduk();
+            $pembelianProduk->id_pembelian = $request->id_pembelian;
+            $pembelianProduk->id_produk = $id_produk;
+            $pembelianProduk->id_supplier = $request->id_supplier;
+            $pembelianProduk->harga_beli = $request->harga_beli[$key];
+            $pembelianProduk->jumlah = $request->jumlah[$key];
+            $pembelianProduk->total_harga = $request->total_harga[$key];
+            // Simpan pembelian_produk
+            $pembelianProduk->save();
+    
+            // tambah stok pada tabel produks berdasarkan id_produk
+            $produk = Produk::find($id_produk);
+            $produk->stok += $request->jumlah[$key];
+            $produk->save();
+        }
+    
+        // Hitung total_item, total_pembelian, dan kembalian
+        $total_item = array_sum($request->jumlah);
+        $total_pembelian = array_sum($request->total_harga);
+        $diterima = $request->diterima;
+        $kembalian = $diterima - $total_pembelian;
+    
+        // Simpan data ke tabel pembelian
+        $pembelian = Pembelian::find($request->id_pembelian);
+        $pembelian->total_item = $total_item;
+        $pembelian->total_pembelian = $total_pembelian;
+        $pembelian->diterima = $diterima;
+        $pembelian->kembalian = $kembalian;
+        $pembelian->save();
+    
+        return redirect()->route('pembelian.index')
+            ->with('success', 'Pembelian berhasil disimpan.');
     }
-
-    // Validasi jumlah tidak kurang dari 1
-    if ($request->jumlah < 1) {
-        return back()->with('error', 'Jumlah produk tidak valid.');
-    }
-
-    // Menghitung total harga
-    $totalHarga = $request->harga_beli * $request->jumlah;
-
-    // Menyimpan data ke dalam tabel pembelian_produk
-    PembelianProduk::create([
-        'id_pembelian' => $request->id_pembelian,
-        'id_produk' => $request->id_produk,
-        'id_supplier' => $request->id_supplier,
-        'jumlah' => $request->jumlah,
-        'harga_beli' => $request->harga_beli,
-        'total_harga' => $totalHarga,
-    ]);
-
-    // Mengurangi stok produk
-    $produk->stok += $request->jumlah;
-    $produk->save();
-
-    // Menghitung ulang total item dan total harga untuk pembelian
-    $totalItem = PembelianProduk::where('id_pembelian', $id)->sum('jumlah');
-    $totalPembelian = PembelianProduk::where('id_pembelian', $id)->sum('total_harga');
-
-    // Update data pembelian
-    $pembelian = Pembelian::find($id);
-
-    if (!$pembelian) {
-        return back()->with('error', 'Data pembelian tidak ditemukan');
-    }
-
-    $pembelian->total_item = $totalItem;
-    $pembelian->total_pembelian = $totalPembelian;
-
-    // Simpan perubahan
-    $pembelian->save();
-
-    return back();
-    }
+    
 
     /**
      * Display the specified resource.

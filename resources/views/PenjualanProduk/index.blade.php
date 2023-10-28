@@ -171,8 +171,7 @@ $(document).ready(function() {
                 jumlah_barang + '" id="jumlah_barang">',
                 '<input type="text" class="form-control total_harga" name="total_harga[]" value="0" readonly>',
                 '<input type="text" class="form-control" name="id_produk[]" value="' +
-                id_produk + '" readonly>',
-                '<button class="btn btn-sm btn-danger text-white hapus-baris">Remove</button>'
+                id_produk + '" readonly hidden> <button class="btn btn-sm btn-danger text-white hapus-baris">Remove</button>'
             ]
         ];
         var tableRow = table.rows.add(data).draw().node();

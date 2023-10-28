@@ -240,15 +240,15 @@
     //     $('#modal-produk-data').modal('hide');
     // });
 
-    // $(".select-supplier").click(function() {
-    //     var id = $(this).data("id");
+    $(".select-supplier").click(function() {
+        var id = $(this).data("id_supplier");
 
-    //     // Pilih opsi dengan nilai yang sesuai dengan id
-    //     $('.supplier-pilihan').val(id).trigger('change');
+        // Pilih opsi dengan nilai yang sesuai dengan id
+        $('.supplier-pilihan').val(id).trigger('change');
 
-    //     // Tutup modal setelah memilih produk
-    //     $('#modal-supplier-data').modal('hide');
-    // });
+        // Tutup modal setelah memilih produk
+        $('#modal-supplier-data').modal('hide');
+    });
   });
   </script>
 

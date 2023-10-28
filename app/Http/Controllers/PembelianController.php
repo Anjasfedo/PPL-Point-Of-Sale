@@ -19,7 +19,7 @@ class PembelianController extends Controller
     public function index()
     {
         $dataProduk = Produk::all();
-        $datasupplier = Supplier::all();
+        $dataSupplier = Supplier::all();
         $dataPembelian = Pembelian::get();
         $dataPembelianTabel = Pembelian::where('total_item', '>', 0)
         ->where('total_pembelian', '>', 0)
@@ -30,7 +30,7 @@ class PembelianController extends Controller
 
         $dataPembelianProduk = PembelianProduk::with('produk')->latest()->get();
 
-        return view('Pembelian.index', compact('dataProduk', 'dataPembelian', 'dataPembelianTabel', 'dataPembelianProduk'));
+        return view('Pembelian.index', compact('dataProduk', 'dataPembelian', 'dataPembelianTabel', 'dataPembelianProduk', 'dataSupplier'));
     }
 
     /**
@@ -57,7 +57,6 @@ class PembelianController extends Controller
 
         // Simpan id_pembelian ke dalam session
         session(['id_pembelian' => $pembelian->id_pembelian]);
-
         return redirect()->route('pembelianproduk.index', [$pembelian->id_pembelian]);
     }
 
