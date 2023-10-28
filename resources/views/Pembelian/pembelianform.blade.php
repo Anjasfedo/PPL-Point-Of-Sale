@@ -1,6 +1,6 @@
-<div class="modal fade" id="modal-supplier-data">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content"">
+<div class="modal fade" id="modal-pembelian-form">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+      <div class="modal-content">
         <div class="modal-header">
           <h4 class="modal-title">Large Modal</h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -21,36 +21,17 @@
   
   
   <div class="card-body">
-    <table id="tabel-supplier" class="table table-bordered table-hover">
-      <thead>
-          <tr>
-              <th>No</th>
-              <th>ID</th>
-              <th>Nama</th>
-              <th>Telepon</th>
-              <th>Aksi</th>
-          </tr>
-      </thead>
-      <tbody>
-          @foreach ($dataSupplier as $item)
-          <tr>
-              <td>{{ $loop->iteration }}</td>
-              <td>{{ $item->id_supplier }}</td>
-              <td>{{ $item->nama_supplier }}</td>
-              <td>{{ $item->telepon }}</td>
-              <td>
-                  <a href="#" class="btn btn-primary select-supplier"
-                     data-id_supplier="{{ $item->id_supplier }}"
-                     data-name="{{ $item->nama_supplier }}" data-toggle="modal" data-target="#modal-pembelian-form">
-                     Pilih
-                  </a>
-              </td>
-          </tr>
-          @endforeach
-      </tbody>
-  </table>
-
-  
+    @foreach ($dataPembelian as $item)
+    <!-- Tambahkan elemen input tersembunyi -->
+    <form
+        method="POST"
+        action="{{ route('pembelian.store', [$item->id_pembelian]) }}" method="POST">
+        @endforeach
+        @csrf
+        @method('POST')
+        <input type="number" name="id_supplier" id="selected_supplier" value="" readonly>
+        <button type="submit" class="btn btn-primary">Tambah pembelian</button>
+    </form>
   </div>
   <!-- /.card -->
   </div>
