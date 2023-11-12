@@ -70,6 +70,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::group(['middleware' => 'role:admin|kasir'], function () {
         Route::get('/home', [HomeController::class, 'index'])->name('home');
+        Route::resource('/dashboard', DashboardController::class);
+
 
         Route::resource('/penjualan', PenjualanController::class)
                 ->except('edit', 'show', 'destroy', 'create', 'store');

@@ -79,8 +79,7 @@ class PenjualanProdukController extends Controller
         $penjualan->kembalian = $kembalian;
         $penjualan->save();
 
-        return redirect()->route('penjualan.index')
-            ->with('success', 'Penjualan berhasil disimpan.');
+        return view('PenjualanProduk.nota', compact('id_penjualan'));
     }
 
     /**

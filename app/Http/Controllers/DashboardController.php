@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Models\Penjualan;
+use App\Models\Pembelian;
+
 class DashboardController extends Controller
 {
     /**
@@ -11,7 +14,27 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return view('Layout.dashboard');
+        $tanggal_awal = date('Y-m-01');
+        $tanggal_akhir = date('Y-m-d');
+
+        $data_tanggal = array();
+        $data_pendapatan = array();
+
+        while (strtotime($tanggal_awal) <= strtotime($tanggal_akhir)) {
+            $data_tanggal[] = (int) substr($tanggal_awal, 8, 2);
+
+            $total_penjualan = Penjualan::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('total_penjualan');
+            $total_pembelian = Pembelian::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('total_pembelian');
+
+            $pendapatan = $total_penjualan - $total_pembelian;
+            $data_pendapatan[] = $pendapatan;
+
+            $tanggal_awal = date('Y-m-d', strtotime("+1 day", strtotime($tanggal_awal)));
+        }
+
+        $tanggal_awal = date('Y-m-01');
+
+        return view('Layout.dashboard', compact('tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan'));
     }
 
     /**

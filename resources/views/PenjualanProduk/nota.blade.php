@@ -1,0 +1,1 @@
+<h1>{{ $id_penjualan }}</h1>
