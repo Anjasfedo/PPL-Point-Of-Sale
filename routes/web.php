@@ -75,6 +75,8 @@ Route::group(['middleware' => 'auth'], function () {
 
         Route::resource('/penjualan', PenjualanController::class)
                 ->except('edit', 'show', 'destroy', 'create', 'store');
+        Route::get('penjualan/notaPenjualan', [PenjualanController::class, 'notaPenjualan'])->name('penjualan.notaPenjualan');
+
         Route::post('penjualan/{penjualan}', [PenjualanController::class, 'store'])->name('penjualan.store');
 
         Route::resource('/penjualanproduk', PenjualanProdukController::class)

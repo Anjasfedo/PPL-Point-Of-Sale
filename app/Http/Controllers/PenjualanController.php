@@ -104,4 +104,18 @@ class PenjualanController extends Controller
     {
         //
     }
+
+    public function notaPenjualan()
+    {
+        // $setting = Setting::first();
+        $penjualan = Penjualan::find(session('id_penjualan'));
+        if (! $penjualan) {
+            abort(404);
+        }
+        $detail = PenjualanProduk::with('produk')
+            ->where('id_penjualan', session('id_penjualan'))
+            ->get();
+        
+        return view('penjualan.notaPenjualan', compact( 'penjualan', 'detail'));
+    }
 }
