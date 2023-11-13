@@ -83,8 +83,7 @@ class PembelianProdukController extends Controller
         $pembelian->kembalian = $kembalian;
         $pembelian->save();
     
-        return redirect()->route('pembelian.index')
-            ->with('success', 'Pembelian berhasil disimpan.');
+        return view('PembelianProduk.nota');
     }
     
 
@@ -109,63 +108,63 @@ class PembelianProdukController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $dataPembelian = PembelianProduk::find($id);
+        // $dataPembelian = PembelianProduk::find($id);
 
-        // Mendapatkan objek Produk berdasarkan id_produk dari permintaan
-        $produk = Produk::find($request->id_produk);
+        // // Mendapatkan objek Produk berdasarkan id_produk dari permintaan
+        // $produk = Produk::find($request->id_produk);
 
-        if (!$produk) {
-            return back()->with('error', 'Produk tidak ditemukan');
-        }
+        // if (!$produk) {
+        //     return back()->with('error', 'Produk tidak ditemukan');
+        // }
 
-        // Validasi jumlah tidak kurang dari stok
-        if ($request->jumlah < 0) {
-            return back()->with('error', 'Jumlah produk tidak valid.');
-        }
+        // // Validasi jumlah tidak kurang dari stok
+        // if ($request->jumlah < 0) {
+        //     return back()->with('error', 'Jumlah produk tidak valid.');
+        // }
 
-        // Validasi jumlah tidak melebihi stok
-        if ($request->jumlah > $produk->stok) {
-            return back()->with('error', 'Jumlah produk melebihi stok yang tersedia.');
-        }
+        // // Validasi jumlah tidak melebihi stok
+        // if ($request->jumlah > $produk->stok) {
+        //     return back()->with('error', 'Jumlah produk melebihi stok yang tersedia.');
+        // }
 
-        // Mengurangi stok produk yang sebelumnya ditambahkan
-        $produk->stok -= $dataPembelian->jumlah;
-        $produk->save();
+        // // Mengurangi stok produk yang sebelumnya ditambahkan
+        // $produk->stok -= $dataPembelian->jumlah;
+        // $produk->save();
 
-        // Update jumlah
-        $dataPembelian->jumlah = $request->jumlah;
+        // // Update jumlah
+        // $dataPembelian->jumlah = $request->jumlah;
 
-        // Mengakses harga_jual dari objek Produk
-        $harga_beli = $dataPembelian->harga_beli;
+        // // Mengakses harga_jual dari objek Produk
+        // $harga_beli = $dataPembelian->harga_beli;
 
-        // Menghitung ulang total_harga
-        $dataPembelian->total_harga = $harga_beli * $request->jumlah;
+        // // Menghitung ulang total_harga
+        // $dataPembelian->total_harga = $harga_beli * $request->jumlah;
 
-        // Simpan perubahan
-        $dataPembelian->save();
+        // // Simpan perubahan
+        // $dataPembelian->save();
 
-        // Mengurangi stok produk yang baru ditambahkan
-        $produk->stok += $request->jumlah;
-        $produk->save();
+        // // Mengurangi stok produk yang baru ditambahkan
+        // $produk->stok += $request->jumlah;
+        // $produk->save();
 
-        // Menghitung ulang total item dan total harga untuk pembelian
-        $totalItem = pembelianProduk::where('id_pembelian', $dataPembelian->id_pembelian)->sum('jumlah');
-        $totalpembelian = pembelianProduk::where('id_pembelian', $dataPembelian->id_pembelian)->sum('total_harga');
+        // // Menghitung ulang total item dan total harga untuk pembelian
+        // $totalItem = pembelianProduk::where('id_pembelian', $dataPembelian->id_pembelian)->sum('jumlah');
+        // $totalpembelian = pembelianProduk::where('id_pembelian', $dataPembelian->id_pembelian)->sum('total_harga');
 
-        // Update data pembelian
-        $pembelian = pembelian::find($dataPembelian->id_pembelian);
+        // // Update data pembelian
+        // $pembelian = pembelian::find($dataPembelian->id_pembelian);
 
-        if (!$pembelian) {
-            return back()->with('error', 'Data pembelian tidak ditemukan');
-        }
+        // if (!$pembelian) {
+        //     return back()->with('error', 'Data pembelian tidak ditemukan');
+        // }
 
-        $pembelian->total_item = $totalItem;
-        $pembelian->total_pembelian = $totalpembelian;
+        // $pembelian->total_item = $totalItem;
+        // $pembelian->total_pembelian = $totalpembelian;
 
-        // Simpan perubahan
-        $pembelian->save();
+        // // Simpan perubahan
+        // $pembelian->save();
 
-        return back();     
+        // return back();     
     }
 
     /**
@@ -173,34 +172,34 @@ class PembelianProdukController extends Controller
      */
     public function destroy(string $id)
     {
-        // Temukan objek PenjualanProduk berdasarkan ID
-        $pembelianProduk = PembelianProduk::findOrFail($id);
+        // // Temukan objek PenjualanProduk berdasarkan ID
+        // $pembelianProduk = PembelianProduk::findOrFail($id);
 
-        // Temukan objek pembelian berdasarkan id_pembelian pada pembelianProduk
-        $pembelian = Pembelian::find($pembelianProduk->id_pembelian);
+        // // Temukan objek pembelian berdasarkan id_pembelian pada pembelianProduk
+        // $pembelian = Pembelian::find($pembelianProduk->id_pembelian);
     
-        // Mengurangkan total_item dengan jumlah yang dihapus
-        $pembelian->total_item += $pembelianProduk->jumlah;
+        // // Mengurangkan total_item dengan jumlah yang dihapus
+        // $pembelian->total_item += $pembelianProduk->jumlah;
     
-        // Mengurangkan total_pembelian dengan total_harga dari pembelianProduk yang dihapus
-        $pembelian->total_pembelian += $pembelianProduk->total_harga;
+        // // Mengurangkan total_pembelian dengan total_harga dari pembelianProduk yang dihapus
+        // $pembelian->total_pembelian += $pembelianProduk->total_harga;
     
-        // Jika total_item menjadi 0, Anda dapat mengosongkan total_pembelian
-        if ($pembelian->total_item === 0) {
-            $pembelian->total_pembelian = 0;
-        }
+        // // Jika total_item menjadi 0, Anda dapat mengosongkan total_pembelian
+        // if ($pembelian->total_item === 0) {
+        //     $pembelian->total_pembelian = 0;
+        // }
     
-        // Simpan perubahan pada objek pembelian
-        $pembelian->save();
+        // // Simpan perubahan pada objek pembelian
+        // $pembelian->save();
     
-        // Mengembalikan jumlah produk yang dihapus ke stok
-        $produk = Produk::find($pembelianProduk->id_produk);
-        $produk->stok -= $pembelianProduk->jumlah;
-        $produk->save();
+        // // Mengembalikan jumlah produk yang dihapus ke stok
+        // $produk = Produk::find($pembelianProduk->id_produk);
+        // $produk->stok -= $pembelianProduk->jumlah;
+        // $produk->save();
     
-        // Hapus objek pembelianProduk
-        $pembelianProduk->delete();
+        // // Hapus objek pembelianProduk
+        // $pembelianProduk->delete();
     
-        return back();
+        // return back();
     }
 }

@@ -13,8 +13,8 @@
                         <div class="row">
                             <div class="col-12">
                                 <h4>
-                                    <i class="fas fa-globe"></i> Usaha
-                                    {{-- <small class="float-right">{{ $tanggal }}</small> --}}
+                                    <i class="fas fa-globe"></i> {{ strtoupper(auth()->user()->name) }}
+                                    <small class="float-right">{{ date('d-m-Y') }}</small>
                                 </h4>
                             </div>
                         </div>
@@ -26,7 +26,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="id_supplier">Supplier</label>
                                             <div class="input-group">
-                                                <select name="id_supplier" class="form-control supplier-pilihan select2bs4">
+                                                <select name="id_supplier" class="form-control supplier-pilihan d-none">
                                                     <option value="">-- Pilih Supplier --</option>
                                                     @foreach ($dataSupplier as $item)
                                                         <option value="{{ $item->id_supplier }}">{{ $item->nama_supplier }}</option>
@@ -34,7 +34,7 @@
                                                 </select>
                                                 <span class="input-group-btn">
                                                     <a data-toggle="modal" data-target="#modal-supplier-data"
-                                                       class="btn btn-info btn-flat"><i class="fa fa-arrow-right"></i></a>
+                                                    class="btn btn-info btn-flat">Pilih Supplier   <i class="m-r2 fa fa-arrow-right"></i></a>
                                                 </span>
                                             </div>
                                         </div>
@@ -45,12 +45,12 @@
                                             <div class="input-group">
                                                 <span class="input-group-btn">
                                                     <a data-toggle="modal" data-target="#modal-produk-data"
-                                                       class="btn btn-info btn-flat"><i class="fa fa-arrow-right"></i></a>
+                                                    class="btn btn-info btn-flat">Pilih Produk   <i class="m-r2 fa fa-arrow-right"></i></a>
                                                 </span>
                                             </div>
                                         </div>
                                     </div>
-                                    <input name="id_pembelian" type="text" value="{{ $id_pembelian }}" readonly>
+                                    <input name="id_pembelian" type="text" value="{{ $id_pembelian }}" readonly hidden>
                                 </div>
                             </div>
 
@@ -74,8 +74,10 @@
                             <div class="row">
                                 <!-- accepted payments column -->
                                 <div class="col-7">
-                                    <div class="tampil-bayar bg-primary"></div>
-                                    <div class="tampil-terbilang"></div>
+                                    <div class="bg-primary"></div>
+                                    <div id="tampil-terbilang" class="alert alert-primary text-center display-4">
+                                        Total: 
+                                    </div>
                                 </div>
                                 <div class="col-5">
                                     <div class="table-responsive">
@@ -111,7 +113,7 @@
                             <div class="row no-print">
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-                                        <i class="fas fa-download"></i> Lakukan Pembelian
+                                        <i class="fas fa-download"></i> Generate PDF
                                     </button>
                                 </div>
                             </div>
@@ -134,6 +136,11 @@
 
 @push('script')
 <script>
+
+function formatUang(angka) {
+    return 'Rp' + angka.toLocaleString('id-ID');
+}
+
   $(document).ready(function() {
       var table = $('#example2').DataTable();
   
@@ -211,6 +218,9 @@
               totalItem += parseInt($(this).val());
           });
           $('#total_pembelian').val(total);
+
+          $('#tampil-terbilang').text(`Total: ${formatUang(total)}`)
+
           $('#total_item').val(totalItem);
           updateKembalian();
       }

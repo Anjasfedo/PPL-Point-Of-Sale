@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Nota Penjualan - No: {{ tambah_nol_didepan($penjualan->id_penjualan, 10) }}</title>
+    <title>Nota pembelian - No: {{ tambah_nol_didepan($pembelian->id_pembelian, 10) }}</title>
 
     <?php
     $style = '
@@ -66,12 +66,23 @@
         <p style="float: right">{{ strtoupper(auth()->user()->name) }}</p>
     </div>
     <div class="clear-both" style="clear: both;"></div>
-    <p>No: {{ tambah_nol_didepan($penjualan->id_penjualan, 10) }}</p>
-    <p class="text-center">===================================</p>
+    <p>No: {{ tambah_nol_didepan($pembelian->id_pembelian, 10) }}</p>
+    <hr>
     
     <br>
     <table width="100%" style="border: 0;">
+        @php
+            $lastSupplier = null;
+        @endphp
         @foreach ($detail as $item)
+            @if ($item->supplier->nama_supplier !== $lastSupplier)
+                <tr>
+                    <td colspan="4"><strong>Supplier: {{ $item->supplier->nama_supplier }}</strong></td>
+                </tr>
+                @php
+                    $lastSupplier = $item->supplier->nama_supplier;
+                @endphp
+            @endif
             <tr>
                 <td colspan="3">{{ $item->produk->nama_produk }}</td>
             </tr>
@@ -82,36 +93,37 @@
             </tr>
         @endforeach
     </table>
-    <p class="text-center">-----------------------------------</p>
+    
+    <hr>
 
     <table width="100%" style="border: 0;">
         <tr>
             <td>Total Item:</td>
-            <td class="text-right">{{ $penjualan->total_item }}</td>
+            <td class="text-right">{{ $pembelian->total_item }}</td>
         </tr>
         {{-- <tr>
             <td>Diskon:</td>
-            <td class="text-right">{{ format_uang($penjualan->diskon) }}</td>
+            <td class="text-right">{{ format_uang($pembelian->diskon) }}</td>
         </tr>
         <tr>
             <td>Total Bayar:</td>
-            <td class="text-right">{{ format_uang($penjualan->bayar) }}</td>
+            <td class="text-right">{{ format_uang($pembelian->bayar) }}</td>
         </tr> --}}
         <tr>
             <td>Diterima:</td>
-            <td class="text-right">{{ format_uang($penjualan->diterima) }}</td>
+            <td class="text-right">{{ format_uang($pembelian->diterima) }}</td>
         </tr>
         <tr>
             <td>Total Harga:</td>
-            <td class="text-right">{{ format_uang($penjualan->total_penjualan) }}</td>
+            <td class="text-right">{{ format_uang($pembelian->total_pembelian) }}</td>
         </tr>
         <tr>
             <td>Kembali:</td>
-            <td class="text-right">{{ format_uang($penjualan->kembalian) }}</td>
+            <td class="text-right">{{ format_uang($pembelian->kembalian) }}</td>
         </tr>
     </table>
 
-    <p class="text-center">===================================</p>
+    <hr>
     <p class="text-center">-- TERIMA KASIH --</p>
 
     <script>

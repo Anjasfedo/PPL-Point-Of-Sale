@@ -19,15 +19,16 @@
                                         <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
                                     </div>
                                     <div class="card-body">
-                                        <p>ID Penjualan: {{ $item->id_penjualan }}</p>
+                                        <p>ID Penjualan:  {{ tambah_nol_didepan($item->id_penjualan, 10) }}</p>
                                         <p>Total Item: {{ $item->total_item }}</p>
-                                        <p>Total Harga: {{ $item->total_penjualan }}</p>
+                                        <p>Total Harga: {{ format_uang($item->total_penjualan) }}</p>
+                                        <p>Waktu Penjualan: {{ $item->created_at->format('d-m-Y H:i') }}</p>
 
                                         <h5>Related Products:</h5>
                                         <table class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>ID Produk</th>
+                                                    {{-- <th>ID Produk</th> --}}
                                                     <th>Nama Produk</th>
                                                     <th>Harga Jual</th>
                                                     <th>Jumlah</th>
@@ -38,7 +39,7 @@
                                                 @foreach ($dataPenjualanProduk as $produk)
                                                     @if ($produk->id_penjualan === $item->id_penjualan)
                                                         <tr>
-                                                            <td>{{ $produk->id_penjualan_produk }}</td>
+                                                            {{-- <td>{{ $produk->id_penjualan_produk }}</td> --}}
                                                             <td>
                                                                 @if ($produk->produk)
                                                                     {{ $produk->produk->nama_produk }}
@@ -46,11 +47,11 @@
                                                             </td>
                                                             <td>
                                                                 @if ($produk->produk)
-                                                                    {{ $produk->produk->harga_jual }}
+                                                                    {{ format_uang($produk->produk->harga_jual) }}
                                                                 @endif
                                                             </td>
                                                             <td>{{ $produk->jumlah }}</td>
-                                                            <td>{{ $produk->total_harga }}</td>
+                                                            <td>{{ format_uang($produk->total_harga) }}</td>
                                                         </tr>
                                                     @endif
                                                 @endforeach

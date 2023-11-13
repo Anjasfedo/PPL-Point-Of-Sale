@@ -15,8 +15,8 @@
                         <div class="row">
                             <div class="col-12">
                                 <h4>
-                                    <i class="fas fa-globe"></i> Usaha
-                                    <small class="float-right">Tanggal</small>
+                                    <i class="fas fa-globe"></i> {{ strtoupper(auth()->user()->name) }}
+                                    <small class="float-right">{{ date('d-m-Y') }}</small>
                                 </h4>
                             </div>
                             <!-- /.col -->
@@ -26,11 +26,11 @@
                             <div class="col-12">
                                 <div class="form-row">
                                     <div class="form-group col-md-6">
-                                        <label for="inputEmail4">Email</label>
+                                        <label for="inputEmail4">Produk</label>
                                         <div class="input-group">
                                             <span class="input-group-btn">
                                                 <a data-toggle="modal" data-target="#modal-produk-data"
-                                                   class="btn btn-info btn-flat"><i class="fa fa-arrow-right"></i></a>
+                                                   class="btn btn-info btn-flat">Pilih Produk   <i class="m-r2 fa fa-arrow-right"></i></a>
                                             </span>
                                         </div>
                                     </div>
@@ -61,9 +61,12 @@
 
                             <div class="row">
                                 <div class="col-7">
-                                    <div class="tampil-bayar bg-primary"></div>
-                                    <div class="tampil-terbilang"></div>
+                                    <div class="bg-primary"></div>
+                                    <div id="tampil-terbilang" class="alert alert-primary text-center display-4">
+                                        Total: 
+                                    </div>
                                 </div>
+                                
                                 <div class="col-5">
                                     <div class="table-responsive">
                                         <table class="table">
@@ -108,14 +111,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <input name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly>
-                            <input name="id_user" type="text" value="{{ auth()->id() }}" readonly>
+                            <input name="id_penjualan" type="text" value="{{ $id_penjualan }}" readonly hidden>
+                            <input name="id_user" type="text" value="{{ auth()->id() }}" readonly hidden>
                             <div class="row no-print">
                                 <div class="col-12">
                                     <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
                                         <i class="fas fa-download"></i> Generate PDF
                                     </button>
-                                    <button type="button" class="btn btn-warning btn-flat" onclick="notaPenjualan('{{ route('penjualan.notaPenjualan') }}', 'Nota Kecil')">Cetak Nota</button>
                                 </div>
                             </div>
                         </form>
@@ -130,11 +132,14 @@
 @endsection
 
 @includeIf('PenjualanProduk.produk')
-@includeIf('PenjualanProduk.update')
-@includeIf('PenjualanProduk.destroy')
 
 @push('script')
 <script>
+
+function formatUang(angka) {
+    return 'Rp' + angka.toLocaleString('id-ID');
+}
+
 $(document).ready(function() {
     var table = $('#example1').DataTable();
 
@@ -211,6 +216,9 @@ $(document).ready(function() {
             totalItem += parseInt($(this).val());
         });
         $('#total_penjualan').val(total);
+
+        $('#tampil-terbilang').text(`Total: ${formatUang(total)}`)
+        
         $('#total_item').val(totalItem); // Update the total_item field
         updateKembalian(); // Call the function to update kembalian
     }

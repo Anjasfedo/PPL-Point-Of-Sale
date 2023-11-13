@@ -25,7 +25,7 @@
       <thead>
           <tr>
               <th>No</th>
-              <th>ID</th>
+              {{-- <th>ID</th> --}}
               <th>Nama</th>
               <th>Telepon</th>
               <th>Aksi</th>
@@ -35,7 +35,7 @@
           @foreach ($dataSupplier as $item)
           <tr>
               <td>{{ $loop->iteration }}</td>
-              <td>{{ $item->id_supplier }}</td>
+              {{-- <td>{{ $item->id_supplier }}</td> --}}
               <td>{{ $item->nama_supplier }}</td>
               <td>{{ $item->telepon }}</td>
               <td>

@@ -25,7 +25,7 @@
       <thead>
       <tr>
         <th>No</th>
-        <th>ID</th>
+        {{-- <th>ID</th> --}}
         <th>Nama</th>
         <th>kategori</th>
         <th>harga</th>
@@ -38,7 +38,7 @@
             <tr>
                
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->id_produk }}</td>
+                {{-- <td>{{ $item->id_produk }}</td> --}}
                 <td>{{ $item->nama_produk }}</td>
                
                  <td>

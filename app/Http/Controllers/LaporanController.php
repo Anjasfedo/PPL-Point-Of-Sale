@@ -14,8 +14,8 @@ class LaporanController extends Controller
      */
     public function index(Request $request)
     {
-        $tanggalAwal = $request->input('tanggal_awal', now()->toDateString());
-        $tanggalAkhir = $request->input('tanggal_akhir', now()->toDateString());
+        $tanggalAwal = $request->input('tanggal_awal', now()->startOfMonth()->toDateString());
+        $tanggalAkhir = $request->input('tanggal_akhir', now()->endOfMonth()->toDateString());
 
         $penjualanData = Penjualan::whereDate('created_at', '>=', $tanggalAwal)
             ->whereDate('created_at', '<=', $tanggalAkhir)
