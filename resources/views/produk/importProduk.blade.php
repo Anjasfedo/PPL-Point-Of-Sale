@@ -23,13 +23,16 @@
                   <!-- form start -->
                     <form action="{{ route('produk-import') }}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group mb-4" style="max-width: 500px; margin: 0 auto;">
-                            <div class="custom-file text-left">
+                        <div class="card-body mb-4" style="max-width: 500px; margin: 0 auto;">
+                            <div class="custom-file text-left form-group">
                                 <input type="file" name="produk" class="custom-file-input" id="customFile">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                             </div>
                         </div>
-                        <button class="btn btn-primary">Import data</button>
+                        <div class="card-footer text-center">
+                          <button class="btn btn-primary">Import data</button>
+                        </div>
+
                         {{-- <a class="btn btn-success" href="{{ route('kategori-export') }}">Export data</a> --}}
                     </form>
 

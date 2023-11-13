@@ -94,7 +94,7 @@ class PenjualanController extends Controller
         // $penjualan->save();
 
         // return redirect()->route('penjualan.index');
-        dd($request->all());
+        // dd($request->all());
     }
 
     /**

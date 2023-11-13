@@ -34,7 +34,8 @@ pembelian
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Id pembelian</th>
+                                    {{-- <th>Id pembelian</th> --}}
+                                    <th>Waktu Pembelian</th>
                                     <th>Total Item</th>
                                     <th>Total Harga</th>
                                     <th>Aksi</th>
@@ -44,7 +45,8 @@ pembelian
                                 @foreach ($dataPembelianTabel as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->id_pembelian }}</td>
+                                    <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
+                                    {{-- <td>{{ tambah_nol_didepan($item->id_pembelian, 10) }}</td> --}}
                                     <td>{{ $item->total_item }}</td>
                                     <td>{{ $item->total_pembelian }}</td>
                                     <td>

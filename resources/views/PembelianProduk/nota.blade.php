@@ -10,11 +10,9 @@
             <div class="row">
                 <div class="col-12">
                     <!-- Main content -->
-
-                        
                     <div class="invoice p-3 mb-3">
-                        <button type="button" class="btn btn-warning btn-flat" onclick="notaPenjualan('{{ route('penjualan.notaPenjualan') }}')">Cetak Nota</button>
-                        <a class="btn btn-primary" href="{{ route('penjualan.index') }}">Tambah penjualan</a>
+                        <button type="button" class="btn btn-warning btn-flat" onclick="notaPembelian('{{ route('pembelian.notaPembelian') }}')">Cetak Nota</button>
+                        <a class="btn btn-primary" href="{{ route('pembelian.index') }}">Tambah Pembelian</a>
                     </div>
                     <!-- /.invoice -->
                 </div><!-- /.col -->
@@ -34,7 +32,7 @@
     // tambahkan untuk delete cookie innerHeight terlebih dahulu
     document.cookie = "innerHeight=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     
-    function notaPenjualan(url, title) {
+    function notaPembelian(url, title) {
         popupCenter(url, title, 625, 500);
     }
 

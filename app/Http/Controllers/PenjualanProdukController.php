@@ -79,7 +79,7 @@ class PenjualanProdukController extends Controller
         $penjualan->kembalian = $kembalian;
         $penjualan->save();
 
-        return view('PenjualanProduk.nota', compact('id_penjualan'));
+        return view('PenjualanProduk.nota');
     }
 
     /**

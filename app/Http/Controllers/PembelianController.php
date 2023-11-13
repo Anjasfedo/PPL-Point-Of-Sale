@@ -81,21 +81,21 @@ class PembelianController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'diterima' => 'required|numeric|min:1',
-        ]);
+        // $request->validate([
+        //     'diterima' => 'required|numeric|min:1',
+        // ]);
 
-        // Mengambil data penjualan berdasarkan $id
-        $pembelian = Pembelian::find($id);
+        // // Mengambil data penjualan berdasarkan $id
+        // $pembelian = Pembelian::find($id);
 
-        // Mengupdate data pembelian dengan nilai diterima dari formulir
-        $pembelian->diterima = $request->input('diterima');
-        $pembelian->kembalian = $request->input('kembalian');
+        // // Mengupdate data pembelian dengan nilai diterima dari formulir
+        // $pembelian->diterima = $request->input('diterima');
+        // $pembelian->kembalian = $request->input('kembalian');
 
-        // Simpan perubahan pada data pembelian
-        $pembelian->save();
+        // // Simpan perubahan pada data pembelian
+        // $pembelian->save();
 
-        return redirect()->route('pembelian.index');
+        // return redirect()->route('pembelian.index');
     }
 
     /**
@@ -104,5 +104,19 @@ class PembelianController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function notaPembelian()
+    {
+        // $setting = Setting::first();
+        $pembelian = Pembelian::find(session('id_pembelian'));
+        if (! $pembelian) {
+            abort(404);
+        }
+        $detail = PembelianProduk::with('produk')
+            ->where('id_pembelian', session('id_pembelian'))
+            ->get();
+        
+        return view('pembelian.notaPembelian', compact( 'pembelian', 'detail'));
     }
 }

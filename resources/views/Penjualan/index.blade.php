@@ -33,7 +33,8 @@ penjualan
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Id Penjualan</th>
+                                    {{-- <th>Id Penjualan</th> --}}
+                                    <th>Waktu Penjualan</th>
                                     <th>Total Item</th>
                                     <th>Total Harga</th>
                                     <th>Aksi</th>
@@ -43,7 +44,8 @@ penjualan
                                 @foreach ($dataPenjualanTabel as $item)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $item->id_penjualan }}</td>
+                                    {{-- <td>{{ tambah_nol_didepan($item->id_penjualan, 10) }}</td> --}}
+                                    <td>{{ $item->created_at->format('d-m-Y H:i') }}</td>
                                     <td>{{ $item->total_item }}</td>
                                     <td>{{ $item->total_penjualan }}</td>
                                     <td>
@@ -73,3 +75,10 @@ penjualan
 
 
 @includeIf('Penjualan.info')
+@push('script')
+    <script>
+        $(document).ready(function() {
+        var table = $('#tabel-penjualan').DataTable();
+        })
+    </script>
+@endpush
