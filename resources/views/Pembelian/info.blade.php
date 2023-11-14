@@ -1,5 +1,4 @@
 @foreach ($dataPembelian as $item)
-    <!-- Modal for Sale Details -->
     <div class="modal fade" id="modal-info{{ $item->id_pembelian }}">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -9,7 +8,6 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-
                 <section class="content">
                     <div class="container-fluid">
                         <div class="row">
@@ -19,17 +17,15 @@
                                         <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
                                     </div>
                                     <div class="card-body">
-                                        <p>ID Penjualan:  {{ tambah_nol_didepan($item->id_pembelian, 10) }}</p>
+                                        <p>ID Penjualan: {{ tambah_nol_didepan($item->id_pembelian, 10) }}</p>
                                         <p>Total Item: {{ $item->total_item }}</p>
                                         <p>Total Harga: {{ $item->total_pembelian }}</p>
                                         <p>Waktu Pembelian: {{ $item->created_at->format('d-m-Y H:i') }}</p>
-
                                         <h5>Related Products:</h5>
                                         <table class="table table-bordered table-hover">
                                             <thead>
                                                 <tr>
-                                                    {{-- <th>ID Produk</th> --}}
-                                                    <th>Nama Produk</th>
+                                                    <th>Nama Barang</th>
                                                     <th>Supplier</th>
                                                     <th>Harga Jual</th>
                                                     <th>Jumlah</th>
@@ -37,23 +33,22 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                @foreach ($dataPembelianProduk as $produk)
-                                                    @if ($produk->id_pembelian === $item->id_pembelian)
+                                                @foreach ($dataPembelianBarang as $barang)
+                                                    @if ($barang->id_pembelian === $item->id_pembelian)
                                                         <tr>
-                                                            {{-- <td>{{ $produk->id_pembelian_produk }}</td> --}}
                                                             <td>
-                                                                @if ($produk->produk)
-                                                                    {{ $produk->produk->nama_produk }}
+                                                                @if ($barang->barang)
+                                                                    {{ $barang->barang->nama_barang }}
                                                                 @endif
                                                             </td>
-                                                            <td>{{ $produk->supplier->nama_supplier }}</td>
+                                                            <td>{{ $barang->supplier->nama_supplier }}</td>
                                                             <td>
-                                                                @if ($produk->produk)
-                                                                    {{ $produk->produk->harga_jual }}
+                                                                @if ($barang->barang)
+                                                                    {{ $barang->barang->harga_jual }}
                                                                 @endif
                                                             </td>
-                                                            <td>{{ $produk->jumlah }}</td>
-                                                            <td>{{ $produk->total_harga }}</td>
+                                                            <td>{{ $barang->jumlah }}</td>
+                                                            <td>{{ $barang->total_harga }}</td>
                                                         </tr>
                                                     @endif
                                                 @endforeach

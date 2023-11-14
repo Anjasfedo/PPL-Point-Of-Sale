@@ -19,7 +19,6 @@ class PermissionSeeder extends Seeder
      */
     public function run(): void
     {
-
         $users = array(
             [
                 'name' => 'Admin',
@@ -71,7 +70,5 @@ class PermissionSeeder extends Seeder
         $pembelian->kembalian = 0;
 
         $pembelian->save();
-
-
     }
 }

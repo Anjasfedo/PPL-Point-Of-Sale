@@ -22,13 +22,13 @@ class Pembelian extends Model
         'kembalian',
     ];
 
-    public function produk()
+    public function barang()
     {
-        return $this->belongsToMany(Produk::class, 'pembelian_produks');
+        return $this->belongsToMany(Barang::class, 'pembelian_barangs');
     }
 
     public function supplier()
     {
-        return $this->belongsToMany(Supplier::class, 'pembelian_produks');
+        return $this->belongsToMany(Supplier::class, 'pembelian_barangs');
     }
 }

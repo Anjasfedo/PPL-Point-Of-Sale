@@ -22,8 +22,8 @@ class Penjualan extends Model
         'kembalian',
     ];
 
-    public function produk()
+    public function barang()
     {
-        return $this->belongsToMany(Produk::class, 'penjualan_produks');
+        return $this->belongsToMany(Barang::class, 'penjualan_barangs');
     }
 }

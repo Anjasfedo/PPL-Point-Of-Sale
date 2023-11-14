@@ -37,12 +37,13 @@ class KategoriController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'nama_kategori' => 'required|min:5|unique:kategoris',
 
         ]);
 
-        if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
+        if ($validator->fails())
+            return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
         $dataKategori['nama_kategori'] = $request->nama_kategori;
         Kategori::create($dataKategori);
@@ -72,12 +73,13 @@ class KategoriController extends Controller
     public function update(Request $request, string $id)
     {
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'nama_kategori' => 'required|min:5|unique:kategoris',
 
         ]);
 
-        if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
+        if ($validator->fails())
+            return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
         $dataKategori['nama_kategori'] = $request->nama_kategori;
         Kategori::find($id)->update($dataKategori);
@@ -92,7 +94,7 @@ class KategoriController extends Controller
     {
         $dataKategori = Kategori::find($id);
 
-        if($dataKategori){
+        if ($dataKategori) {
             $dataKategori->delete();
         }
 
@@ -105,15 +107,8 @@ class KategoriController extends Controller
             'kategori' => 'required|mimes:xlsx,xls,csv',
         ]);
 
-        Excel::import(new KategoriImport, $request->file('kategori')); // Menggunakan kelas KategoriImport yang diperbarui
+        Excel::import(new KategoriImport, $request->file('kategori'));
 
         return redirect()->back()->with('success', 'Data berhasil diimpor.');
     }
-
-    // public function kategoriExport()
-    // {
-    //     $dataKategori = Kategori::select('nama_kategori')->get(); // Hanya mengambil kolom 'name'
-
-    //     return Excel::download(new KategoriExport($dataKategori), 'kategori.xlsx');
-    // }
 }

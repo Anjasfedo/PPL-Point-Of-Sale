@@ -13,7 +13,7 @@ class Supplier extends Model
     use SoftDeletes;
 
     protected $table = 'suppliers';
-    protected $primaryKey = 'id_supplier'; 
+    protected $primaryKey = 'id_supplier';
     protected $guarded = [];
 
     protected $fillable = [
@@ -23,6 +23,6 @@ class Supplier extends Model
 
     public function pembelian()
     {
-        return $this->belongsToMany(Pembelian::class, 'pembelian_produks');
+        return $this->belongsToMany(Pembelian::class, 'pembelian_barangs');
     }
 }

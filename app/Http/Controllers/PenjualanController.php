@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Produk;
+use App\Models\Barang;
 use App\Models\Penjualan;
-use App\Models\PenjualanProduk;
+use App\Models\PenjualanBarang;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -17,18 +17,17 @@ class PenjualanController extends Controller
      */
     public function index()
     {
-        $dataProduk = Produk::all();
+        $dataBarang = Barang::all();
         $dataPenjualan = Penjualan::get();
         $dataPenjualanTabel = Penjualan::where('total_item', '>', 0)
-        ->where('total_penjualan', '>', 0)
-        ->where('diterima', '>', 0)
-        ->where('kembalian', '>', 0)
-        ->get();
+            ->where('total_penjualan', '>', 0)
+            ->where('diterima', '>', 0)
+            ->where('kembalian', '>', 0)
+            ->get();
 
-        $dataPenjualanProduk = PenjualanProduk::with('produk')->latest()->get();
-        // $dataPenjualanProduk = PenjualanProduk::with('produk')->latest()->get();
+        $dataPenjualanBarang = PenjualanBarang::with('barang')->latest()->get();
 
-        return view('Penjualan.index', compact('dataProduk', 'dataPenjualan' , 'dataPenjualanTabel', 'dataPenjualanProduk'));
+        return view('Penjualan.index', compact('dataBarang', 'dataPenjualan', 'dataPenjualanTabel', 'dataPenjualanBarang'));
     }
 
     /**
@@ -44,7 +43,6 @@ class PenjualanController extends Controller
      */
     public function store(Request $request)
     {
-        // Inisialisasi data dengan nilai 0
         $penjualan = new Penjualan;
         $penjualan->total_item = 0;
         $penjualan->total_penjualan = 0;
@@ -52,10 +50,9 @@ class PenjualanController extends Controller
         $penjualan->kembalian = 0;
         $penjualan->save();
 
-        // Simpan id_penjualan ke dalam session
         session(['id_penjualan' => $penjualan->id_penjualan]);
 
-        return redirect()->route('penjualanproduk.index', [$penjualan->id_penjualan]);
+        return redirect()->route('penjualanbarang.index', [$penjualan->id_penjualan]);
     }
 
     /**
@@ -79,22 +76,7 @@ class PenjualanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // $request->validate([
-        //     'diterima' => 'required|numeric|min:1',
-        // ]);
-
-        // // Mengambil data penjualan berdasarkan $id
-        // $penjualan = Penjualan::find($id);
-
-        // // Mengupdate data penjualan dengan nilai diterima dari formulir
-        // $penjualan->diterima = $request->input('diterima');
-        // $penjualan->kembalian = $request->input('kembalian');
-
-        // // Simpan perubahan pada data penjualan
-        // $penjualan->save();
-
-        // return redirect()->route('penjualan.index');
-        // dd($request->all());
+        // 
     }
 
     /**
@@ -107,15 +89,14 @@ class PenjualanController extends Controller
 
     public function notaPenjualan()
     {
-        // $setting = Setting::first();
         $penjualan = Penjualan::find(session('id_penjualan'));
-        if (! $penjualan) {
+        if (!$penjualan) {
             abort(404);
         }
-        $detail = PenjualanProduk::with('produk')
+        $detail = PenjualanBarang::with('barang')
             ->where('id_penjualan', session('id_penjualan'))
             ->get();
-        
-        return view('penjualan.notaPenjualan', compact( 'penjualan', 'detail'));
+
+        return view('penjualan.notaPenjualan', compact('penjualan', 'detail'));
     }
 }

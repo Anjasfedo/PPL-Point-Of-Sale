@@ -11,22 +11,22 @@ use Maatwebsite\Excel\Concerns\WithStartRow;
 class KategoriImport implements ToModel, WithStartRow
 {
     /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
+     * @param array $row
+     *
+     * @return \Illuminate\Database\Eloquent\Model|null
+     */
 
 
     public function model(array $row)
     {
 
         return new Kategori([
-            'nama_kategori' => $row[1], // Kolom 'name' tetap tidak berubah
+            'nama_kategori' => $row[1],
         ]);
     }
 
     public function startRow(): int
     {
-        return 3; // Sesuaikan dengan nomor baris yang berisi data (biasanya baris 2 adalah data, bukan header)
+        return 3;
     }
 }
