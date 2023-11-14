@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Produk;
+use App\Models\Barang;
 use App\Models\Supplier;
 use App\Models\Pembelian;
-use App\Models\PembelianProduk;
+use App\Models\PembelianBarang;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -18,19 +18,18 @@ class PembelianController extends Controller
      */
     public function index()
     {
-        $dataProduk = Produk::all();
+        $dataBarang = Barang::all();
         $dataSupplier = Supplier::all();
         $dataPembelian = Pembelian::get();
         $dataPembelianTabel = Pembelian::where('total_item', '>', 0)
-        ->where('total_pembelian', '>', 0)
-        ->where('diterima', '>', 0)
-        ->where('kembalian', '>', 0)
-        ->get();
+            ->where('total_pembelian', '>', 0)
+            ->where('diterima', '>', 0)
+            ->where('kembalian', '>', 0)
+            ->get();
 
+        $dataPembelianBarang = PembelianBarang::with('barang')->latest()->get();
 
-        $dataPembelianProduk = PembelianProduk::with('produk')->latest()->get();
-
-        return view('Pembelian.index', compact('dataProduk', 'dataPembelian', 'dataPembelianTabel', 'dataPembelianProduk', 'dataSupplier'));
+        return view('Pembelian.index', compact('dataBarang', 'dataPembelian', 'dataPembelianTabel', 'dataPembelianBarang', 'dataSupplier'));
     }
 
     /**
@@ -46,7 +45,6 @@ class PembelianController extends Controller
      */
     public function store(Request $request)
     {
-        // Inisialisasi data dengan nilai 0
         $pembelian = new Pembelian;
         $pembelian->total_item = 0;
         $pembelian->total_pembelian = 0;
@@ -55,9 +53,8 @@ class PembelianController extends Controller
 
         $pembelian->save();
 
-        // Simpan id_pembelian ke dalam session
         session(['id_pembelian' => $pembelian->id_pembelian]);
-        return redirect()->route('pembelianproduk.index', [$pembelian->id_pembelian]);
+        return redirect()->route('pembelianbarang.index', [$pembelian->id_pembelian]);
     }
 
     /**
@@ -81,21 +78,7 @@ class PembelianController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // $request->validate([
-        //     'diterima' => 'required|numeric|min:1',
-        // ]);
-
-        // // Mengambil data penjualan berdasarkan $id
-        // $pembelian = Pembelian::find($id);
-
-        // // Mengupdate data pembelian dengan nilai diterima dari formulir
-        // $pembelian->diterima = $request->input('diterima');
-        // $pembelian->kembalian = $request->input('kembalian');
-
-        // // Simpan perubahan pada data pembelian
-        // $pembelian->save();
-
-        // return redirect()->route('pembelian.index');
+        // 
     }
 
     /**
@@ -108,15 +91,14 @@ class PembelianController extends Controller
 
     public function notaPembelian()
     {
-        // $setting = Setting::first();
         $pembelian = Pembelian::find(session('id_pembelian'));
-        if (! $pembelian) {
+        if (!$pembelian) {
             abort(404);
         }
-        $detail = PembelianProduk::with('produk')
+        $detail = PembelianBarang::with('barang')
             ->where('id_pembelian', session('id_pembelian'))
             ->get();
-        
-        return view('pembelian.notaPembelian', compact( 'pembelian', 'detail'));
+
+        return view('pembelian.notaPembelian', compact('pembelian', 'detail'));
     }
 }

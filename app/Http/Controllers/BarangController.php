@@ -4,26 +4,26 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Models\Produk;
+use App\Models\Barang;
 use App\Models\Kategori;
 
 use Illuminate\Support\Facades\Validator;
 
 use Maatwebsite\Excel\Facades\Excel;
-use App\Imports\ProdukImport;
+use App\Imports\BarangImport;
 
-class ProdukController extends Controller
+class BarangController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $dataProduk = Produk::latest()->get();
+        $dataBarang = Barang::latest()->get();
 
         $dataKategori = Kategori::all();
 
-        return view('produk.index', compact('dataProduk', 'dataKategori'));
+        return view('barang.index', compact('dataBarang', 'dataKategori'));
     }
 
     /**
@@ -39,18 +39,17 @@ class ProdukController extends Controller
      */
     public function store(Request $request)
     {
-
-        $validator = Validator::make($request->all(),[
-            'nama_produk' => 'required|min:5|unique:produks',
+        $validator = Validator::make($request->all(), [
+            'nama_barang' => 'required|min:5|unique:barangs',
             'harga_jual' => 'required|min:1',
             'stok' => 'required',
             'id_kategori' => 'required',
         ]);
 
-        if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
+        if ($validator->fails())
+            return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
-        // Produk::latest()->first() ?? new Produk();
-        Produk::create($request->all());
+        Barang::create($request->all());
 
         return back();
     }
@@ -76,17 +75,17 @@ class ProdukController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(),[
-            'nama_produk' => 'required|min:5|',
+        $validator = Validator::make($request->all(), [
+            'nama_barang' => 'required|min:5|',
             'harga_jual' => 'required|min:1',
             'stok' => 'required',
         ]);
 
-        if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
+        if ($validator->fails())
+            return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
-
-        $dataProduk = Produk::find($id);
-        $dataProduk->update($request->all());
+        $dataBarang = Barang::find($id);
+        $dataBarang->update($request->all());
 
         return back();
     }
@@ -96,19 +95,19 @@ class ProdukController extends Controller
      */
     public function destroy(string $id)
     {
-        $dataProduk = Produk::where('id_produk',$id)->firstOrFail();
-        $dataProduk->delete();
+        $dataBarang = Barang::where('id_barang', $id)->firstOrFail();
+        $dataBarang->delete();
 
         return back();
     }
 
-    public function produkImport(Request $request)
+    public function barangImport(Request $request)
     {
         $this->validate($request, [
-            'produk' => 'required|mimes:xlsx,xls,csv',
+            'barang' => 'required|mimes:xlsx,xls,csv',
         ]);
 
-        Excel::import(new ProdukImport, $request->file('produk')); // Menggunakan kelas produkImport yang diperbarui
+        Excel::import(new BarangImport, $request->file('barang'));
 
         return redirect()->back()->with('success', 'Data berhasil diimpor.');
     }

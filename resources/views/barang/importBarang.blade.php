@@ -1,4 +1,4 @@
-<div class="modal fade" id="modal-tambah-kategori">
+<div class="modal fade" id="modal-import-barang">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -15,28 +15,25 @@
                                 <div class="card-header">
                                     <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
                                 </div>
-                                <form id="quickForm" action="{{ route('kategori.store') }}" method="POST">
+                                <form action="{{ route('barang-import') }}" method="POST"
+                                    enctype="multipart/form-data">
                                     @csrf
-                                    <div class="card-body">
-                                        <div class="form-group">
-                                            <label for="inputNamaKategori">Nama</label>
-                                            <input type="text" name="nama_kategori" class="form-control"
-                                                id="inputNamaKategori" placeholder="Masukan Nama Kategori">
-                                            @error('nama_kategori')
-                                                <small>{{ $message }}</small>
-                                            @enderror
+                                    <div class="card-body mb-4" style="max-width: 500px; margin: 0 auto;">
+                                        <div class="custom-file text-left form-group">
+                                            <input type="file" name="barang" class="custom-file-input"
+                                                id="customFile">
+                                            <label class="custom-file-label" for="customFile">Choose file</label>
                                         </div>
                                     </div>
                                     <div class="card-footer text-center">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                        <button class="btn btn-primary">Import data</button>
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                        <div class="col-md-6">
+                            <div class="col-md-6">
+                            </div>
                         </div>
                     </div>
-                </div>
             </section>
         </div>
     </div>

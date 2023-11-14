@@ -9,19 +9,19 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Kategori extends Model
 {
     use HasFactory;
-    
+
     use SoftDeletes;
 
     protected $table = 'kategoris';
-    protected $primaryKey = 'id_kategori'; 
+    protected $primaryKey = 'id_kategori';
     protected $guarded = [];
 
     protected $fillable = [
         'nama_kategori',
     ];
 
-    public function produk()
+    public function barang()
     {
-        return $this->hasMany(Produk::class);
+        return $this->hasMany(Barang::class);
     }
 }

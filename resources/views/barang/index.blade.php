@@ -1,13 +1,13 @@
 @extends('Layout.main')
 @section('title')
-    Supplier
+    Barang
 @endsection
 @section('header')
-    <h1 class="m-0">Supplier</h1>
+    <h1 class="m-0">Barang</h1>
 @endsection
 @section('breadcrumb')
     @parent
-    <li class="breadcrumb-item"><a href="{{ route('supplier.index') }}">Supplier</a></li>
+    <li class="breadcrumb-item"><a href="{{ route('barang.index') }}">Barang</a></li>
 @endsection
 @section('content')
     <section class="content">
@@ -16,38 +16,45 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <a data-toggle="modal" data-target="#modal-tambah-supplier" class="btn btn-primary">Tambah
-                                supplier</a>
-                            <a data-toggle="modal" data-target="#modal-import-supplier" class="btn btn-primary">Import
-                                supplier</a>
-                            @includeIf('supplier.importsupplier')
+                            <a data-toggle="modal" data-target="#modal-tambah-barang" class="btn btn-primary">Tambah barang</a>
+                            <a data-toggle="modal" data-target="#modal-import-barang" class="btn btn-primary">Import
+                                barang</a>
+                            @includeIf('barang.importbarang')
                         </div>
                         <div class="card-body">
                             <table id="tabel-data" class="table table-bordered table-hover">
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Nama supplier</th>
-                                        <th>Telepon</th>
+                                        <th>Nama Barang</th>
+                                        <th>Kategori</th>
+                                        <th>Harga Jual</th>
+                                        <th>Stok</th>
                                         <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($dataSupplier as $item)
+                                    @foreach ($dataBarang as $item)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
-                                            <td>{{ $item->nama_supplier }}</td>
-                                            <th>{{ $item->telepon }}</th>
+                                            <td>{{ $item->nama_barang }}</td>
+                                            <td>
+                                                @if ($item->kategori)
+                                                    {{ $item->kategori->nama_kategori }}
+                                                @endif
+                                            </td>
+                                            <td>{{ $item->harga_jual }}</td>
+                                            <td>{{ $item->stok }}</td>
                                             <td>
                                                 <a data-toggle="modal"
-                                                    data-target="#modal-edit-supplier{{ $item->id_supplier }}"
+                                                    data-target="#modal-edit-barang{{ $item->id_barang }}"
                                                     class="btn btn-primary"><i class="fas fa pen">Edit</i></a>
                                                 <a data-toggle="modal"
-                                                    data-target="#modal-hapus-supplier{{ $item->id_supplier }}"
+                                                    data-target="#modal-hapus-barang{{ $item->id_barang }}"
                                                     class="btn btn-danger"><i class="fas fa-trash-alt">Edit</i></a>
                                             </td>
                                         </tr>
-                                        <div class="modal fade" id="modal-edit-supplier{{ $item->id_supplier }}">
+                                        <div class="modal fade" id="modal-edit-barang{{ $item->id_barang }}">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
@@ -67,33 +74,63 @@
                                                                                 <small>jQuery Validation</small></h3>
                                                                         </div>
                                                                         <form id="quickForm"
-                                                                            action="{{ route('supplier.update', [$item->id_supplier]) }}"
+                                                                            action="{{ route('barang.update', [$item->id_barang]) }}"
                                                                             method="POST">
                                                                             @csrf
                                                                             @method('PUT')
                                                                             <div class="card-body">
                                                                                 <div class="form-group">
-                                                                                    <label for="inputNamasupplier">Nama
-                                                                                        supplier</label>
-                                                                                    <input type="text"
-                                                                                        name="nama_supplier"
+                                                                                    <label
+                                                                                        for="inputNamaBarang">Nama</label>
+                                                                                    <input type="text" name="nama_barang"
                                                                                         class="form-control"
-                                                                                        id="inputNamasupplier"
-                                                                                        value="{{ $item->nama_supplier }}"
-                                                                                        placeholder="Masukan Nama supplier">
-                                                                                    @error('nama_supplier')
+                                                                                        id="inputNamaBarang"
+                                                                                        value="{{ $item->nama_barang }}"
+                                                                                        placeholder="Masukan Nama barang">
+                                                                                    @error('nama_barang')
                                                                                         <small>{{ $message }}</small>
                                                                                     @enderror
                                                                                 </div>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="form-group">
+                                                                                    <label>Minimal</label>
+                                                                                    <select name="id_kategori"
+                                                                                        class="form-control select2bs4"
+                                                                                        style="width: 100%;">
+                                                                                        @foreach ($dataKategori as $value)
+                                                                                            <option
+                                                                                                value="{{ $value->id_kategori }}">
+                                                                                                {{ $value->nama_kategori }}
+                                                                                            </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="card-body">
                                                                                 <div class="form-group">
                                                                                     <label
-                                                                                        for="inputTeleponSupplier">Telepon</label>
-                                                                                    <input type="text" name="telepon"
+                                                                                        for="inputHargaJual">harga</label>
+                                                                                    <input type="number" name="harga_jual"
                                                                                         class="form-control"
-                                                                                        id="inputTeleponSupplier"
-                                                                                        value="{{ $item->telepon }}"
-                                                                                        placeholder="Masukan Nomor Telepon Supplier">
-                                                                                    @error('telepon')
+                                                                                        id="inputHargaJual"
+                                                                                        value={{ $item->harga_jual }}
+                                                                                        placeholder="Masukan harga barang">
+                                                                                    @error('harga_jual')
+                                                                                        <small>{{ $message }}</small>
+                                                                                    @enderror
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="card-body">
+                                                                                <div class="form-group">
+                                                                                    <label
+                                                                                        for="inputStokBarang">stok</label>
+                                                                                    <input type="number" name="stok"
+                                                                                        class="form-control"
+                                                                                        id="inputStokBarang"
+                                                                                        value="{{ $item->stok }}"
+                                                                                        placeholder="Masukan stok barang">
+                                                                                    @error('stok')
                                                                                         <small>{{ $message }}</small>
                                                                                     @enderror
                                                                                 </div>
@@ -113,7 +150,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="modal fade" id="modal-hapus-supplier{{ $item->id_supplier }}">
+                                        <div class="modal fade" id="modal-hapus-barang{{ $item->id_barang }}">
                                             <div class="modal-dialog">
                                                 <div class="modal-content bg-danger">
                                                     <div class="modal-header">
@@ -124,11 +161,10 @@
                                                         </button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        <p>Konfirmasi Hapus data <b>{{ $item->nama_supplier }}</b></p>
+                                                        <p>Konfirmasi Hapus data <b>{{ $item->nama_barang }}</b></p>
                                                     </div>
                                                     <div class="modal-footer justify-content-center text-center">
-                                                        <form
-                                                            action="{{ route('supplier.destroy', [$item->id_supplier]) }}"
+                                                        <form action="{{ route('barang.destroy', [$item->id_barang]) }}"
                                                             method="POST">
                                                             @csrf
                                                             @method('DELETE')
@@ -149,4 +185,4 @@
         </div>
     </section>
 @endsection
-@includeIf('supplier.supplierCreate')
+@includeIf('barang.barangCreate')

@@ -36,7 +36,7 @@ class LoginController extends Controller
     public function login_proses(Request $request)
     {
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'email' => 'required|min:5',
             'password' => 'required|min:5',
 
@@ -47,7 +47,7 @@ class LoginController extends Controller
             'password' => $request->password,
         ];
 
-        if(Auth::attempt($data)) {
+        if (Auth::attempt($data)) {
             return redirect()->route('dashboard');
         } else {
             return redirect('login')->with('failed', 'email atau password salah')->withErrors($validator);
@@ -68,7 +68,7 @@ class LoginController extends Controller
     public function register_proses(Request $request)
     {
 
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'name' => 'required',
             'email' => 'required|unique:users,email',
             'password' => 'required|min:5',
@@ -89,7 +89,7 @@ class LoginController extends Controller
             'password' => $request->password,
         ];
 
-        if(Auth::attempt($login)) {
+        if (Auth::attempt($login)) {
             return redirect()->route('dashboard');
         } else {
             return redirect('login')->with('failed', 'email atau password salah')->withErrors($validator);

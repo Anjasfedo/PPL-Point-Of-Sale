@@ -36,12 +36,13 @@ class SupplierController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'nama_supplier' => 'required|min:5|unique:suppliers',
             'telepon' => 'required|min:1',
         ]);
 
-        if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
+        if ($validator->fails())
+            return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
         Supplier::create($request->all());
 
@@ -69,13 +70,13 @@ class SupplierController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validator = Validator::make($request->all(),[
+        $validator = Validator::make($request->all(), [
             'nama_supplier' => 'required|min:5|unique:suppliers',
             'telepon' => 'required|min:1',
         ]);
 
-        if($validator->fails()) return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
-
+        if ($validator->fails())
+            return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
         $dataSupplier = Supplier::find($id);
         $dataSupplier->update($request->all());
@@ -88,7 +89,7 @@ class SupplierController extends Controller
      */
     public function destroy(string $id)
     {
-        $datasupplier = Supplier::where('id_supplier',$id)->firstOrFail();
+        $datasupplier = Supplier::where('id_supplier', $id)->firstOrFail();
         $datasupplier->delete();
 
         return back();
@@ -100,7 +101,7 @@ class SupplierController extends Controller
             'supplier' => 'required|mimes:xlsx,xls,csv',
         ]);
 
-        Excel::import(new SupplierImport, $request->file('supplier')); // Menggunakan kelas supplierImport yang diperbarui
+        Excel::import(new SupplierImport, $request->file('supplier'));
 
         return redirect()->back()->with('success', 'Data berhasil diimpor.');
     }

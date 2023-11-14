@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Produk extends Model
+class Barang extends Model
 {
     use HasFactory;
 
     use SoftDeletes;
 
-    protected $table = 'produks';
-    protected $primaryKey = 'id_produk'; 
+    protected $table = 'barangs';
+    protected $primaryKey = 'id_barang';
     protected $guarded = [];
 
     protected $fillable = [
-        'nama_produk',
+        'nama_barang',
         'harga_jual',
         'stok',
         'id_kategori',
@@ -30,11 +30,11 @@ class Produk extends Model
 
     public function penjualan()
     {
-        return $this->belongsToMany(Penjualan::class, 'penjualan_produks');
+        return $this->belongsToMany(Penjualan::class, 'penjualan_barangs');
     }
 
     public function pembelian()
     {
-        return $this->belongsToMany(Pembelian::class, 'pembelian_produks');
+        return $this->belongsToMany(Pembelian::class, 'pembelian_barangs');
     }
 }
