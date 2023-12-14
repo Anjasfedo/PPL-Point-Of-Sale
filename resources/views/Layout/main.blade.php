@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        | @yield('title')
+        Point Of Sales | @yield('title')
     </title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -153,15 +153,21 @@
 
     @if (Session::has('failed'))
         <script>
-            toastr.error("{{ Session::get('failed') }}", "gagal brow!")
+            toastr.error("{{ Session::get('failed') }}", "Gagal!")
         </script>
     @endif
 
     @if (Session::has('message'))
         <script>
-            toastr.success("{{ Session::get('message') }}", "Success!")
+            toastr.success("{{ Session::get('message') }}", "Sukses!")
         </script>
     @endif
+
+    @if (Session::has('success'))
+    <script>
+        toastr.success("{{ Session::get('success') }}", "Sukses!")
+    </script>
+@endif
 
     @if (Session::has('error'))
         <script>

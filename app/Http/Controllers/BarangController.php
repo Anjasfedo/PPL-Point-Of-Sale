@@ -51,7 +51,7 @@ class BarangController extends Controller
 
         Barang::create($request->all());
 
-        return back();
+        return redirect()->back()->with('success', 'Data berhasil ditambah.');
     }
 
     /**
@@ -82,12 +82,12 @@ class BarangController extends Controller
         ]);
 
         if ($validator->fails())
-            return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
+            return back()->with('error', 'gagal diubah')->withInput()->withErrors($validator);
 
         $dataBarang = Barang::find($id);
         $dataBarang->update($request->all());
 
-        return back();
+        return redirect()->back()->with('success', 'Data berhasil diubah.');
     }
 
     /**
@@ -98,17 +98,24 @@ class BarangController extends Controller
         $dataBarang = Barang::where('id_barang', $id)->firstOrFail();
         $dataBarang->delete();
 
-        return back();
+        return redirect()->back()->with('success', 'Data berhasil dihapus.');
     }
 
     public function barangImport(Request $request)
     {
-        $this->validate($request, [
+
+        $validator = Validator::make($request->all(), [
             'barang' => 'required|mimes:xlsx,xls,csv',
         ]);
 
-        Excel::import(new BarangImport, $request->file('barang'));
+        if ($validator->fails())
+            return back()->with('error', 'gagal diunggah')->withInput()->withErrors($validator);
 
-        return redirect()->back()->with('success', 'Data berhasil diimpor.');
+        try {
+            Excel::import(new BarangImport, $request->file('barang'));
+            return redirect()->back()->with('success', 'Data berhasil diimpor.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('failed', 'Data gagal diimpor.');
+        }
     }
 }
