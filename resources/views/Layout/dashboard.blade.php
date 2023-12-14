@@ -14,7 +14,7 @@
                         <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Kategori</span>
-                            <span class="info-box-number">None</span>
+                            <span class="info-box-number">{{ $totalKategori }}</span>
                         </div>
                     </div>
                 </div>
@@ -22,8 +22,8 @@
                     <div class="info-box shadow">
                         <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Produk</span>
-                            <span class="info-box-number">Small</span>
+                            <span class="info-box-text">Barang</span>
+                            <span class="info-box-number">{{ $totalBarang }}</span>
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                         <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Supplier</span>
-                            <span class="info-box-number">Regular</span>
+                            <span class="info-box-number">{{ $totalSupplier }}</span>
                         </div>
                     </div>
                 </div>
@@ -40,8 +40,8 @@
                     <div class="info-box shadow">
                         <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">Laporan</span>
-                            {{-- <span class="info-box-number">Large</span> --}}
+                            <span class="info-box-text">User</span>
+                            <span class="info-box-number">{{ $totalUser }}</span>
                         </div>
                     </div>
                 </div>
