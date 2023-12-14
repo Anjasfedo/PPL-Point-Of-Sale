@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->unsignedInteger('id_user');
             $table->integer('jumlah');
             $table->integer('total_harga');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

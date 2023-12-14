@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\DashboardController;
@@ -68,6 +69,11 @@ Route::group(['middleware' => 'auth'], function () {
                 Route::resource('/laporan', LaporanController::class)
                         ->except('show');
                 Route::get('laporan/detail/{tanggal}', [LaporanController::class, 'show'])->name('detail');
+
+                Route::resource('/user', UserController::class)
+                        ->except('edit', 'create', 'show');
+                Route::get('user-profile', [UserController::class, 'profile'])->name('user-profile');
+                Route::put('user-profile-update', [UserController::class, 'profileUpdate'])->name('user-profile-update');
         });
 
         Route::group(['middleware' => 'role:admin|kasir'], function () {

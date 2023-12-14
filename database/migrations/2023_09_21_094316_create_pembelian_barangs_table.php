@@ -18,6 +18,7 @@ return new class extends Migration {
             $table->integer('harga_beli');
             $table->integer('jumlah');
             $table->integer('total_harga');
+            $table->softDeletes();
             $table->timestamps();
         });
     }

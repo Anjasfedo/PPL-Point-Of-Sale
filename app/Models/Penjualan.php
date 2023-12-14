@@ -11,6 +11,8 @@ class Penjualan extends Model
 {
     use HasFactory;
 
+    use SoftDeletes;
+
     protected $table = 'penjualans';
     protected $primaryKey = 'id_penjualan';
     protected $guarded = [];

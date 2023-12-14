@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->integer('total_penjualan')->default(0);
             $table->integer('diterima')->default(0);
             $table->integer('kembalian')->default(0);
+            $table->softDeletes();
             $table->timestamps();
         });
     }
