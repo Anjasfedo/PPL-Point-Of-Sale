@@ -41,7 +41,7 @@
                         <a href="#" class="nav-link">
                             <i class="nav-icon fas fa-table"></i>
                             <p>
-                                CRUD
+                                Manajemen Data
                                 <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
@@ -108,8 +108,35 @@
                                     <p>Laporan</p>
                                 </a>
                             </li>
+                        </ul>
                     </li>
                 @endhasrole
+
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="nav-icon fas fa-table"></i>
+                        <p>
+                            Manajemen User
+                            <i class="fas fa-angle-left right"></i>
+                        </p>
+                    </a>
+                    <ul class="nav nav-treeview">
+                        @hasrole('admin')
+                            <li class="nav-item">
+                                <a href="{{ route('user.index') }}" class="nav-link">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    <p>Manajemen User</p>
+                                </a>
+                            </li>
+                        @endhasrole
+                        <li class="nav-item">
+                            <a href="{{ route('user-profile') }}" class="nav-link">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Pengaturan Akun</p>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </nav>
     </div>

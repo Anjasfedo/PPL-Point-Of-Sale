@@ -11,6 +11,8 @@ class Pembelian extends Model
 {
     use HasFactory;
 
+    use SoftDeletes;
+
     protected $table = 'pembelians';
     protected $primaryKey = 'id_pembelian';
     protected $guarded = [];

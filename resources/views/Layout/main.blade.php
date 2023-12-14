@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-        | @yield('title')
+        Point Of Sales | @yield('title')
     </title>
 
     <!-- Google Font: Source Sans Pro -->
@@ -57,7 +57,7 @@
         </footer>
     </div>
     <!-- REQUIRED SCRIPTS -->
-    
+
     <!-- jQuery -->
     <script src="{{ asset('AdminLte/plugins/jquery/jquery.min.js') }}"></script>
     <!-- Bootstrap -->
@@ -153,13 +153,19 @@
 
     @if (Session::has('failed'))
         <script>
-            toastr.error("{{ Session::get('failed') }}", "gagal brow!")
+            toastr.error("{{ Session::get('failed') }}", "Gagal!")
         </script>
     @endif
 
     @if (Session::has('message'))
         <script>
-            toastr.success("{{ Session::get('message') }}", "Success!")
+            toastr.success("{{ Session::get('message') }}", "Sukses!")
+        </script>
+    @endif
+
+    @if (Session::has('success'))
+        <script>
+            toastr.success("{{ Session::get('success') }}", "Sukses!")
         </script>
     @endif
 
@@ -196,6 +202,106 @@
             });
         });
     </script>
+
+    {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script> --}}
+    <script>
+        $(document).ready(function() {
+            var passwordInput = $('#inputPasswordUser');
+            var confirmPasswordInput = $('#password_confirmation_user_create');
+            var passwordMismatchError = $('#password-mismatch-error-user-create');
+            var registerBtn = $('#register-btn');
+
+            $('form').submit(function(event) {
+                var password = passwordInput.val();
+                var confirmPassword = confirmPasswordInput.val();
+
+                if (password !== confirmPassword) {
+                    event.preventDefault();
+                    confirmPasswordInput.addClass('is-invalid');
+                    passwordMismatchError.show();
+                }
+            });
+
+            confirmPasswordInput.on('input', function() {
+                var password = passwordInput.val();
+                var confirmPassword = confirmPasswordInput.val();
+
+                if (password === confirmPassword) {
+                    confirmPasswordInput.removeClass('is-invalid');
+                    passwordMismatchError.hide();
+                } else {
+                    confirmPasswordInput.addClass('is-invalid');
+                    passwordMismatchError.show();
+                }
+            });
+        });
+    </script>
+
+<script>
+    $(document).ready(function() {
+        var passwordInput = $('#editPasswordUser');
+        var confirmPasswordInput = $('#password_confirmation_user_edit');
+        var passwordMismatchError = $('#password-mismatch-error-user-edit');
+        var registerBtn = $('#register-btn');
+
+        $('form').submit(function(event) {
+            var password = passwordInput.val();
+            var confirmPassword = confirmPasswordInput.val();
+
+            if (password !== confirmPassword) {
+                event.preventDefault();
+                confirmPasswordInput.addClass('is-invalid');
+                passwordMismatchError.show();
+            }
+        });
+
+        confirmPasswordInput.on('input', function() {
+            var password = passwordInput.val();
+            var confirmPassword = confirmPasswordInput.val();
+
+            if (password === confirmPassword) {
+                confirmPasswordInput.removeClass('is-invalid');
+                passwordMismatchError.hide();
+            } else {
+                confirmPasswordInput.addClass('is-invalid');
+                passwordMismatchError.show();
+            }
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        var passwordInput = $('#inputPasswordBaru');
+        var confirmPasswordInput = $('#password_confirmation_user_profile');
+        var passwordMismatchError = $('#password-mismatch-error-user-profile');
+        var registerBtn = $('#register-btn');
+
+        $('form').submit(function(event) {
+            var password = passwordInput.val();
+            var confirmPassword = confirmPasswordInput.val();
+
+            if (password !== confirmPassword) {
+                event.preventDefault();
+                confirmPasswordInput.addClass('is-invalid');
+                passwordMismatchError.show();
+            }
+        });
+
+        confirmPasswordInput.on('input', function() {
+            var password = passwordInput.val();
+            var confirmPassword = confirmPasswordInput.val();
+
+            if (password === confirmPassword) {
+                confirmPasswordInput.removeClass('is-invalid');
+                passwordMismatchError.hide();
+            } else {
+                confirmPasswordInput.addClass('is-invalid');
+                passwordMismatchError.show();
+            }
+        });
+    });
+</script>
 
     @stack('script')
 </body>

@@ -45,6 +45,9 @@
                                                 <a data-toggle="modal"
                                                     data-target="#modal-hapus-supplier{{ $item->id_supplier }}"
                                                     class="btn btn-danger"><i class="fas fa-trash-alt">Edit</i></a>
+                                                    <a data-toggle="modal"
+                                                    data-target="#modal-hapus-supplier{{ $item->id_supplier }}"
+                                                    class="btn btn-warning" style="background-color: pink"><i class="fas fa-trash-alt">Edit</i></a>
                                             </td>
                                         </tr>
                                         <div class="modal fade" id="modal-edit-supplier{{ $item->id_supplier }}">

@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barang;
+use App\Models\Kategori;
+use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use App\Models\Penjualan;
@@ -14,6 +18,12 @@ class DashboardController extends Controller
      */
     public function index()
     {
+
+        $totalKategori = Kategori::count();
+        $totalBarang = Barang::count();
+        $totalSupplier = Supplier::count();
+        $totalUser = User::count();
+
         $tanggal_awal = date('Y-m-01');
         $tanggal_akhir = date('Y-m-d');
 
@@ -34,7 +44,7 @@ class DashboardController extends Controller
 
         $tanggal_awal = date('Y-m-01');
 
-        return view('Layout.dashboard', compact('tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan'));
+        return view('Layout.dashboard', compact('tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan', 'totalKategori', 'totalBarang', 'totalSupplier', 'totalUser'));
     }
 
     /**
