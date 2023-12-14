@@ -34,5 +34,39 @@
 <script src="{{ asset('AdminLte/plugins/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 <!-- AdminLTE App -->
 <script src="{{ asset('AdminLte/dist/js/adminlte.min.js') }}"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var passwordInput = $('#password');
+            var confirmPasswordInput = $('#password_confirmation');
+            var passwordMismatchError = $('#password-mismatch-error');
+            var registerBtn = $('#register-btn');
+
+            $('form').submit(function(event) {
+                var password = passwordInput.val();
+                var confirmPassword = confirmPasswordInput.val();
+
+                if (password !== confirmPassword) {
+                    event.preventDefault();
+                    confirmPasswordInput.addClass('is-invalid');
+                    passwordMismatchError.show();
+                }
+            });
+
+            confirmPasswordInput.on('input', function() {
+                var password = passwordInput.val();
+                var confirmPassword = confirmPasswordInput.val();
+
+                if (password === confirmPassword) {
+                    confirmPasswordInput.removeClass('is-invalid');
+                    passwordMismatchError.hide();
+                } else {
+                    confirmPasswordInput.addClass('is-invalid');
+                    passwordMismatchError.show();
+                }
+            });
+        });
+    </script>
 </body>
 </html>
