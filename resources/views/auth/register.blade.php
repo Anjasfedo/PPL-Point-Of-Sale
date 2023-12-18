@@ -2,13 +2,13 @@
 
 @section('content')
     <div class="card-body">
-        <p class="login-box-msg">Register a new membership</p>
+        <p class="login-box-msg">Daftar Akun Baru</p>
 
         <form method="POST" action="{{ route('register') }}">
             @csrf
             <!-- Your existing code -->
             <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Full name" name="name" value="{{ old('name') }}"
+                <input type="text" class="form-control" placeholder="Nama Lengkap" name="name" value="{{ old('name') }}"
                     required autocomplete="name" autofocus>
                 <div class="input-group-append">
                     <div class="input-group-text">
@@ -39,7 +39,7 @@
             </div>
             <!-- Add the following code for password matching check -->
             <div class="input-group mb-3">
-                <input type="password" class="form-control" placeholder="Password" name="password" id="password" required
+                <input type="password" class="form-control" placeholder="Sandi" name="password" id="password" required
                     autocomplete="new-password">
                 <div class="input-group-append">
                     <div class="input-group-text">
@@ -54,7 +54,7 @@
             </div>
 
             <div class="input-group mb-3">
-                <input type="password" class="form-control" placeholder="Retype password" name="password_confirmation"
+                <input type="password" class="form-control" placeholder="Ketikkan Ulang Sandi" name="password_confirmation"
                     id="password_confirmation" required autocomplete="new-password">
                 <div class="input-group-append">
                     <div class="input-group-text">
@@ -62,19 +62,19 @@
                     </div>
                 </div>
                 <div id="password-mismatch-error" class="invalid-feedback" style="display:none;">
-                    <strong>Password confirmation does not match.</strong>
+                    <strong>Konfirmasi Sandi Tidak Cocok.</strong>
                 </div>
             </div>
             <!-- End of password matching check code -->
 
             <div class="row">
                 <div class="col-4">
-                    <button type="submit" class="btn btn-primary btn-block" id="register-btn">Register</button>
+                    <button type="submit" class="btn btn-primary btn-block" id="register-btn">Daftar</button>
                 </div>
             </div>
         </form>
 
-        <a href="{{ route('login') }}" class="text-center">I already have a membership</a>
+        <a href="{{ route('login') }}" class="text-center">Saya Sudah Punya Akun</a>
     </div>
 
     <!-- Add the following jQuery code for password matching check -->

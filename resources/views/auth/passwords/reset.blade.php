@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card-body">
-        <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
+        <p class="login-box-msg">Hanya tinggal satu langkah lagi dari sandi baru anda, Ubah Sandi Anda Sekarang!.</p>
         <form method="POST" action="{{ route('password.update') }}">
             @csrf
 
@@ -22,7 +22,7 @@
             @enderror
             </div>
             <div class="input-group mb-3">
-                <input type="password" class="form-control" placeholder="Password" name="password" id="password" required autocomplete="new-password">
+                <input type="password" class="form-control" placeholder="Sandi" name="password" id="password" required autocomplete="new-password">
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-lock"></span>
@@ -36,7 +36,7 @@
             @enderror
             </div>
             <div class="input-group mb-3">
-                <input type="password" class="form-control" placeholder="Confirm Password" name="password_confirmation" id="password_confirmation" required autocomplete="new-password">
+                <input type="password" class="form-control" placeholder="Konfirmasi Sandi" name="password_confirmation" id="password_confirmation" required autocomplete="new-password">
                 <div class="input-group-append">
                     <div class="input-group-text">
                         <span class="fas fa-lock"></span>
@@ -44,21 +44,21 @@
                 </div>
 
                 <div id="password-mismatch-error" class="invalid-feedback" style="display:none;">
-                    <strong>Password confirmation does not match.</strong>
+                    <strong>Konfirmasi Sandi Tidak Cocok.</strong>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12">
-                    <button type="submit" class="btn btn-primary btn-block">Change password</button>
+                    <button type="submit" class="btn btn-primary btn-block">Ubah Sandi</button>
                 </div>
                 <!-- /.col -->
             </div>
         </form>
 
         <p class="mt-3 mb-1">
-            <a href="{{ route('login') }}">Login</a>
+            <a href="{{ route('login') }}">Masuk</a>
         </p>
     </div>
 
-    
+
 @endsection

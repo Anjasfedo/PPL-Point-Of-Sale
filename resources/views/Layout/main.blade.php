@@ -105,7 +105,7 @@
                                 .addClass('compact')
                                 .css('font-size', 'inherit');
                         },
-                        messageTop: 'This print was produced using the Print button for DataTables'
+                        // messageTop: ''
                     },
                     {
                         extend: 'excel',

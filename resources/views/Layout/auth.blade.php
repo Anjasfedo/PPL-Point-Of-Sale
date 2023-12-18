@@ -19,7 +19,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="{{ asset('AdminLte/index2.html') }}" class="h1"><b>Admin</b>LTE</a>
+      <a href="{{ route('login') }}" class="h1"><b>Toko Bintang</b></a>
     </div>
         @yield("content")
     <!-- /.card-body -->

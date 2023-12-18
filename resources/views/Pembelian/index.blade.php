@@ -45,8 +45,8 @@
                                             <td>{{ $item->total_pembelian }}</td>
                                             <td>
                                                 <a data-toggle="modal" data-target="#modal-info{{ $item->id_pembelian }}"
-                                                    class="btn btn-primary">
-                                                    <i class="fas fa-pen"></i> Edit
+                                                    class="btn btn-success">
+                                                    <i class="fas fa-search"></i> Lihat
                                                 </a>
                                             </td>
                                         </tr>

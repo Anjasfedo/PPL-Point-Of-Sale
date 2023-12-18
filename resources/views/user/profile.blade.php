@@ -5,7 +5,7 @@
 @endsection
 
 @section('header')
-    <h1 class="m-0">User Profile</h1>
+    <h1 class="m-0">Pengaturan Akun</h1>
 @endsection
 
 @section('breadcrumb')
@@ -22,7 +22,7 @@
                     <!-- jquery validation -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Update Profile</h3>
+                            <h3 class="card-title">Isi Data</h3>
                         </div>
                         <!-- /.card-header -->
                         <!-- form start -->

@@ -11,7 +11,7 @@
             <div class="row">
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="info-box shadow">
-                        <span class="info-box-icon bg-info"><i class="far fa-envelope"></i></span>
+                        <span class="info-box-icon bg-info"><i class="fas fa-sitemap"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Kategori</span>
                             <span class="info-box-number">{{ $totalKategori }}</span>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="info-box shadow">
-                        <span class="info-box-icon bg-success"><i class="far fa-flag"></i></span>
+                        <span class="info-box-icon bg-success"><i class="fas fa-boxes"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Barang</span>
                             <span class="info-box-number">{{ $totalBarang }}</span>
@@ -29,7 +29,7 @@
                 </div>
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="info-box shadow">
-                        <span class="info-box-icon bg-warning"><i class="far fa-copy"></i></span>
+                        <span class="info-box-icon bg-warning"><i class="fas fa-people-carry"></i></span>
                         <div class="info-box-content">
                             <span class="info-box-text">Supplier</span>
                             <span class="info-box-number">{{ $totalSupplier }}</span>
@@ -38,9 +38,9 @@
                 </div>
                 <div class="col-md-3 col-sm-6 col-12">
                     <div class="info-box shadow">
-                        <span class="info-box-icon bg-danger"><i class="far fa-star"></i></span>
+                        <span class="info-box-icon bg-danger"><i class="fas fa-users"></i></span>
                         <div class="info-box-content">
-                            <span class="info-box-text">User</span>
+                            <span class="info-box-text">Pengguna</span>
                             <span class="info-box-number">{{ $totalUser }}</span>
                         </div>
                     </div>

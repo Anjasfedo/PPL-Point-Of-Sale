@@ -157,8 +157,8 @@ class UserController extends Controller
 
         // Validation rules
         $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email,' . $id,
+            'nama' => 'required|min:3',
+            'email' => 'required|min:1',
             'password' => 'nullable|min:6', // Password is optional
         ]);
 
@@ -180,17 +180,18 @@ class UserController extends Controller
         }
 
         // Update user data
-        $userData = [
-            'name' => $request->name,
-            'email' => $request->email,
-        ];
+        // $userData = [
+        //     'nama' => $request->name,
+        //     'email' => $request->email,
+        // ];
+        $user->name = $request->input('nama', $user->name);
+        $user->email= $request->input('email', $user->email);
 
+        $user->save();
         // Update the password only if it's provided
         if ($request->filled('password')) {
             $userData['password'] = Hash::make($request->password);
         }
-
-        $user->update($userData);
 
         return redirect()->back()->with('success', 'User berhasil diperbarui');
     }

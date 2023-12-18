@@ -71,7 +71,7 @@ class SupplierController extends Controller
     public function update(Request $request, string $id)
     {
         $validator = Validator::make($request->all(), [
-            'nama_supplier' => 'required|min:5|unique:suppliers',
+            'nama_supplier' => 'required|min:5',
             'telepon' => 'required|min:1',
         ]);
 
@@ -79,7 +79,12 @@ class SupplierController extends Controller
             return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
         $dataSupplier = Supplier::find($id);
-        $dataSupplier->update($request->all());
+        // $dataSupplier->update($request->all());
+
+        $dataSupplier->nama_supplier = $request->input('nama_supplier', $dataSupplier->nama_supplier);
+        $dataSupplier->telepon = $request->input('telepon', $dataSupplier->telepon);
+
+        $dataSupplier->save();
 
         return back();
     }
@@ -97,12 +102,18 @@ class SupplierController extends Controller
 
     public function supplierImport(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'supplier' => 'required|mimes:xlsx,xls,csv',
         ]);
 
-        Excel::import(new SupplierImport, $request->file('supplier'));
+        if ($validator->fails())
+            return back()->with('error', 'gagal diunggah')->withInput()->withErrors($validator);
 
+        try {
+        Excel::import(new SupplierImport, $request->file('supplier'));
         return redirect()->back()->with('success', 'Data berhasil diimpor.');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('failed', 'Data gagal diimpor.');
+    }
     }
 }

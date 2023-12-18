@@ -27,18 +27,18 @@
                                         <div class="form-group col-md-6">
                                             <label for="id_supplier">Supplier</label>
                                             <div class="input-group">
-                                                <select name="id_supplier" class="form-control supplier-pilihan d-none">
+                                                 <span class="input-group-btn">
+                                                    <a data-toggle="modal" data-target="#modal-supplier-data"
+                                                        class="btn btn-info btn-flat">Pilih Supplier<i
+                                                            class="m-r2 fa fa-arrow-right"></i></a>
+                                                </span>
+                                                <select name="id_supplier" class="form-control supplier-pilihan">
                                                     <option value="">-- Pilih Supplier --</option>
                                                     @foreach ($dataSupplier as $item)
                                                         <option value="{{ $item->id_supplier }}">{{ $item->nama_supplier }}
                                                         </option>
                                                     @endforeach
                                                 </select>
-                                                <span class="input-group-btn">
-                                                    <a data-toggle="modal" data-target="#modal-supplier-data"
-                                                        class="btn btn-info btn-flat">Pilih Supplier <i
-                                                            class="m-r2 fa fa-arrow-right"></i></a>
-                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -112,8 +112,8 @@
                             </div>
                             <div class="row no-print">
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-                                        <i class="fas fa-download"></i> Generate PDF
+                                    <button type="submit" id="generatePdfBtn" class="btn btn-primary float-right" style="margin-right: 5px;">
+                                        <i class="fas fa-download"></i> Proses Transaksi
                                     </button>
                                 </div>
                             </div>
@@ -146,7 +146,13 @@
                 var diterima = parseFloat($('#diterima').val());
                 var totalPembelian = parseFloat($('#total_pembelian').val());
                 var kembalian = diterima - totalPembelian;
-                $('#kembalian').val(kembalian);
+                if (kembalian < 0) {
+                    $('#kembalian').val('');
+                    $('#generatePdfBtn').prop('disabled', true);
+                } else {
+                    $('#kembalian').val(kembalian);
+                    $('#generatePdfBtn').prop('disabled', false);
+                }
             }
             $(document).on('input', 'input[name="harga_beli[]"]', function() {
                 updatetotal_harga($(this).closest('tr'));
