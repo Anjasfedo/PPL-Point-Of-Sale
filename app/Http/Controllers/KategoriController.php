@@ -103,12 +103,17 @@ class KategoriController extends Controller
 
     public function kategoriImport(Request $request)
     {
-        $this->validate($request, [
+        $validator = Validator::make($request->all(), [
             'kategori' => 'required|mimes:xlsx,xls,csv',
         ]);
 
+        if ($validator->fails())
+            return back()->with('error', 'gagal diunggah')->withInput()->withErrors($validator);
+        try {
         Excel::import(new KategoriImport, $request->file('kategori'));
-
         return redirect()->back()->with('success', 'Data berhasil diimpor.');
+    } catch (\Exception $e) {
+        return redirect()->back()->with('failed', 'Data gagal diimpor.');
     }
+}
 }

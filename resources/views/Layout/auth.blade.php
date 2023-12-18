@@ -19,7 +19,7 @@
   <!-- /.login-logo -->
   <div class="card card-outline card-primary">
     <div class="card-header text-center">
-      <a href="{{ asset('AdminLte/index2.html') }}" class="h1"><b>Admin</b>LTE</a>
+      <a href="{{ route('login') }}" class="h1"><b>Toko Bintang</b></a>
     </div>
         @yield("content")
     <!-- /.card-body -->
@@ -68,5 +68,52 @@
             });
         });
     </script>
+
+<script src="{{ asset('AdminLte/plugins/toastr/toastr.min.js') }}"></script>
+<script>
+    $(function() {
+        $('.toastrDefaultSuccess').click(function() {
+            toastr.success('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+        });
+        $('.toastrDefaultInfo').click(function() {
+            toastr.info('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+        });
+        $('.toastrDefaultError').click(function() {
+            toastr.error('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+        });
+        $('.toastrDefaultWarning').click(function() {
+            toastr.warning('Lorem ipsum dolor sit amet, consetetur sadipscing elitr.')
+        });
+    });
+</script>
+
+@if (Session::has('failed'))
+    <script>
+        toastr.error("{{ Session::get('failed') }}", "Gagal!")
+    </script>
+@endif
+
+@if (Session::has('message'))
+    <script>
+        toastr.success("{{ Session::get('message') }}", "Sukses!")
+    </script>
+@endif
+
+@if (Session::has('success'))
+    <script>
+        toastr.success("{{ Session::get('success') }}", "Sukses!")
+    </script>
+@endif
+
+@if (Session::has('error'))
+    <script>
+        @if (count($errors) > 0)
+            @foreach ($errors->all() as $error)
+                toastr.error("{{ $error }}");
+            @endforeach
+        @endif
+    </script>
+@endif
+
 </body>
 </html>

@@ -39,12 +39,16 @@ class DashboardController extends Controller
             $pendapatan = $total_penjualan - $total_pembelian;
             $data_pendapatan[] = $pendapatan;
 
+            $data_penjualan[] = $total_penjualan;
+
+            $data_pembelian[] = $total_pembelian;
+
             $tanggal_awal = date('Y-m-d', strtotime("+1 day", strtotime($tanggal_awal)));
         }
 
         $tanggal_awal = date('Y-m-01');
 
-        return view('Layout.dashboard', compact('tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan', 'totalKategori', 'totalBarang', 'totalSupplier', 'totalUser'));
+        return view('Layout.dashboard', compact('tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan', 'data_penjualan', 'data_pembelian', 'totalKategori', 'totalBarang', 'totalSupplier', 'totalUser'));
     }
 
     /**

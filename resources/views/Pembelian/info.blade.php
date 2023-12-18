@@ -13,9 +13,6 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="card card-primary">
-                                    <div class="card-header">
-                                        <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
-                                    </div>
                                     <div class="card-body">
                                         <p>ID Penjualan: {{ tambah_nol_didepan($item->id_pembelian, 10) }}</p>
                                         <p>Total Item: {{ $item->total_item }}</p>

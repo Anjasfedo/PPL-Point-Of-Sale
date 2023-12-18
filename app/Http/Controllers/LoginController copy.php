@@ -50,7 +50,7 @@ class LoginController extends Controller
         if (Auth::attempt($data)) {
             return redirect()->route('dashboard');
         } else {
-            return redirect('login')->with('failed', 'email atau password salah')->withErrors($validator);
+            return redirect('login')->withInput()->with('failed', 'email atau password salah')->withErrors($validator);
         }
     }
 

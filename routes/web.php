@@ -90,5 +90,8 @@ Route::group(['middleware' => 'auth'], function () {
                         ->except('edit', 'create', 'show', 'store', 'index');
                 Route::get('penjualanbarang/index/{penjualanbarang}', [PenjualanBarangController::class, 'index'])->name('penjualanbarang.index');
                 Route::post('penjualanbarang/{penjualanbarang}', [PenjualanBarangController::class, 'store'])->name('penjualanbarang.store');
+
+                Route::get('user-profile', [UserController::class, 'profile'])->name('user-profile');
+                Route::put('user-profile-update/{id}', [UserController::class, 'profileUpdate'])->name('user-profile-update');
         });
 });

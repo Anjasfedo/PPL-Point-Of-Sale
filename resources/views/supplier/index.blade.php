@@ -41,20 +41,17 @@
                                             <td>
                                                 <a data-toggle="modal"
                                                     data-target="#modal-edit-supplier{{ $item->id_supplier }}"
-                                                    class="btn btn-primary"><i class="fas fa pen">Edit</i></a>
+                                                    class="btn btn-primary"><i class="fas fa-pen">Edit</i></a>
                                                 <a data-toggle="modal"
                                                     data-target="#modal-hapus-supplier{{ $item->id_supplier }}"
-                                                    class="btn btn-danger"><i class="fas fa-trash-alt">Edit</i></a>
-                                                    <a data-toggle="modal"
-                                                    data-target="#modal-hapus-supplier{{ $item->id_supplier }}"
-                                                    class="btn btn-warning" style="background-color: pink"><i class="fas fa-trash-alt">Edit</i></a>
+                                                    class="btn btn-danger"><i class="fas fa-trash-alt">Hapus</i></a>
                                             </td>
                                         </tr>
                                         <div class="modal fade" id="modal-edit-supplier{{ $item->id_supplier }}">
                                             <div class="modal-dialog modal-lg">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h4 class="modal-title">Large Modal</h4>
+                                                        <h4 class="modal-title">Edit Supplier</h4>
                                                         <button type="button" class="close" data-dismiss="modal"
                                                             aria-label="Close">
                                                             <span aria-hidden="true">&times;</span>
@@ -66,8 +63,7 @@
                                                                 <div class="col-md-12">
                                                                     <div class="card card-primary">
                                                                         <div class="card-header">
-                                                                            <h3 class="card-title">Quick Example
-                                                                                <small>jQuery Validation</small></h3>
+                                                                            <h3 class="card-title">Isi Data</h3>
                                                                         </div>
                                                                         <form id="quickForm"
                                                                             action="{{ route('supplier.update', [$item->id_supplier]) }}"

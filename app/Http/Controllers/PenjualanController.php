@@ -22,7 +22,7 @@ class PenjualanController extends Controller
         $dataPenjualanTabel = Penjualan::where('total_item', '>', 0)
             ->where('total_penjualan', '>', 0)
             ->where('diterima', '>', 0)
-            ->where('kembalian', '>', 0)
+            ->where('kembalian', '>=', 0)
             ->get();
 
         $dataPenjualanBarang = PenjualanBarang::with('barang')->latest()->get();
@@ -76,7 +76,7 @@ class PenjualanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        // 
+        //
     }
 
     /**

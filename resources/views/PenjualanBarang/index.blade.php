@@ -70,7 +70,7 @@
                                                     </label>
                                                 </th>
                                                 <td>
-                                                    <input type="text" id="diterima" name="diterima"
+                                                    <input type="number" id="diterima" name="diterima"
                                                         class="form-control form-control-lg" value="">
                                                 </td>
                                             </tr>
@@ -109,8 +109,8 @@
                             <input name="id_user" type="text" value="{{ auth()->id() }}" readonly hidden>
                             <div class="row no-print">
                                 <div class="col-12">
-                                    <button type="submit" class="btn btn-primary float-right" style="margin-right: 5px;">
-                                        <i class="fas fa-download"></i> Generate PDF
+                                    <button type="submit" id="generatePdfBtn" class="btn btn-primary float-right" style="margin-right: 5px;">
+                                        <i class="fas fa-download"></i> Proses Transaksi
                                     </button>
                                 </div>
                             </div>
@@ -143,7 +143,13 @@
                 var diterima = parseFloat($('#diterima').val());
                 var totalPenjualan = parseFloat($('#total_penjualan').val());
                 var kembalian = diterima - totalPenjualan;
-                $('#kembalian').val(kembalian);
+                if (kembalian < 0 ) {
+                    $('#kembalian').val('');
+                    $('#generatePdfBtn').prop('disabled', true);
+                } else {
+                    $('#kembalian').val(kembalian);
+                    $('#generatePdfBtn').prop('disabled', false);
+                }
             }
             $(document).on('click', '.tambah-penjualan', function() {
                 var id_barang = $(this).data("id_barang");
@@ -173,17 +179,31 @@
                 hitungTotal();
             });
             $(document).on('input', 'input.qty', function() {
-                var maxQty = parseInt($(this).attr('max'));
-                var inputQty = parseInt($(this).val());
-                if (inputQty > maxQty) {
-                    $(this).val(maxQty);
-                }
-                updatetotal_harga($(this).closest('tr'));
-                updateKembalian();
-            });
-            $('#diterima').on('input', function() {
-                updateKembalian();
-            });
+            var maxQty = parseInt($(this).attr('max'));
+            var inputQty = parseInt($(this).val());
+            if (inputQty > maxQty) {
+                $(this).val(maxQty);
+            }
+            updatetotal_harga($(this).closest('tr'));
+            updateKembalian();
+            updateSubmitButton();
+        });
+
+        $('#diterima').on('input', function() {
+            updateKembalian();
+            updateSubmitButton();
+        });
+
+        function updateSubmitButton() {
+            // Check if any input is empty
+            var isEmpty = $('input[name="nama_barang[]"]').filter(function() {
+                return $(this).val() === '';
+            }).length > 0;
+
+            // Disable or enable the button based on the condition
+            $('#generatePdfBtn').prop('disabled', isEmpty);
+        }
+
 
             function hitungTotal() {
                 var total = 0;
@@ -222,9 +242,9 @@
             const newWindow = window.open(url, title,
                 `
             scrollbars=yes,
-            width  = ${w / systemZoom}, 
-            height = ${h / systemZoom}, 
-            top    = ${top}, 
+            width  = ${w / systemZoom},
+            height = ${h / systemZoom},
+            top    = ${top},
             left   = ${left}
         `
             );

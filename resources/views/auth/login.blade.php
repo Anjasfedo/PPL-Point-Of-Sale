@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="card-body">
-        <p class="login-box-msg">Sign in to start your session</p>
+        <p class="login-box-msg">Ayo masuk dan mulai aktifitas Anda!</p>
 
         <form method="POST" action="{{ route('login') }}">
             @csrf
@@ -22,7 +22,7 @@
                 @enderror
             </div>
             <div class="input-group mb-3">
-                <input type="password" class="form-control" placeholder="Password" name="password" required
+                <input type="password" class="form-control" placeholder="Sandi" name="password" required
                     autocomplete="current-password">
                 <div class="input-group-append">
                     <div class="input-group-text">
@@ -47,7 +47,7 @@
                 </div> --}}
                 <!-- /.col -->
                 <div class="col-4">
-                    <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    <button type="submit" class="btn btn-primary btn-block">Masuk</button>
                 </div>
                 <!-- /.col -->
             </div>
@@ -67,18 +67,18 @@
             {{ __('Forgot Your Password?') }}
         </a> --}}
         <p class="mb-1">
-            <a href="{{ route('password.request') }}">I forgot my password</a>
+            <a href="{{ route('password.request') }}">Lupa Kata Sandi?</a>
         </p>
 
         {{-- <p class="mb-1">
             <a href="forgot-password.html">I forgot my password</a>
         </p> --}}
-        {{-- 
+        {{--
         <li class="nav-item">
             <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
         </li> --}}
         <p class="mb-0">
-            <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
+            <a href="{{ route('register') }}" class="text-center">Daftar Akun Baru</a>
         </p>
     </div>
 @endsection

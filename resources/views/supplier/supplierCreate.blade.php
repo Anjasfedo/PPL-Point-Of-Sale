@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Large Modal</h4>
+                <h4 class="modal-title">Tambah Supplier</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -13,13 +13,13 @@
                         <div class="col-md-12">
                             <div class="card card-primary">
                                 <div class="card-header">
-                                    <h3 class="card-title">Quick Example <small>jQuery Validation</small></h3>
+                                    <h3 class="card-title">Isi Data</h3>
                                 </div>
                                 <form id="quickForm" action="{{ route('supplier.store') }}" method="POST">
                                     @csrf
                                     <div class="card-body">
                                         <div class="form-group">
-                                            <label for="inputNamaSupplier">Nama</label>
+                                            <label for="inputNamaSupplier">Nama*</label>
                                             <input type="text" name="nama_supplier" class="form-control"
                                                 id="inputNamaSupplier" placeholder="Masukan Nama supplier">
                                             @error('nama_supplier')
@@ -27,9 +27,9 @@
                                             @enderror
                                         </div>
                                         <div class="form-group">
-                                            <label for="inputTeleponSupplier">Telepon</label>
+                                            <label for="inputTeleponSupplier">Telepon*</label>
                                             <input type="text" name="telepon" class="form-control"
-                                                id="inputTeleponSupplier" placeholder="Masukan Nama supplier">
+                                                id="inputTeleponSupplier" placeholder="Masukan Nomor supplier">
                                             @error('telepon')
                                                 <small>{{ $message }}</small>
                                             @enderror
