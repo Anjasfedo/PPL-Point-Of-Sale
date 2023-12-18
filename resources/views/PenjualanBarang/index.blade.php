@@ -179,17 +179,31 @@
                 hitungTotal();
             });
             $(document).on('input', 'input.qty', function() {
-                var maxQty = parseInt($(this).attr('max'));
-                var inputQty = parseInt($(this).val());
-                if (inputQty > maxQty) {
-                    $(this).val(maxQty);
-                }
-                updatetotal_harga($(this).closest('tr'));
-                updateKembalian();
-            });
-            $('#diterima').on('input', function() {
-                updateKembalian();
-            });
+            var maxQty = parseInt($(this).attr('max'));
+            var inputQty = parseInt($(this).val());
+            if (inputQty > maxQty) {
+                $(this).val(maxQty);
+            }
+            updatetotal_harga($(this).closest('tr'));
+            updateKembalian();
+            updateSubmitButton();
+        });
+
+        $('#diterima').on('input', function() {
+            updateKembalian();
+            updateSubmitButton();
+        });
+
+        function updateSubmitButton() {
+            // Check if any input is empty
+            var isEmpty = $('input[name="nama_barang[]"]').filter(function() {
+                return $(this).val() === '';
+            }).length > 0;
+
+            // Disable or enable the button based on the condition
+            $('#generatePdfBtn').prop('disabled', isEmpty);
+        }
+
 
             function hitungTotal() {
                 var total = 0;
