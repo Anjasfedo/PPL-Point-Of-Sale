@@ -80,7 +80,8 @@
                                                 </th>
                                                 <td>
                                                     <input type="text" id="total_penjualan" class="form-control"
-                                                        name="total_penjualan" value="" readonly>
+                                                        name="total_penjualan" value="{{ $dataPenjualan->total_penjualan }}"
+                                                        readonly>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -109,7 +110,8 @@
                             <input name="id_user" type="text" value="{{ auth()->id() }}" readonly hidden>
                             <div class="row no-print">
                                 <div class="col-12">
-                                    <button type="submit" id="generatePdfBtn" class="btn btn-primary float-right" style="margin-right: 5px;">
+                                    <button type="submit" id="generatePdfBtn" class="btn btn-primary float-right"
+                                        style="margin-right: 5px;">
                                         <i class="fas fa-download"></i> Proses Transaksi
                                     </button>
                                 </div>
@@ -143,7 +145,7 @@
                 var diterima = parseFloat($('#diterima').val());
                 var totalPenjualan = parseFloat($('#total_penjualan').val());
                 var kembalian = diterima - totalPenjualan;
-                if (kembalian < 0 ) {
+                if (kembalian < 0) {
                     $('#kembalian').val('');
                     $('#generatePdfBtn').prop('disabled', true);
                 } else {
@@ -179,30 +181,30 @@
                 hitungTotal();
             });
             $(document).on('input', 'input.qty', function() {
-            var maxQty = parseInt($(this).attr('max'));
-            var inputQty = parseInt($(this).val());
-            if (inputQty > maxQty) {
-                $(this).val(maxQty);
-            }
-            updatetotal_harga($(this).closest('tr'));
-            updateKembalian();
-            updateSubmitButton();
-        });
+                var maxQty = parseInt($(this).attr('max'));
+                var inputQty = parseInt($(this).val());
+                if (inputQty > maxQty) {
+                    $(this).val(maxQty);
+                }
+                updatetotal_harga($(this).closest('tr'));
+                updateKembalian();
+                // updateSubmitButton();
+            });
 
-        $('#diterima').on('input', function() {
-            updateKembalian();
-            updateSubmitButton();
-        });
+            $('#diterima').on('input', function() {
+                updateKembalian();
+                // updateSubmitButton();
+            });
 
-        function updateSubmitButton() {
-            // Check if any input is empty
-            var isEmpty = $('input[name="nama_barang[]"]').filter(function() {
-                return $(this).val() === '';
-            }).length > 0;
+            // function updateSubmitButton() {
+            //     // Check if any input is empty
+            //     var isEmpty = $('input[name="nama_barang[]"]').filter(function() {
+            //         return $(this).val() === '';
+            //     }).length > 0;
 
-            // Disable or enable the button based on the condition
-            $('#generatePdfBtn').prop('disabled', isEmpty);
-        }
+            //     // Disable or enable the button based on the condition
+            //     $('#generatePdfBtn').prop('disabled', isEmpty);
+            // }
 
 
             function hitungTotal() {

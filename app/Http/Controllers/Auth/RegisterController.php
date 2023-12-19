@@ -11,6 +11,7 @@ use Spatie\Permission\Models\Role;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
@@ -52,7 +53,7 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
@@ -64,6 +65,16 @@ class RegisterController extends Controller
             'password.min' => 'The password must be at least :min characters.',
             'password.confirmed' => 'The password confirmation does not match.',
         ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->all();
+
+            // Simpan pesan error ke session agar dapat diakses oleh JavaScript
+            session(['validationRegisters' => $errors]);
+            throw new ValidationException($validator);
+        }
+
+        return $validator;
     }
 
     /**

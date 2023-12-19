@@ -41,6 +41,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
+// Route::post('/register', [UserController::class, 'store'])->name("register.user");
+
 Route::group(['middleware' => 'auth'], function () {
 
         Route::group(['middleware' => 'role:admin'], function () {

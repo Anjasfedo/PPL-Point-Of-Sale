@@ -77,7 +77,7 @@
         <a href="{{ route('login') }}" class="text-center">Saya Sudah Punya Akun</a>
     </div>
 
-    <!-- Add the following jQuery code for password matching check -->
+    {{-- <!-- Add the following jQuery code for password matching check -->
     {{-- <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
         $(document).ready(function() {
