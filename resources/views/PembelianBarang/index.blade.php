@@ -27,7 +27,7 @@
                                         <div class="form-group col-md-6">
                                             <label for="id_supplier">Supplier</label>
                                             <div class="input-group">
-                                                 <span class="input-group-btn">
+                                                <span class="input-group-btn">
                                                     <a data-toggle="modal" data-target="#modal-supplier-data"
                                                         class="btn btn-info btn-flat">Pilih Supplier<i
                                                             class="m-r2 fa fa-arrow-right"></i></a>
@@ -112,7 +112,8 @@
                             </div>
                             <div class="row no-print">
                                 <div class="col-12">
-                                    <button type="submit" id="generatePdfBtn" class="btn btn-primary float-right" style="margin-right: 5px;">
+                                    <button type="submit" id="generatePdfBtn" class="btn btn-primary float-right"
+                                        style="margin-right: 5px;">
                                         <i class="fas fa-download"></i> Proses Transaksi
                                     </button>
                                 </div>

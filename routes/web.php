@@ -41,7 +41,7 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::post('/register', [UserController::class, 'store'])->name("register.user");
+// Route::post('/register', [UserController::class, 'store'])->name("register.user");
 
 Route::group(['middleware' => 'auth'], function () {
 

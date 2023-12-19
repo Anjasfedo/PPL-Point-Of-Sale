@@ -4,7 +4,7 @@
     <div class="card-body">
         <p class="login-box-msg">Daftar Akun Baru</p>
 
-        <form method="POST" action="{{ route('register.user') }}">
+        <form method="POST" action="{{ route('register') }}">
             @csrf
             <!-- Your existing code -->
             <div class="input-group mb-3">

@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sistem Informasi Point Of Sales</title>
 
+
+  <link rel="icon" type="image/png" href="{{ asset('AdminLte/dist/img/Bintang.png') }}">
+
   <!-- Google Font: Source Sans Pro -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
   <!-- Font Awesome -->
@@ -116,6 +119,28 @@
             @endforeach
         @endif
     </script>
+@endif
+
+@if (session()->has('validationRegisters'))
+    <script>
+        @foreach (session('validationRegisters') as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    </script>
+    {{ session()->forget('validationRegisters') }}
+@endif
+
+
+@if (Session::has('validationErrors'))
+    <script>
+        var validationErrors = {!! json_encode(Session::get('validationErrors')) !!};
+        Object.values(validationErrors).forEach(function(errors) {
+            errors.forEach(function(error) {
+                toastr.error(error);
+            });
+        });
+    </script>
+    {{ Session::forget('validationErrors') }}
 @endif
 
 </body>

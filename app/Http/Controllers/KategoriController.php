@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Kategori;
 
 use Maatwebsite\Excel\Facades\Excel;
-use App\Exports\KategoriExport;
 use App\Imports\KategoriImport;
 
 use Illuminate\Support\Facades\Validator;

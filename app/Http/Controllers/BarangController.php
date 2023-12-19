@@ -41,8 +41,8 @@ class BarangController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_barang' => 'required|min:5|unique:barangs',
-            'harga_jual' => 'required|min:1',
-            'stok' => 'required',
+            'harga_jual' => 'required|integer|min:1',
+            'stok' => 'required|integer|min:1',
             'id_kategori' => 'required',
         ]);
 
@@ -77,8 +77,8 @@ class BarangController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_barang' => 'required|min:5|',
-            'harga_jual' => 'required|min:1',
-            'stok' => 'required',
+            'harga_jual' => 'required|integer|min:1',
+            'stok' => 'required|integer|min:1',
         ]);
 
         if ($validator->fails())

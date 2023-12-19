@@ -38,7 +38,7 @@ class SupplierController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_supplier' => 'required|min:5|unique:suppliers',
-            'telepon' => 'required|min:1',
+            'telepon' => 'required|integer|min:1',
         ]);
 
         if ($validator->fails())
@@ -72,7 +72,7 @@ class SupplierController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'nama_supplier' => 'required|min:5',
-            'telepon' => 'required|min:1',
+            'telepon' => 'required|integer|min:1',
         ]);
 
         if ($validator->fails())
