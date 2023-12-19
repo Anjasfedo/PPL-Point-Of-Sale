@@ -47,13 +47,8 @@ class UserController extends Controller
         ]);
 
         // Check if validation fails
-        if ($validator->fails()) {
-            return redirect()
-                ->back()
-                ->withErrors($validator)
-                ->withInput()
-                ->with('error', 'Gagal ditambah');
-        }
+        if ($validator->fails())
+            return back()->with('error', 'gagal ditambah')->withInput()->withErrors($validator);
 
         $user = User::create([
             'name' => $request->name,
@@ -185,7 +180,7 @@ class UserController extends Controller
         //     'email' => $request->email,
         // ];
         $user->name = $request->input('nama', $user->name);
-        $user->email= $request->input('email', $user->email);
+        $user->email = $request->input('email', $user->email);
 
         $user->save();
         // Update the password only if it's provided

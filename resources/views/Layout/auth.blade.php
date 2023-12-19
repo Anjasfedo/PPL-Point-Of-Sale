@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="{{ asset('AdminLte/plugins/icheck-bootstrap/icheck-bootstrap.min.css') }}">
   <!-- Theme style -->
   <link rel="stylesheet" href="{{ asset('AdminLte/dist/css/adminlte.min.css') }}">
+
+  <link rel="stylesheet" href="{{ asset('AdminLte/plugins/toastr/toastr.min.css') }}">
+  <link rel="stylesheet" href="{{ asset('AdminLte/plugins/toastr/toastr.css') }}">
 </head>
 <body class="hold-transition login-page">
 <div class="login-box">
